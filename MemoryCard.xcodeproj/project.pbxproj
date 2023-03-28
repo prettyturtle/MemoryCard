@@ -15,6 +15,7 @@
 		6B088D2429D06DFF0056B4EF /* CreateCardIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B088D2329D06DFF0056B4EF /* CreateCardIntroViewController.swift */; };
 		6B088D2829D087340056B4EF /* CreateCardFolderNameInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B088D2729D087340056B4EF /* CreateCardFolderNameInputViewController.swift */; };
 		6B088D2A29D08B170056B4EF /* CreateCardContentInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B088D2929D08B170056B4EF /* CreateCardContentInputViewController.swift */; };
+		6B088D2E29D32DD90056B4EF /* CreateCardContentInputCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B088D2D29D32DD90056B4EF /* CreateCardContentInputCollectionViewCell.swift */; };
 		6B29BDC229CE10EB00F39932 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDC129CE10EB00F39932 /* AppDelegate.swift */; };
 		6B29BDC429CE10EB00F39932 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDC329CE10EB00F39932 /* SceneDelegate.swift */; };
 		6B29BDC629CE10EB00F39932 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDC529CE10EB00F39932 /* LoginViewController.swift */; };
@@ -49,6 +50,7 @@
 		6B088D2329D06DFF0056B4EF /* CreateCardIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardIntroViewController.swift; sourceTree = "<group>"; };
 		6B088D2729D087340056B4EF /* CreateCardFolderNameInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardFolderNameInputViewController.swift; sourceTree = "<group>"; };
 		6B088D2929D08B170056B4EF /* CreateCardContentInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardContentInputViewController.swift; sourceTree = "<group>"; };
+		6B088D2D29D32DD90056B4EF /* CreateCardContentInputCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardContentInputCollectionViewCell.swift; sourceTree = "<group>"; };
 		6B29BDBE29CE10EB00F39932 /* MemoryCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B29BDC129CE10EB00F39932 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B29BDC329CE10EB00F39932 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				6B088D2329D06DFF0056B4EF /* CreateCardIntroViewController.swift */,
 				6B088D2729D087340056B4EF /* CreateCardFolderNameInputViewController.swift */,
 				6B088D2929D08B170056B4EF /* CreateCardContentInputViewController.swift */,
+				6B088D2D29D32DD90056B4EF /* CreateCardContentInputCollectionViewCell.swift */,
 				6B29BDF629CF52FA00F39932 /* HomeViewController.swift */,
 				6B088D1F29D040170056B4EF /* TabBarController.swift */,
 				6B088D1929D02EBE0056B4EF /* UIViewController+.swift */,
@@ -226,6 +229,7 @@
 				6B088D2829D087340056B4EF /* CreateCardFolderNameInputViewController.swift in Sources */,
 				6B29BDF929CF547600F39932 /* AuthManager.swift in Sources */,
 				6B088D1A29D02EBE0056B4EF /* UIViewController+.swift in Sources */,
+				6B088D2E29D32DD90056B4EF /* CreateCardContentInputCollectionViewCell.swift in Sources */,
 				6B29BDF529CED7A700F39932 /* SignUpViewController.swift in Sources */,
 				6B29BDF129CECCA100F39932 /* UITextField+.swift in Sources */,
 				6B088D1E29D0375B0056B4EF /* IndicatorManager.swift in Sources */,

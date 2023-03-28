@@ -55,6 +55,12 @@ final class CreateCardContentInputViewController: UIViewController {
     }
 }
 
+extension CreateCardContentInputViewController {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+}
+
 extension CreateCardContentInputViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
@@ -79,7 +85,9 @@ extension CreateCardContentInputViewController: UICollectionViewDataSource {
         ) as? CreateCardContentInputCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.backgroundColor = .red
+        
+        cell.setupLayout()
+        
         return cell
     }
 }
@@ -121,9 +129,4 @@ private extension CreateCardContentInputViewController {
             $0.height.equalTo(48.0)
         }
     }
-}
-
-
-final class CreateCardContentInputCollectionViewCell: UICollectionViewCell {
-    static let identifier = "CreateCardContentInputCollectionViewCell"
 }
