@@ -117,13 +117,13 @@ private extension LoginViewController {
             guard let self = self else { return }
             
             switch result {
-            case .success(let authResult):                                  // 로그인 성공
+            case .success(let authResult):                                  // 로그인 성공 (`로그인 결과`)
                 print("🎉 이메일 로그인 성공", authResult)
                 
-                let rootVC = TabBarController() // 메인 탭바 컨트롤러
+                let rootVC = TabBarController()                             // 메인 탭바 컨트롤러
                 self.changeRootVC(rootVC, animated: true)                   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
                 
-            case .failure(let error):                                       // 로그인 실패
+            case .failure(let error):                                       // 로그인 실패 (`에러`)
                                                                             // TODO: - 로그인 실패 처리
                 print("🎉 이메일 로그인 실패", error)
             }
