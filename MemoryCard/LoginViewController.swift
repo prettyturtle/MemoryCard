@@ -10,95 +10,137 @@ import SnapKit
 import Then
 import FirebaseAuth
 
+// MARK: - 로그인 뷰컨
 final class LoginViewController: UIViewController {
     
+    // MARK: ========================= < UI 컴포넌트 > =========================
+    /// 이메일 입력 텍스트 필드
     private lazy var emailTextField = UITextField().then {
-        $0.offAutoChange(true)
-        $0.keyboardType = .emailAddress
-        $0.borderStyle = .roundedRect
-        $0.placeholder = "이메일을 입력하세요..."
+        $0.placeholder = "이메일을 입력하세요..."    // 텍스트 필드 placeholder
+        $0.keyboardType = .emailAddress         // 키보드 타입 : 이메일
+        $0.borderStyle = .roundedRect           // 테두리 타입
+        $0.offAutoChange(true)                  // 오토 대문자, 오토 수정 off
     }
+    
+    /// 비밀번호 입력 텍스트 필드
     private lazy var passwordTextField = UITextField().then {
-        $0.offAutoChange(true)
-        $0.borderStyle = .roundedRect
-        $0.placeholder = "비밀번호를 입력하세요..."
-        $0.keyboardType = .default
-        $0.isSecureTextEntry = true
+        $0.placeholder = "비밀번호를 입력하세요..."   // 텍스트 필드 placeholder
+        $0.borderStyle = .roundedRect           // 테두리 타입
+        $0.isSecureTextEntry = true             // 비밀번호 가리기
+        $0.offAutoChange(true)                  // 오토 대문자, 오토 수정 off
     }
+    
+    /// 로그인 버튼
     private lazy var loginButton = OpacityButton().then {
-        $0.style = .fill(backgroundColor: .systemOrange)
-        $0.setTitle("로그인", for: .normal)
-        $0.addTarget(
+        $0.setTitle("로그인", for: .normal)                        // 버튼 타이틀 설정
+        $0.style = .fill(backgroundColor: .systemOrange)         // 버튼 스타일 : 배경색 systemOrange
+        $0.addTarget(                                            // 버튼을 눌렀을 때 이벤트 등록
             self,
             action: #selector(didTapLoginButton),
             for: .touchUpInside
         )
     }
+    
+    /// 회원가입 뷰컨 이동 버튼
     private lazy var moveToSignUpButton = UIButton().then {
-        $0.setTitleColor(.secondaryLabel, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 16.0, weight: .medium)
-        $0.addTarget(
+        $0.setTitleColor(.secondaryLabel, for: .normal)                     // 텍스트 색상 설정
+        $0.titleLabel?.font = .systemFont(ofSize: 16.0, weight: .medium)    // 폰트 설정
+        $0.addTarget(                                                       // 버튼을 눌렀을 때 이벤트 등록
             self,
             action: #selector(didTapMoveToSignUpButton),
             for: .touchUpInside
         )
         
-        let text = "아직 계정이 없으신가요? 회원가입"
-        let attributedText = NSMutableAttributedString(string: text)
-        let attributedRange = (text as NSString).range(of: "회원가입")
+        let text = "아직 계정이 없으신가요? 회원가입"                            // 버튼 타이틀
+        let attrText = NSMutableAttributedString(string: text)           // 꾸며질 텍스트
+        let attrRange = (text as NSString).range(of: "회원가입")           // 꾸며질 텍스트 범위 ("회원가입")
         
-        attributedText.addAttribute(.foregroundColor, value: UIColor.systemMint, range: attributedRange)
-        attributedText.addAttribute(.font, value: UIFont.systemFont(ofSize: 16.0, weight: .semibold), range: attributedRange)
-        $0.setAttributedTitle(attributedText, for: .normal)
+        attrText.addAttribute(                                          // "회원가입"만 색상 따로 설정
+            .foregroundColor,
+            value: UIColor.systemMint,
+            range: attrRange
+        )
+        attrText.addAttribute(                                          // "회원가입"만 폰트 따로 설정
+            .font,
+            value: UIFont.systemFont(
+                ofSize: 16.0,
+                weight: .semibold
+            ),
+            range: attrRange
+        )
+        
+        $0.setAttributedTitle(attrText, for: .normal)                   // 꾸며진 버튼 텍스트 설정
     }
-    
+    // MARK: ========================= </ UI 컴포넌트 > =========================
+}
+
+// MARK: - 라이프 사이클
+extension LoginViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
-        setupLayout()
+        
+        setupNavigationBar()    // 내비게이션 설정
+        setupLayout()           // 레이아웃 설정
     }
 }
 
+// MARK: - UI 이벤트
 private extension LoginViewController {
+    /// 회원가입 뷰컨 이동 버튼을 눌렀을 때
+    /// - Parameter sender: 회원가입 뷰턴 이동 버튼
     @objc func didTapMoveToSignUpButton(_ sender: UIButton) {
-        let signUpVC = SignUpViewController()
-        navigationController?.pushViewController(signUpVC, animated: true)
+        let signUpVC = SignUpViewController()                               // 로그인 뷰컨
+        navigationController?.pushViewController(signUpVC, animated: true)  // 로그인 뷰컨으로 이동
     }
     
+    /// 로그인 버튼을 눌렀을 때
+    /// - Parameter sender: 로그인 버튼
     @objc func didTapLoginButton(_ sender: UIButton) {
-        IndicatorManager.shared.start()
+        IndicatorManager.shared.start()                                     // 로딩 인디케이터 시작
         
         guard let email = emailTextField.text,
-              let password = passwordTextField.text else {
-            return
+              let password = passwordTextField.text else {                  // 이메일, 비밀번호 옵셔널 해제
+            return                                                          // 이메일, 비밀번호가 nil일 때
         }
         
-        guard !email.isEmpty, !password.isEmpty else {
-            return
+        guard !email.isEmpty, !password.isEmpty else {                      // 이메일, 비밀번호가 공백이 아닌지 확인
+                                                                            // TODO: - 이메일, 비밀번호가 공백일 때 처리
+            return                                                          // 이메일, 비밀번호가 공백일 때
         }
         
-        AuthManager.shared.login((email, password)) { [weak self] result in
+        let userInput = (email, password)                                   // 유저가 입력한 이메일, 비밀번호
+        
+        // 파이어베이스 이메일 로그인 시작
+        AuthManager.shared.login(userInput) { [weak self] result in
+            IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
+            
             guard let self = self else { return }
             
             switch result {
-            case .success(let authResult):
-                IndicatorManager.shared.stop()
+            case .success(let authResult):                                  // 로그인 성공
                 print("🎉 이메일 로그인 성공", authResult)
                 
-                let rootVC = TabBarController()
-                self.changeRootVC(rootVC, animated: true)
-            case .failure(let error):
+                let rootVC = TabBarController() // 메인 탭바 컨트롤러
+                self.changeRootVC(rootVC, animated: true)                   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
+                
+            case .failure(let error):                                       // 로그인 실패
+                                                                            // TODO: - 로그인 실패 처리
                 print("🎉 이메일 로그인 실패", error)
             }
         }
     }
 }
 
+// MARK: - UI 레이아웃
 private extension LoginViewController {
+    
+    /// 내비게이션 바 설정
     func setupNavigationBar() {
         navigationItem.title = "로그인"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
+    
+    /// 레이아웃 설정
     func setupLayout() {
         [
             emailTextField,
