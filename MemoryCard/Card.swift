@@ -9,13 +9,13 @@ import Foundation
 
 /// 카드
 struct Card {
-    let id: Int             // 고유값
-    let front: CardContent  // 앞면
-    let back: CardContent   // 뒷면
+    var id: Int             // 고유값
+    var front: CardContent  // 앞면
+    var back: CardContent   // 뒷면
     
     /// 카드 내용
     struct CardContent {
-        let content: String // 내용
+        var content: String // 내용
     }
     
     /// 빈 카드 생성하는 함수

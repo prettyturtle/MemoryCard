@@ -207,9 +207,36 @@ extension CreateCardContentInputViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
+        cell.delegate = self
+        cell.index = indexPath.item
+        cell.card = cardList[indexPath.item]
+        cell.reloadTextView()
         cell.setupLayout()
         
         return cell
+    }
+}
+
+// MARK: - CreateCardContentInputCollectionViewCellDelegate
+extension CreateCardContentInputViewController: CreateCardContentInputCollectionViewCellDelegate {
+    func createCardContentInputCollectionViewCell(
+        didChangeContentText cell: CreateCardContentInputCollectionViewCell,
+        index: Int,
+        text: String,
+        type: CardContentType
+    ) {
+        guard let changedCardIdx = cardList.firstIndex(where: { $0.id == index }) else {
+            return
+        }
+        
+        switch type {
+        case .front:
+            cardList[changedCardIdx].front.content = text
+            print(cardList[changedCardIdx])
+        case .back:
+            cardList[changedCardIdx].back.content = text
+            print(cardList[changedCardIdx])
+        }
     }
 }
 
