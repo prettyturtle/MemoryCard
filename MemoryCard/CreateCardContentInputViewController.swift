@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import FirebaseFirestoreSwift
 
 // MARK: - 카드 내용 작성 뷰컨
 final class CreateCardContentInputViewController: UIViewController {
@@ -131,6 +132,9 @@ private extension CreateCardContentInputViewController {
     /// - Parameter sender: 다음으로 이동 버튼
     @objc func didTapNextButton(_ sender: UIButton) {
         // TODO: - 다음으로 이동 이벤트
+        let filteredCardList = cardList.filter { $0.front.content != "" || $0.back.content != "" }
+        let createCardFinishVC = CreateCardFinishViewController(folderName: folderName, cardList: filteredCardList)
+        navigationController?.pushViewController(createCardFinishVC, animated: true)
     }
 }
 
@@ -232,10 +236,8 @@ extension CreateCardContentInputViewController: CreateCardContentInputCollection
         switch type {
         case .front:
             cardList[changedCardIdx].front.content = text
-            print(cardList[changedCardIdx])
         case .back:
             cardList[changedCardIdx].back.content = text
-            print(cardList[changedCardIdx])
         }
     }
 }
