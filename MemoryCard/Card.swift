@@ -8,13 +8,13 @@
 import Foundation
 
 /// 카드
-struct Card {
+struct Card: Codable {
     var id: Int             // 고유값
     var front: CardContent  // 앞면
     var back: CardContent   // 뒷면
     
     /// 카드 내용
-    struct CardContent {
+    struct CardContent: Codable {
         var content: String // 내용
     }
     
@@ -22,6 +22,10 @@ struct Card {
     /// - Parameter id: 카드 ID
     /// - Returns: 빈 카드
     static func createDefault(id: Int) -> Card {
-        return Card(id: id, front: CardContent(content: ""), back: CardContent(content: ""))
+        return Card(
+            id: id,
+            front: CardContent(content: ""),
+            back: CardContent(content: "")
+        )
     }
 }
