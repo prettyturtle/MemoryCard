@@ -149,10 +149,12 @@ private extension SignUpViewController {
         
         guard let email = emailTextField.text,
               let password = passwordTextField.text else {                  // 이메일, 비밀번호 옵셔널 해제
+            IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
             return                                                          // 이메일, 비밀번호가 nil일 때
         }
         
         guard !email.isEmpty, !password.isEmpty else {                      // 이메일, 비밀번호가 공백이 아닌지 확인
+            IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
                                                                             // TODO: - 이메일, 비밀번호가 공백일 때 처리
             return                                                          // 이메일, 비밀번호가 공백일 때
         }
@@ -169,9 +171,19 @@ private extension SignUpViewController {
             case .success(let authResult):                                  // 회원가입 성공 (`회원가입 결과`)
                 print("🎉 이메일 회원가입 성공", authResult)
                 
-                let rootVC = TabBarController()                             // 메인 탭바 컨트롤러
-                self.changeRootVC(rootVC, animated: true)                   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
+                let user = User(id: authResult.user.uid, email: email)
                 
+                // 유저 정보 저장 시작
+                DBManager.shared.save(.user, documentName: user.id, data: user) { dbResult in
+                    switch dbResult {
+                    case .success(_):                                               // 유저 저장 성공
+                        let rootVC = TabBarController()                             // 메인 탭바 컨트롤러
+                        self.changeRootVC(rootVC, animated: true)                   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
+                    case .failure(let error):
+                                                                                    // TODO: - 유저 저장 실패 처리
+                        print("🎉 유저 저장 실패", error)
+                    }
+                }
             case .failure(let error):                                       // 회원가입 실패 (`에러`)
                                                                             // TODO: - 회원가입 실패 처리
                 print("🎉 이메일 회원가입 실패", error)

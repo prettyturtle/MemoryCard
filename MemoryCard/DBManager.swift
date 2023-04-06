@@ -54,6 +54,7 @@ final class DBManager {
 /// DB 콜렉션 타입
 enum DBCollectionType: String {
     case card = "Card" // 카드 콜렉션
+    case user = "User" // 유저 콜렉션
     
     var collectionName: String { // 콜렉션 명
         return self.rawValue
