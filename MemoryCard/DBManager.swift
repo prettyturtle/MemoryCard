@@ -49,6 +49,26 @@ final class DBManager {
             completion(.failure(error))                     // 실패 컴플리션
         }
     }
+    
+    
+    /// 데이터 가져오기(도큐먼트)
+    ///
+    /// - Parameters:
+    ///   - collectionType: 콜렉션 타입
+    ///   - documentName: 가져올 도큐먼트명
+    ///   - type: 파싱할 타입
+    ///   - completion: 완료 컴플리션
+    func fetchDocument<T: Decodable>(
+        _ collectionType: DBCollectionType,
+        documentName: String,
+        type: T.Type,
+        completion: (@escaping (Result<T, Error>) -> Void)
+    ) {
+        db
+            .collection(collectionType.collectionName)      // 콜렉션 명 설정
+            .document(documentName)                         // 가져올 도큐먼트 설정
+            .getDocument(as: type, completion: completion)  // 도큐먼트 가져오기
+    }
 }
 
 /// DB 콜렉션 타입
