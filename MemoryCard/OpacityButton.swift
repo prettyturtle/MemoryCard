@@ -20,10 +20,12 @@ final class OpacityButton: UIButton {
             case .fill(let color):
                 backgroundColor = color
                 layer.borderWidth = 0.0
+                setTitleColor(.white, for: .normal)
             case .border(let color):
                 backgroundColor = .clear
                 layer.borderColor = color.cgColor
                 layer.borderWidth = 1.0
+                setTitleColor(color, for: .normal)
             }
         }
     }
