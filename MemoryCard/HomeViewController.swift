@@ -15,10 +15,22 @@ final class HomeViewController: UIViewController {
     
     // MARK: ========================= < UI 컴포넌트 > =========================
     
-    private lazy var scrollView = UIScrollView().then {
-        $0.alwaysBounceVertical = true
+    /// 리프레시 컨트롤
+    private lazy var refreshControl = UIRefreshControl().then {
+        $0.addTarget(
+            self,
+            action: #selector(beginRefresh),
+            for: .valueChanged
+        )
     }
     
+    /// 스크롤뷰
+    private lazy var scrollView = UIScrollView().then {
+        $0.alwaysBounceVertical = true
+        $0.refreshControl = refreshControl
+    }
+    
+    /// 스크롤뷰 컨텐트뷰
     private lazy var scrollContentView = UIView()
     
     /// 카드 생성 라벨
@@ -102,7 +114,9 @@ private extension HomeViewController {
     /// 카드 집 불러오는 함수
     ///
     /// 카드 집을 fetch 하고 콜렉션 뷰를 reload 한다
-    func fetchCardZip() {
+    ///
+    /// - Parameter completion: 완료 컴플리션
+    func fetchCardZip(completion: (() -> Void)? = nil) {
         // DB에서 카드 집 불러오기 시작
         DBManager.shared.fetchDocuments(.card, type: CardZip.self) { [weak self] result in
             // DB에서 카드 집 불러오기 완료
@@ -116,6 +130,8 @@ private extension HomeViewController {
             case .failure(let error):                           // 불러오기 실패시
                 print("💩 ERROR : \(error.localizedDescription)")
             }
+            
+            completion?()                                       // 완료
         }
     }
     
@@ -144,6 +160,18 @@ private extension HomeViewController {
     /// - Parameter sender: 나의 카드 더보기 버튼
     @objc func didTapMyCardListPreviewMoreButton(_ sender: UIButton) {
         // TODO: - 나의 카드 더보기 버튼 구현
+    }
+    
+    /// 리프레시 컨트롤 시작 함수
+    /// - Parameter sender: 리프레시 컨트롤
+    @objc func beginRefresh(_ sender: UIRefreshControl) {
+        cardZipList = [] // 현재 카드 집 비우기
+        
+        // 카드 집 불러오기 시작
+        fetchCardZip {
+            // 카드 집 불러오기 완료
+            sender.endRefreshing() // 리프레시 컨트롤 종료
+        }
     }
 }
 
