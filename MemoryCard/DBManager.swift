@@ -69,6 +69,41 @@ final class DBManager {
             .document(documentName)                         // 가져올 도큐먼트 설정
             .getDocument(as: type, completion: completion)  // 도큐먼트 가져오기
     }
+    
+    
+    /// 데이터 가져오기(콜렉션)
+    /// - Parameters:
+    ///   - collectionType: 가져올 콜렉션
+    ///   - type: 도큐먼트를 파싱할 타입
+    ///   - completion: 완료 컴플리션
+    func fetchDocuments<T: Decodable>(
+        _ collectionType: DBCollectionType,
+        type: T.Type,
+        completion: (@escaping (Result<T, Error>) -> Void)
+    ) {
+        db
+            .collection(collectionType.collectionName)                  // 콜렉션 명 설정
+            .getDocuments { snapshot, error in                          // 도큐먼트들 가져오기
+                if let error = error {
+                    completion(.failure(error))                         // 실패시 컴플리션 (`에러`)
+                    return
+                }
+                
+                if let snapshot = snapshot {                            // 성공시
+                    let documents = snapshot.documents                  // 가져온 도큐먼트들
+                    
+                    for document in documents {
+                        do {
+                            let docData = try document.data(as: type)   // 도큐먼트 데이터 파싱
+                            
+                            completion(.success(docData))               // 성공시 컴플리션 (`도큐먼트 데이터`)
+                        } catch {
+                            completion(.failure(error))                 // 실패시 컴플리션 (`에러`)
+                        }
+                    }
+                }
+            }
+    }
 }
 
 /// DB 콜렉션 타입
