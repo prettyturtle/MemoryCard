@@ -42,6 +42,7 @@
 		6B85569229DC646F0004E226 /* CardZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569129DC646F0004E226 /* CardZip.swift */; };
 		6B85569429DC64AA0004E226 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569329DC64AA0004E226 /* DBManager.swift */; };
 		6B85569629DF03F70004E226 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569529DF03F70004E226 /* User.swift */; };
+		6B85569829E2C1100004E226 /* CardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569729E2C10F0004E226 /* CardListCollectionViewCell.swift */; };
 		6BA3065529D89260003CFAF2 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065429D89260003CFAF2 /* Card.swift */; };
 		6BA3065729D896AA003CFAF2 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065629D896AA003CFAF2 /* UITextView+.swift */; };
 		6BA3065929D8A5CC003CFAF2 /* CardContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065829D8A5CC003CFAF2 /* CardContentType.swift */; };
@@ -77,6 +78,7 @@
 		6B85569129DC646F0004E226 /* CardZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardZip.swift; sourceTree = "<group>"; };
 		6B85569329DC64AA0004E226 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		6B85569529DF03F70004E226 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6B85569729E2C10F0004E226 /* CardListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListCollectionViewCell.swift; sourceTree = "<group>"; };
 		6BA3065429D89260003CFAF2 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		6BA3065629D896AA003CFAF2 /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		6BA3065829D8A5CC003CFAF2 /* CardContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentType.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				6B088D2D29D32DD90056B4EF /* CreateCardContentInputCollectionViewCell.swift */,
 				6BA3065A29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift */,
 				6B29BDF629CF52FA00F39932 /* HomeViewController.swift */,
+				6B85569729E2C10F0004E226 /* CardListCollectionViewCell.swift */,
 				6B088D1F29D040170056B4EF /* TabBarController.swift */,
 				6B088D1929D02EBE0056B4EF /* UIViewController+.swift */,
 				6B29BDF229CECCC000F39932 /* Constant.swift */,
@@ -272,6 +275,7 @@
 				6BA3065B29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift in Sources */,
 				6BA3065D29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift in Sources */,
 				6BA3065929D8A5CC003CFAF2 /* CardContentType.swift in Sources */,
+				6B85569829E2C1100004E226 /* CardListCollectionViewCell.swift in Sources */,
 				6B29BDF329CECCC000F39932 /* Constant.swift in Sources */,
 				6B088D2429D06DFF0056B4EF /* CreateCardIntroViewController.swift in Sources */,
 			);
@@ -418,11 +422,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TB9WF4459Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MemoryCard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "메모리카드";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -435,6 +441,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = YC.MemoryCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -446,11 +453,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TB9WF4459Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MemoryCard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "메모리카드";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -463,6 +472,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = YC.MemoryCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

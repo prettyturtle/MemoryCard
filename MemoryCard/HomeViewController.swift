@@ -14,6 +14,13 @@ import FirebaseAuth
 final class HomeViewController: UIViewController {
     
     // MARK: ========================= < UI 컴포넌트 > =========================
+    
+    private lazy var scrollView = UIScrollView().then {
+        $0.alwaysBounceVertical = true
+    }
+    
+    private lazy var scrollContentView = UIView()
+    
     /// 카드 생성 라벨
     private lazy var createCardLabel = UILabel().then {
         $0.text = "동해물과백...\n두산이? 마르고닳 도록하느"
@@ -189,10 +196,28 @@ private extension HomeViewController {
             target: self,
             action: nil
         )
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
     }
     
     /// 레이아웃 설정
     func setupLayout() {
+        
+        view.addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        scrollView.addSubview(scrollContentView)
+        
+        scrollContentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+        
         [
             createCardLabel,
             createCardButton,
@@ -200,29 +225,30 @@ private extension HomeViewController {
             myCardListPreviewMoreButton,
             homeMyCardListPreviewCollectionView
         ].forEach {
-            view.addSubview($0)
+            scrollContentView.addSubview($0)
         }
         
         createCardLabel.snp.makeConstraints {
-            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.top.trailing.equalToSuperview().inset(Constant.defaultInset)
         }
         createCardButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(createCardLabel.snp.bottom).offset(Constant.defaultInset)
             $0.height.equalTo(48.0)
         }
         myCardListPreviewLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(createCardButton.snp.bottom).offset(Constant.defaultInset * 2)
         }
         myCardListPreviewMoreButton.snp.makeConstraints {
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.bottom.equalTo(myCardListPreviewLabel)
         }
         homeMyCardListPreviewCollectionView.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(myCardListPreviewLabel.snp.bottom).offset(Constant.defaultInset)
             $0.height.equalTo(120.0)
+            $0.bottom.equalToSuperview()
         }
     }
 }
