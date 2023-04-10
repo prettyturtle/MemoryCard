@@ -117,19 +117,31 @@ private extension HomeViewController {
     ///
     /// - Parameter completion: 완료 컴플리션
     func fetchCardZip(completion: (() -> Void)? = nil) {
+        guard let currentUser = AuthManager.shared.getCurrentUser() else { // 현재 유저
+            return  // TODO: - 현재 유저가 없을 때 예외처리
+        }
+        
+        let mIdx = currentUser.uid                              // 유저 mIdx
+        
         // DB에서 카드 집 불러오기 시작
-        DBManager.shared.fetchDocuments(.card, type: CardZip.self) { [weak self] result in
+        DBManager.shared.fetchDocumentsWhereField(
+            .card,
+            type: CardZip.self,
+            field: ("mIdx", mIdx)
+        ) { [weak self] result in
             // DB에서 카드 집 불러오기 완료
             guard let self = self else { return }
             
             switch result {
             case .success(let cardZip):                         // 불러오기 성공시
-                self.cardZipList.append(cardZip)                // 카드 집 리스트에 추가
-                
-                self.reloadMyCardListPreviewCollectionView()    // 콜렉션 뷰 새로고침
+                if let cardZip = cardZip {
+                    self.cardZipList.append(cardZip)                // 카드 집 리스트에 추가
+                }
             case .failure(let error):                           // 불러오기 실패시
                 print("💩 ERROR : \(error.localizedDescription)")
             }
+            
+            self.reloadMyCardListPreviewCollectionView()    // 콜렉션 뷰 새로고침
             
             completion?()                                       // 완료
         }

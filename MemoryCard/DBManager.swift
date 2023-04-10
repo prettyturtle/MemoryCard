@@ -79,7 +79,7 @@ final class DBManager {
     func fetchDocuments<T: Decodable>(
         _ collectionType: DBCollectionType,
         type: T.Type,
-        completion: (@escaping (Result<T, Error>) -> Void)
+        completion: (@escaping (Result<T?, Error>) -> Void)
     ) {
         db
             .collection(collectionType.collectionName)                  // 콜렉션 명 설정
@@ -91,6 +91,52 @@ final class DBManager {
                 
                 if let snapshot = snapshot {                            // 성공시
                     let documents = snapshot.documents                  // 가져온 도큐먼트들
+                    
+                    if documents.isEmpty {
+                        completion(.success(nil))
+                    }
+                    
+                    for document in documents {
+                        do {
+                            let docData = try document.data(as: type)   // 도큐먼트 데이터 파싱
+                            
+                            completion(.success(docData))               // 성공시 컴플리션 (`도큐먼트 데이터`)
+                        } catch {
+                            completion(.failure(error))                 // 실패시 컴플리션 (`에러`)
+                        }
+                    }
+                }
+            }
+    }
+    
+    
+    /// 데이터 가져오기(콜렉션, 해당 필드에 맞는 데이터)
+    /// - Parameters:
+    ///   - collectionType: 가져올 콜렉션
+    ///   - type: 도큐먼트를 파싱할 타입
+    ///   - field: 필드 조건
+    ///   - completion: 완료 컴플리션
+    func fetchDocumentsWhereField<T: Decodable>(
+        _ collectionType: DBCollectionType,
+        type: T.Type,
+        field: (String, Any),
+        completion: (@escaping (Result<T?, Error>) -> Void)
+    ) {
+        db
+            .collection(collectionType.collectionName)                  // 콜렉션 명 설정
+            .whereField(field.0, isEqualTo: field.1)                    // 필드 설정
+            .getDocuments { snapshot, error in                          // 도큐먼트들 가져오기
+                if let error = error {
+                    completion(.failure(error))                         // 실패시 컴플리션 (`에러`)
+                    return
+                }
+                
+                if let snapshot = snapshot {                            // 성공시
+                    let documents = snapshot.documents                  // 가져온 도큐먼트들
+                    
+                    if documents.isEmpty {
+                        completion(.success(nil))
+                    }
                     
                     for document in documents {
                         do {

@@ -135,7 +135,15 @@ private extension CreateCardContentInputViewController {
         let filteredCardList = cardList.filter {                                // 앞, 뒤 중 하나라도 채워져 있는 카드 리스트
             $0.front.content != "" || $0.back.content != ""                     // 카드 중 앞, 뒤 둘 다 비어있는 카드는 제거
         }
-        let cardZip = CardZip(folderName: folderName, cards: filteredCardList)  // 카드 집 생성
+        
+        guard let currentUser = AuthManager.shared.getCurrentUser() else {
+            IndicatorManager.shared.stop()                                      // 인디케이터 중지
+            return // TODO: - 현재 유저 없을 때 처리
+        }
+        
+        let mIdx = currentUser.uid                                              // 유저 아이디
+        
+        let cardZip = CardZip(folderName: folderName, cards: filteredCardList, mIdx: mIdx)  // 카드 집 생성
         
         // DB 저장 시작
         DBManager.shared.save(.card, documentName: folderName, data: cardZip) { result in
