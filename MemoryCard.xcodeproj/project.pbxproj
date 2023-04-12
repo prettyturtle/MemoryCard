@@ -43,6 +43,7 @@
 		6B85569429DC64AA0004E226 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569329DC64AA0004E226 /* DBManager.swift */; };
 		6B85569629DF03F70004E226 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569529DF03F70004E226 /* User.swift */; };
 		6B85569829E2C1100004E226 /* CardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569729E2C10F0004E226 /* CardListCollectionViewCell.swift */; };
+		6B85569C29E464070004E226 /* MyCardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569B29E464070004E226 /* MyCardListViewController.swift */; };
 		6BA3065529D89260003CFAF2 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065429D89260003CFAF2 /* Card.swift */; };
 		6BA3065729D896AA003CFAF2 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065629D896AA003CFAF2 /* UITextView+.swift */; };
 		6BA3065929D8A5CC003CFAF2 /* CardContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065829D8A5CC003CFAF2 /* CardContentType.swift */; };
@@ -79,6 +80,7 @@
 		6B85569329DC64AA0004E226 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		6B85569529DF03F70004E226 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6B85569729E2C10F0004E226 /* CardListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListCollectionViewCell.swift; sourceTree = "<group>"; };
+		6B85569B29E464070004E226 /* MyCardListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCardListViewController.swift; sourceTree = "<group>"; };
 		6BA3065429D89260003CFAF2 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		6BA3065629D896AA003CFAF2 /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		6BA3065829D8A5CC003CFAF2 /* CardContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentType.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				6B088D2D29D32DD90056B4EF /* CreateCardContentInputCollectionViewCell.swift */,
 				6BA3065A29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift */,
 				6B29BDF629CF52FA00F39932 /* HomeViewController.swift */,
+				6B85569B29E464070004E226 /* MyCardListViewController.swift */,
 				6B85569729E2C10F0004E226 /* CardListCollectionViewCell.swift */,
 				6B088D1F29D040170056B4EF /* TabBarController.swift */,
 				6B088D1929D02EBE0056B4EF /* UIViewController+.swift */,
@@ -251,6 +254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B85569C29E464070004E226 /* MyCardListViewController.swift in Sources */,
 				6B85569629DF03F70004E226 /* User.swift in Sources */,
 				6B29BDC629CE10EB00F39932 /* LoginViewController.swift in Sources */,
 				6B088D2029D040170056B4EF /* TabBarController.swift in Sources */,

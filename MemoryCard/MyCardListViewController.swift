@@ -1,16 +1,16 @@
 //
-//  HomeViewController.swift
+//  MyCardListViewController.swift
 //  MemoryCard
 //
-//  Created by yc on 2023/03/26.
+//  Created by yc on 2023/04/11.
 //
 
 import UIKit
 import SnapKit
 import Then
 
-// MARK: - 홈 뷰컨
-final class HomeViewController: UIViewController {
+// MARK: - 나의 카드 리스트 뷰컨
+final class MyCardListViewController: UIViewController {
     
     // MARK: ========================= < UI 컴포넌트 > =========================
     
@@ -23,59 +23,15 @@ final class HomeViewController: UIViewController {
         )
     }
     
-    /// 스크롤뷰
-    private lazy var scrollView = UIScrollView().then {
-        $0.alwaysBounceVertical = true
-        $0.refreshControl = refreshControl
-    }
-    
-    /// 스크롤뷰 컨텐트뷰
-    private lazy var scrollContentView = UIView()
-    
-    /// 카드 생성 라벨
-    private lazy var createCardLabel = UILabel().then {
-        $0.text = "동해물과백...\n두산이? 마르고닳 도록하느"
-        $0.font = .systemFont(ofSize: 22.0, weight: .bold)
-        $0.numberOfLines = 2
-    }
-    
-    /// 카드 생성 버튼
-    private lazy var createCardButton = OpacityButton().then {
-        $0.setTitle("암기 카드 만들기", for: .normal)
-        $0.style = .fill(backgroundColor: .systemOrange)
-        $0.addTarget(
-            self,
-            action: #selector(didTapCreateCardButton),
-            for: .touchUpInside
-        )
-    }
-    
-    /// 나의 카드 미리보기 리스트
-    private lazy var myCardListPreviewLabel = UILabel().then {
-        $0.text = "나의 카드"
-        $0.font = .systemFont(ofSize: 18.0, weight: .semibold)
-    }
-    
-    /// 나의 카드 더보기 버튼
-    private lazy var myCardListPreviewMoreButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-        $0.contentHorizontalAlignment = .right
-        $0.tintColor = .label
-        $0.addTarget(
-            self,
-            action: #selector(didTapMyCardListPreviewMoreButton),
-            for: .touchUpInside
-        )
-    }
-    
     /// 나의 카드 미리보기 콜랙션 뷰 레이아웃
     private lazy var homeMyCardListPreviewCollectionViewFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .horizontal
+        $0.scrollDirection = .vertical
     }
     
     /// 나의 카드 미리보기 콜랙션 뷰
     private lazy var homeMyCardListPreviewCollectionView = UICollectionView(frame: .zero, collectionViewLayout: homeMyCardListPreviewCollectionViewFlowLayout).then {
-        $0.alwaysBounceHorizontal = true
+        $0.refreshControl = refreshControl
+        $0.alwaysBounceVertical = true
         $0.showsHorizontalScrollIndicator = false
         $0.register(
             CardListCollectionViewCell.self,
@@ -89,27 +45,34 @@ final class HomeViewController: UIViewController {
     
     // MARK: ========================= < 프로퍼티 > =========================
     
-    private var cardZipList = [CardZip]() // 카드 집 리스트
+    var cardZipList: [CardZip] // 카드 집 리스트
     
     // MARK: ========================= </ 프로퍼티 > ========================
-
+    
+    // MARK: ========================= < init > =========================
+    init(cardZipList: [CardZip]) {
+        self.cardZipList = cardZipList
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    // MARK: ========================= </ init > ========================
 }
 
 // MARK: - 라이프 사이클
-extension HomeViewController {
+extension MyCardListViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground // 배경색 설정
         
         setupNavigationBar()    // 내비게이션 설정
         setupLayout()           // 레이아웃 설정
-        
-        
-        fetchCardZip()          // 카드 집 불러오기
     }
 }
 
-private extension HomeViewController {
+private extension MyCardListViewController {
     
     /// 카드 집 불러오는 함수
     ///
@@ -156,26 +119,7 @@ private extension HomeViewController {
 }
 
 // MARK: - UI 이벤트
-private extension HomeViewController {
-    
-    /// 카드 생성 버튼을 눌렀을 때
-    /// - Parameter sender: 카드 생성 버튼
-    @objc func didTapCreateCardButton(_ sender: UIButton) {
-        let createCardIntroVC = CreateCardIntroViewController()                                 // 카드 생성 뷰컨
-        let createCardIntroNVC = UINavigationController(rootViewController: createCardIntroVC)  // 카드 생성 NVC
-        
-        createCardIntroNVC.modalPresentationStyle = .fullScreen                                 // 풀스크린
-        present(createCardIntroNVC, animated: true)                                             // 카드 뷰컨 띄우기
-    }
-    
-    /// 나의 카드 더보기 버튼을 눌렀을 때
-    /// - Parameter sender: 나의 카드 더보기 버튼
-    @objc func didTapMyCardListPreviewMoreButton(_ sender: UIButton) {
-        // TODO: - 나의 카드 더보기 버튼 구현
-        let myCardListVC = MyCardListViewController(cardZipList: cardZipList)
-        
-        navigationController?.pushViewController(myCardListVC, animated: true)
-    }
+private extension MyCardListViewController {
     
     /// 리프레시 컨트롤 시작 함수
     /// - Parameter sender: 리프레시 컨트롤
@@ -191,15 +135,15 @@ private extension HomeViewController {
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension HomeViewController: UICollectionViewDelegateFlowLayout {
+extension MyCardListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - CGFloat(Constant.defaultInset * 3)) / 2.0 // 셀 너비
-        let height = collectionView.frame.height                                            // 셀 높이
+        let height = 120.0                                            // 셀 높이
         return CGSize(width: width, height: height)                                         // 셀 사이즈
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let edgeInset = CGFloat(Constant.defaultInset)                                  // 셀 모서리 여백
-        return UIEdgeInsets(top: 0.0, left: edgeInset, bottom: 0.0, right: edgeInset)   // 죄우 여백
+        return UIEdgeInsets(top: edgeInset, left: edgeInset, bottom: edgeInset, right: edgeInset)   // 죄우 여백
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CGFloat(Constant.defaultInset / 2.0)
@@ -207,7 +151,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - UICollectionViewDataSource
-extension HomeViewController: UICollectionViewDataSource {
+extension MyCardListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cardZipList.count
     }
@@ -228,71 +172,25 @@ extension HomeViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UI 레이아웃
-private extension HomeViewController {
+private extension MyCardListViewController {
     
     /// 내비게이션 바 설정
     func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "star"),
-            style: .plain,
-            target: self,
-            action: nil
-        )
-        
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
+        navigationItem.title = "나의 카드"
+        navigationController?.navigationBar.topItem?.backButtonTitle = ""
     }
     
     /// 레이아웃 설정
     func setupLayout() {
-        
-        view.addSubview(scrollView)
-        
-        scrollView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        scrollView.addSubview(scrollContentView)
-        
-        scrollContentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-            $0.width.equalToSuperview()
-        }
-        
         [
-            createCardLabel,
-            createCardButton,
-            myCardListPreviewLabel,
-            myCardListPreviewMoreButton,
             homeMyCardListPreviewCollectionView
         ].forEach {
-            scrollContentView.addSubview($0)
+            view.addSubview($0)
         }
         
-        createCardLabel.snp.makeConstraints {
-            $0.leading.top.trailing.equalToSuperview().inset(Constant.defaultInset)
-        }
-        createCardButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
-            $0.top.equalTo(createCardLabel.snp.bottom).offset(Constant.defaultInset)
-            $0.height.equalTo(48.0)
-        }
-        myCardListPreviewLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(Constant.defaultInset)
-            $0.top.equalTo(createCardButton.snp.bottom).offset(Constant.defaultInset * 2)
-        }
-        myCardListPreviewMoreButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(Constant.defaultInset)
-            $0.top.bottom.equalTo(myCardListPreviewLabel)
-            $0.leading.equalTo(myCardListPreviewLabel.snp.leading)
-        }
         homeMyCardListPreviewCollectionView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(myCardListPreviewLabel.snp.bottom).offset(Constant.defaultInset)
-            $0.height.equalTo(120.0)
-            $0.bottom.equalToSuperview()
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
