@@ -148,6 +148,18 @@ extension MyCardListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CGFloat(Constant.defaultInset / 2.0)
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        
+        // 셀이 눌렸을 때, 살짝 줄어들었다가 다시 돌아오는 애니메이션
+        UIView.animate(withDuration: 0.05, animations: {
+            cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)   // 사이즈 줄이기
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.05, animations: {
+                cell.transform = CGAffineTransform.identity             // 사이즈 복구
+            })
+        })
+    }
 }
 
 // MARK: - UICollectionViewDataSource

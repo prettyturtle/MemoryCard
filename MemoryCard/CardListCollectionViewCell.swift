@@ -36,6 +36,22 @@ final class CardListCollectionViewCell: UICollectionViewCell {
     // MARK: ========================= </ 프로퍼티 > ========================
 }
 
+// MARK: - 재정의
+extension CardListCollectionViewCell {
+    override var isHighlighted: Bool {
+        didSet {
+            // Highlighted 상태일 때, 살짝 줄어드는 애니메이션
+            UIView.animate(withDuration: 0.05) {
+                if self.isHighlighted {
+                    self.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)   // 사이즈 줄이기
+                } else {
+                    self.transform = .identity                                  // 사이즈 복구
+                }
+            }
+        }
+    }
+}
+
 // MARK: - 로직
 extension CardListCollectionViewCell {
     /// 데이터 UI 적용
