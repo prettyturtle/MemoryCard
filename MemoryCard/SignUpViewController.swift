@@ -145,19 +145,17 @@ private extension SignUpViewController {
     /// 회원가입 버튼을 눌렀을 때
     /// - Parameter sender: 회원가입 버튼
     @objc func didTapSignUpButton(_ sender: UIButton) {
-        IndicatorManager.shared.start()                                     // 로딩 인디케이터 시작
-        
         guard let email = emailTextField.text,
               let password = passwordTextField.text else {                  // 이메일, 비밀번호 옵셔널 해제
-            IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
             return                                                          // 이메일, 비밀번호가 nil일 때
         }
         
         guard !email.isEmpty, !password.isEmpty else {                      // 이메일, 비밀번호가 공백이 아닌지 확인
-            IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
                                                                             // TODO: - 이메일, 비밀번호가 공백일 때 처리
             return                                                          // 이메일, 비밀번호가 공백일 때
         }
+        
+        IndicatorManager.shared.start()                                     // 로딩 인디케이터 시작
         
         let userInput = (email, password)                                   // 유저가 입력한 이메일, 비밀번호
         

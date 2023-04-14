@@ -96,8 +96,6 @@ private extension LoginViewController {
     /// 로그인 버튼을 눌렀을 때
     /// - Parameter sender: 로그인 버튼
     @objc func didTapLoginButton(_ sender: UIButton) {
-        IndicatorManager.shared.start()                                     // 로딩 인디케이터 시작
-        
         guard let email = emailTextField.text,
               let password = passwordTextField.text else {                  // 이메일, 비밀번호 옵셔널 해제
             return                                                          // 이메일, 비밀번호가 nil일 때
@@ -107,6 +105,8 @@ private extension LoginViewController {
                                                                             // TODO: - 이메일, 비밀번호가 공백일 때 처리
             return                                                          // 이메일, 비밀번호가 공백일 때
         }
+        
+        IndicatorManager.shared.start()                                     // 로딩 인디케이터 시작
         
         let userInput = (email, password)                                   // 유저가 입력한 이메일, 비밀번호
         
