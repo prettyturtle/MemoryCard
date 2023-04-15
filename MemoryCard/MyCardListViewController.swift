@@ -159,6 +159,12 @@ extension MyCardListViewController: UICollectionViewDelegateFlowLayout {
                 cell.transform = CGAffineTransform.identity             // 사이즈 복구
             })
         })
+        
+        let selectedCardZip = cardZipList[indexPath.item]
+        let rootVC = CardStudyViewController(cardZip: selectedCardZip)
+        let cardStudyVC = UINavigationController(rootViewController: rootVC)
+        cardStudyVC.modalPresentationStyle = .fullScreen
+        present(cardStudyVC, animated: true)
     }
 }
 
