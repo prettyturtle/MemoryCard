@@ -204,6 +204,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CGFloat(Constant.defaultInset / 2.0)
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let vc = CardStudyViewController()
+//        let nvc = UINavigationController(rootViewController: vc)
+//        present(nvc, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
