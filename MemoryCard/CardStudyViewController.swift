@@ -80,6 +80,20 @@ extension CardStudyViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CGFloat(Constant.defaultInset * 2)
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CardStudyCollectionViewCell else { return }
+        
+        // 셀이 눌렸을 때, 살짝 줄어들었다가 다시 돌아오는 애니메이션
+        UIView.animate(withDuration: 0.05, animations: {
+            cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)   // 사이즈 줄이기
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.05, animations: {
+                cell.transform = CGAffineTransform.identity             // 사이즈 복구
+            })
+        })
+        
+        cell.rotateCard()
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -96,6 +110,7 @@ extension CardStudyViewController: UICollectionViewDataSource {
         }
         
         cell.card = cardZip.cards[indexPath.item]
+        cell.cardContentType = .front
         cell.setupLayout()
         cell.setupView()
         
@@ -136,7 +151,7 @@ private extension CardStudyViewController {
         pageControlView.snp.makeConstraints {
             $0.top.equalTo(cardStudyCollectionView.snp.bottom).offset(Constant.defaultInset)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(100.0)
+            $0.height.equalTo(120.0)
         }
     }
 }

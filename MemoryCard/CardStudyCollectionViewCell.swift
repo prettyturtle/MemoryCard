@@ -21,6 +21,31 @@ final class CardStudyCollectionViewCell: UICollectionViewCell {
     }
     
     var card: Card?
+    var cardContentType: CardContentType?
+    
+    func rotateCard() {
+        var animationOption: UIView.AnimationOptions
+        
+        switch cardContentType {
+        case .front:
+            cardContentLabel.text = card?.back.content
+            cardContentType = .back
+            animationOption = .transitionFlipFromRight
+        case .back:
+            cardContentLabel.text = card?.front.content
+            cardContentType = .front
+            animationOption = .transitionFlipFromLeft
+        case .none:
+            return
+        }
+        
+        UIView.transition(
+            with: self,
+            duration: 0.3,
+            options: animationOption,
+            animations: nil
+        )
+    }
     
     func setupView() {
         cardContentLabel.text = card?.front.content
