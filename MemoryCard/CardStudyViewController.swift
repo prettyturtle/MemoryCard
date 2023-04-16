@@ -12,6 +12,11 @@ import Then
 // MARK: - 카드 공부 뷰컨
 final class CardStudyViewController: UIViewController {
     
+    enum CardScrollDirection {
+        case next
+        case prev
+    }
+    
     // MARK: ========================= < UI 컴포넌트 > =========================
     
     private lazy var cardStudyCollectionViewFlowLayout = UICollectionViewFlowLayout().then {
@@ -28,8 +33,43 @@ final class CardStudyViewController: UIViewController {
         $0.delegate = self
     }
     
-    private lazy var pageControlView = UIView().then {
+    private lazy var bottomTabView = UIView().then {
         $0.backgroundColor = .secondarySystemBackground
+    }
+    
+    private lazy var pageControlView = UIView()
+    
+    private lazy var prevCardButton = UIButton().then {
+        $0.contentHorizontalAlignment = .fill
+        $0.contentVerticalAlignment = .fill
+        $0.setImage(UIImage(systemName: "backward.fill"), for: .normal)
+        $0.addTarget(
+            self,
+            action: #selector(didTapPrevNextCardButton),
+            for: .touchUpInside
+        )
+    }
+    
+    private lazy var playAutoButton = UIButton().then {
+        $0.contentHorizontalAlignment = .fill
+        $0.contentVerticalAlignment = .fill
+        $0.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        $0.addTarget(
+            self,
+            action: #selector(didTapPlayAutoButton),
+            for: .touchUpInside
+        )
+    }
+    
+    private lazy var nextCardButton = UIButton().then {
+        $0.contentHorizontalAlignment = .fill
+        $0.contentVerticalAlignment = .fill
+        $0.setImage(UIImage(systemName: "forward.fill"), for: .normal)
+        $0.addTarget(
+            self,
+            action: #selector(didTapPrevNextCardButton),
+            for: .touchUpInside
+        )
     }
     
     // MARK: ========================= </ UI 컴포넌트 > ========================
@@ -38,6 +78,9 @@ final class CardStudyViewController: UIViewController {
     // MARK: ========================= < 프로퍼티 > =========================
     
     private let cardZip: CardZip
+    private var currentCardIdx = 0
+    private var isAuto = false
+    private var autoHandler: DispatchWorkItem?
     
     // MARK: ========================= </ 프로퍼티 > ========================
     
@@ -80,6 +123,20 @@ extension CardStudyViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return CGFloat(Constant.defaultInset * 2)
     }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        var visibleRect = CGRect() // 현재 스크롤 위치를 나타내는 네모
+        
+        visibleRect.origin = cardStudyCollectionView.contentOffset           // 네모의 좌측 상단(origin) 위치 잡기, collectionView의 contentView의 위치
+        visibleRect.size = cardStudyCollectionView.bounds.size               // 네모의 사이즈 잡기, collectionView의 사이즈
+        
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)    // 네모의 중심 구하기
+        
+        guard let indexPath = cardStudyCollectionView.indexPathForItem(at: visiblePoint) else { // 네모의 중심이 포함된 셀의 인덱스
+            return
+        }
+        
+        currentCardIdx = indexPath.item // 현재 인덱스에 할당
+    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardStudyCollectionViewCell else { return }
         
@@ -118,8 +175,87 @@ extension CardStudyViewController: UICollectionViewDataSource {
     }
 }
 
+private extension CardStudyViewController {
+    func scrollToCard(direction: CardScrollDirection) {
+        switch direction {
+        case .prev:
+            if currentCardIdx > 0 {
+                currentCardIdx -= 1
+                
+                let prevIndexPath = IndexPath(item: currentCardIdx, section: 0)
+                
+                cardStudyCollectionView.scrollToItem(at: prevIndexPath, at: .left, animated: true)
+            }
+        case .next:
+            if currentCardIdx < cardZip.cards.count - 1 {
+                currentCardIdx += 1
+                
+                let nextIndexPath = IndexPath(item: currentCardIdx, section: 0)
+                
+                cardStudyCollectionView.scrollToItem(at: nextIndexPath, at: .right, animated: true)
+            }
+        }
+    }
+    
+    func autoScroll() {
+        guard let autoHandler = autoHandler else {
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: autoHandler)
+    }
+}
+
 // MARK: - UI 이벤트
 private extension CardStudyViewController {
+    @objc func didTapPlayAutoButton(_ sender: UIButton) {
+        isAuto.toggle()
+        
+        if isAuto {
+            sender.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            
+            autoHandler = DispatchWorkItem(block: {
+                if !self.isAuto { return }
+                
+                let currentIndexPath = IndexPath(item: self.currentCardIdx, section: 0)
+                
+                guard let cell = self.cardStudyCollectionView.cellForItem(at: currentIndexPath) as? CardStudyCollectionViewCell else {
+                    return
+                }
+                
+                cell.rotateCard()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    if !self.isAuto { return }
+                    
+                    self.scrollToCard(direction: .next)
+                    self.autoScroll()
+                }
+            })
+            
+            autoScroll()
+        } else {
+            sender.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            
+            autoHandler?.cancel()
+        }
+    }
+    
+    @objc func didTapPrevNextCardButton(_ sender: UIButton) {
+        var direction: CardScrollDirection
+        
+        switch sender {
+        case prevCardButton:
+            direction = .prev
+        case nextCardButton:
+            direction = .next
+        default:
+            return
+        }
+        
+        scrollToCard(direction: direction)
+    }
+    
     @objc func didTapDismissButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true)
     }
@@ -138,6 +274,7 @@ private extension CardStudyViewController {
     func setupLayout() {
         [
             cardStudyCollectionView,
+            bottomTabView,
             pageControlView
         ].forEach {
             view.addSubview($0)
@@ -148,10 +285,40 @@ private extension CardStudyViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
-        pageControlView.snp.makeConstraints {
+        bottomTabView.snp.makeConstraints {
             $0.top.equalTo(cardStudyCollectionView.snp.bottom).offset(Constant.defaultInset)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(120.0)
+        }
+        
+        pageControlView.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(bottomTabView)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        [
+            prevCardButton,
+            playAutoButton,
+            nextCardButton
+        ].forEach {
+            pageControlView.addSubview($0)
+        }
+        
+        playAutoButton.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(40.0)
+        }
+        
+        prevCardButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalTo(playAutoButton.snp.leading).offset(-Constant.defaultInset * 2)
+            $0.size.equalTo(40.0)
+        }
+        
+        nextCardButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(playAutoButton.snp.trailing).offset(Constant.defaultInset * 2)
+            $0.size.equalTo(40.0)
         }
     }
 }
