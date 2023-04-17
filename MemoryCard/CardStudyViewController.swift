@@ -33,6 +33,8 @@ final class CardStudyViewController: UIViewController {
         $0.delegate = self
     }
     
+    private lazy var autoProgressView = UIProgressView()
+    
     private lazy var bottomTabView = UIView().then {
         $0.backgroundColor = .secondarySystemBackground
     }
@@ -81,6 +83,8 @@ final class CardStudyViewController: UIViewController {
     private var currentCardIdx = 0
     private var isAuto = false
     private var autoHandler: DispatchWorkItem?
+    private var autoTimer: Timer?
+    private var autoProgress: Float = 0.0
     
     // MARK: ========================= </ 프로퍼티 > ========================
     
@@ -202,12 +206,25 @@ private extension CardStudyViewController {
             return
         }
         
+        autoProgressView.progressTintColor = .systemOrange
+
+        autoProgress = 0.0
+        autoProgressView.setProgress(0.0, animated: false)
+        
+        autoTimer?.invalidate()
+        
+        autoTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(beginTimer), userInfo: nil, repeats: true)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: autoHandler)
     }
 }
 
 // MARK: - UI 이벤트
 private extension CardStudyViewController {
+    @objc func beginTimer() {
+        autoProgress += 1.0
+        autoProgressView.setProgress(autoProgress / 400.0, animated: true)
+    }
     @objc func didTapPlayAutoButton(_ sender: UIButton) {
         isAuto.toggle()
         
@@ -224,6 +241,12 @@ private extension CardStudyViewController {
                 }
                 
                 cell.rotateCard()
+                self.autoProgressView.progressTintColor = .systemRed
+                
+                if self.currentCardIdx == self.cardZip.cards.count - 1 {
+                    // TODO: - 자동 재생 끝났을 때 처리
+                    return
+                }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     if !self.isAuto { return }
@@ -238,6 +261,10 @@ private extension CardStudyViewController {
             sender.setImage(UIImage(systemName: "play.fill"), for: .normal)
             
             autoHandler?.cancel()
+            autoTimer?.invalidate()
+            autoTimer = nil
+            autoProgress = 0.0
+            autoProgressView.setProgress(0.0, animated: true)
         }
     }
     
@@ -297,11 +324,17 @@ private extension CardStudyViewController {
         }
         
         [
+            autoProgressView,
             prevCardButton,
             playAutoButton,
             nextCardButton
         ].forEach {
             pageControlView.addSubview($0)
+        }
+        
+        autoProgressView.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview()
+            $0.height.equalTo(1.0)
         }
         
         playAutoButton.snp.makeConstraints {
