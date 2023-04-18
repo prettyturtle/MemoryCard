@@ -85,6 +85,7 @@ final class CardStudyViewController: UIViewController {
     private var autoHandler: DispatchWorkItem?
     private var autoTimer: Timer?
     private var autoProgress: Float = 0.0
+    private var currentAutoPlaySpeed = 3
     
     // MARK: ========================= </ 프로퍼티 > ========================
     
@@ -229,7 +230,7 @@ private extension CardStudyViewController {
             repeats: true
         )
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: autoHandler)
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double(self.currentAutoPlaySpeed), execute: autoHandler)
     }
     
     func stopAutoScroll() {
@@ -248,7 +249,7 @@ private extension CardStudyViewController {
 private extension CardStudyViewController {
     @objc func beginTimer() {
         autoProgress += 1.0
-        autoProgressView.setProgress(autoProgress / 400.0, animated: true)
+        autoProgressView.setProgress(autoProgress / (Float(currentAutoPlaySpeed) * 200.0), animated: true)
     }
     @objc func didTapPlayAutoButton(_ sender: UIButton) {
         isAuto.toggle()
@@ -266,7 +267,7 @@ private extension CardStudyViewController {
                 cell.rotateCard()
                 self.autoProgressView.progressTintColor = .systemRed
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(self.currentAutoPlaySpeed)) {
                     if !self.isAuto { return }
                     
                     if self.currentCardIdx == self.cardZip.cards.count - 1 {
@@ -301,6 +302,57 @@ private extension CardStudyViewController {
         scrollToCard(direction: direction)
     }
     
+    @objc func didTapOptionSettingButton(_ sender: UIBarButtonItem) {
+        let optionSettingAlertController = UIAlertController(
+            title: "옵션",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        let cancelAction = UIAlertAction(title: "닫기", style: .cancel)
+        let autoPlaySpeed = UIAlertAction(title: "자동 재생 속도", style: .default) { [weak self] _ in
+            let autoPlaySpeedAlertController = UIAlertController(
+                title: "자동 재생 속도",
+                message: nil,
+                preferredStyle: .actionSheet
+            )
+            
+            let speed1 = UIAlertAction(title: self?.currentAutoPlaySpeed == 1 ? "✓ 1초" : "1초", style: .default) { _ in
+                self?.currentAutoPlaySpeed = 1
+            }
+            let speed3 = UIAlertAction(title: self?.currentAutoPlaySpeed == 3 ? "✓ 3초" : "3초", style: .default) { _ in
+                self?.currentAutoPlaySpeed = 3
+            }
+            let speed5 = UIAlertAction(title: self?.currentAutoPlaySpeed == 5 ? "✓ 5초" : "5초", style: .default) { _ in
+                self?.currentAutoPlaySpeed = 5
+            }
+            let speed7 = UIAlertAction(title: self?.currentAutoPlaySpeed == 7 ? "✓ 7초" : "7초", style: .default) { _ in
+                self?.currentAutoPlaySpeed = 7
+            }
+            
+            [
+                cancelAction,
+                speed1,
+                speed3,
+                speed5,
+                speed7
+            ].forEach {
+                autoPlaySpeedAlertController.addAction($0)
+            }
+            
+            self?.present(autoPlaySpeedAlertController, animated: true)
+        }
+        
+        [
+            cancelAction,
+            autoPlaySpeed
+        ].forEach {
+            optionSettingAlertController.addAction($0)
+        }
+        
+        present(optionSettingAlertController, animated: true)
+    }
+    
     @objc func didTapDismissButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true)
     }
@@ -313,6 +365,13 @@ private extension CardStudyViewController {
     func setupNavigationBar() {
         navigationItem.title = cardZip.folderName
         navigationItem.addDismissButton(self, action: #selector(didTapDismissButton))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "ellipsis"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapOptionSettingButton)
+        )
     }
     
     /// 레이아웃 설정
