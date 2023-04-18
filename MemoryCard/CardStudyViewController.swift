@@ -317,28 +317,18 @@ private extension CardStudyViewController {
                 preferredStyle: .actionSheet
             )
             
-            let speed1 = UIAlertAction(title: self?.currentAutoPlaySpeed == 1 ? "✓ 1초" : "1초", style: .default) { _ in
-                self?.currentAutoPlaySpeed = 1
-            }
-            let speed3 = UIAlertAction(title: self?.currentAutoPlaySpeed == 3 ? "✓ 3초" : "3초", style: .default) { _ in
-                self?.currentAutoPlaySpeed = 3
-            }
-            let speed5 = UIAlertAction(title: self?.currentAutoPlaySpeed == 5 ? "✓ 5초" : "5초", style: .default) { _ in
-                self?.currentAutoPlaySpeed = 5
-            }
-            let speed7 = UIAlertAction(title: self?.currentAutoPlaySpeed == 7 ? "✓ 7초" : "7초", style: .default) { _ in
-                self?.currentAutoPlaySpeed = 7
+            [1, 3, 5, 7].forEach { speed in
+                let speedAction = UIAlertAction(
+                    title: self?.currentAutoPlaySpeed == speed ? "✓ \(speed)초" : "\(speed)초",
+                    style: .default
+                ) { _ in
+                    self?.currentAutoPlaySpeed = speed
+                }
+                
+                autoPlaySpeedAlertController.addAction(speedAction)
             }
             
-            [
-                cancelAction,
-                speed1,
-                speed3,
-                speed5,
-                speed7
-            ].forEach {
-                autoPlaySpeedAlertController.addAction($0)
-            }
+            autoPlaySpeedAlertController.addAction(cancelAction)
             
             self?.present(autoPlaySpeedAlertController, animated: true)
         }
