@@ -141,6 +141,11 @@ extension CardStudyViewController: UICollectionViewDelegateFlowLayout {
         
         currentCardIdx = indexPath.item // 현재 인덱스에 할당
     }
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        stopAutoScroll()
+        isAuto = false
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CardStudyCollectionViewCell else { return }
         
@@ -179,6 +184,7 @@ extension CardStudyViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - 로직
 private extension CardStudyViewController {
     func scrollToCard(direction: CardScrollDirection) {
         switch direction {
@@ -201,21 +207,40 @@ private extension CardStudyViewController {
         }
     }
     
-    func autoScroll() {
+    func startAutoScroll() {
         guard let autoHandler = autoHandler else {
             return
         }
         
+        playAutoButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        
         autoProgressView.progressTintColor = .systemOrange
-
+        
         autoProgress = 0.0
         autoProgressView.setProgress(0.0, animated: false)
         
         autoTimer?.invalidate()
         
-        autoTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(beginTimer), userInfo: nil, repeats: true)
+        autoTimer = Timer.scheduledTimer(
+            timeInterval: 0.01,
+            target: self,
+            selector: #selector(beginTimer),
+            userInfo: nil,
+            repeats: true
+        )
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: autoHandler)
+    }
+    
+    func stopAutoScroll() {
+        playAutoButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        
+        autoTimer?.invalidate()
+        autoHandler?.cancel()
+        autoTimer = nil
+        
+        autoProgress = 0.0
+        autoProgressView.setProgress(0.0, animated: true)
     }
 }
 
@@ -229,8 +254,6 @@ private extension CardStudyViewController {
         isAuto.toggle()
         
         if isAuto {
-            sender.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            
             autoHandler = DispatchWorkItem(block: {
                 if !self.isAuto { return }
                 
@@ -243,28 +266,23 @@ private extension CardStudyViewController {
                 cell.rotateCard()
                 self.autoProgressView.progressTintColor = .systemRed
                 
-                if self.currentCardIdx == self.cardZip.cards.count - 1 {
-                    // TODO: - 자동 재생 끝났을 때 처리
-                    return
-                }
-                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     if !self.isAuto { return }
                     
+                    if self.currentCardIdx == self.cardZip.cards.count - 1 {
+                        self.stopAutoScroll()
+                        self.isAuto = false
+                        return
+                    }
+                    
                     self.scrollToCard(direction: .next)
-                    self.autoScroll()
+                    self.startAutoScroll()
                 }
             })
             
-            autoScroll()
+            startAutoScroll()
         } else {
-            sender.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            
-            autoHandler?.cancel()
-            autoTimer?.invalidate()
-            autoTimer = nil
-            autoProgress = 0.0
-            autoProgressView.setProgress(0.0, animated: true)
+            stopAutoScroll()
         }
     }
     
