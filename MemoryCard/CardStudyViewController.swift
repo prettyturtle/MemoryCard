@@ -288,6 +288,11 @@ private extension CardStudyViewController {
     }
     
     @objc func didTapPrevNextCardButton(_ sender: UIButton) {
+        if isAuto {
+            stopAutoScroll()
+            isAuto = false
+        }
+        
         var direction: CardScrollDirection
         
         switch sender {
