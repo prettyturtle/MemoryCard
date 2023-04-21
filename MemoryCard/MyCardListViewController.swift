@@ -46,6 +46,7 @@ final class MyCardListViewController: UIViewController {
     // MARK: ========================= < 프로퍼티 > =========================
     
     var cardZipList: [CardZip] // 카드 집 리스트
+    private var isModify = false // 수정중 플래그
     
     // MARK: ========================= </ 프로퍼티 > ========================
     
@@ -132,6 +133,20 @@ private extension MyCardListViewController {
             sender.endRefreshing() // 리프레시 컨트롤 종료
         }
     }
+    
+    
+    /// 편집 시작 함수
+    /// - Parameter sender: 편집 바 버튼
+    @objc func didTapModifyButton(_ sender: UIBarButtonItem) {
+        
+        if isModify {
+            sender.title = "편집"
+        } else {
+            sender.title = "완료"
+        }
+        
+        isModify.toggle()
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -197,6 +212,13 @@ private extension MyCardListViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.title = "나의 카드"
         navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "편집",
+            style: .plain,
+            target: self,
+            action: #selector(didTapModifyButton)
+        )
     }
     
     /// 레이아웃 설정
