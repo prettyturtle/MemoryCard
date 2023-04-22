@@ -46,7 +46,7 @@ final class MyCardListViewController: UIViewController {
     // MARK: ========================= < 프로퍼티 > =========================
     
     var cardZipList: [CardZip] // 카드 집 리스트
-    private var isModify = false // 수정중 플래그
+    private var isEdit = false // 수정중 플래그
     
     // MARK: ========================= </ 프로퍼티 > ========================
     
@@ -138,14 +138,11 @@ private extension MyCardListViewController {
     /// 편집 시작 함수
     /// - Parameter sender: 편집 바 버튼
     @objc func didTapModifyButton(_ sender: UIBarButtonItem) {
+        isEdit.toggle()
         
-        if isModify {
-            sender.title = "편집"
-        } else {
-            sender.title = "완료"
-        }
+        sender.title = isEdit ? "완료" : "편집"
         
-        isModify.toggle()
+        homeMyCardListPreviewCollectionView.refreshControl = isEdit ? nil : refreshControl
     }
 }
 
@@ -175,11 +172,31 @@ extension MyCardListViewController: UICollectionViewDelegateFlowLayout {
             })
         })
         
-        let selectedCardZip = cardZipList[indexPath.item]
-        let rootVC = CardStudyViewController(cardZip: selectedCardZip)
-        let cardStudyVC = UINavigationController(rootViewController: rootVC)
-        cardStudyVC.modalPresentationStyle = .fullScreen
-        present(cardStudyVC, animated: true)
+        if isEdit { // 편집 모드일 때
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            let modifyAction = UIAlertAction(title: "수정", style: .default)
+            let deleteAction = UIAlertAction(title: "삭제", style: .destructive)
+            let cancelAction = UIAlertAction(title: "닫기", style: .cancel)
+            
+            [
+                modifyAction,
+                deleteAction,
+                cancelAction
+            ].forEach {
+                alertController.addAction($0)
+            }
+            
+            present(alertController, animated: true)
+        } else {
+            let selectedCardZip = cardZipList[indexPath.item]
+            let rootVC = CardStudyViewController(cardZip: selectedCardZip)
+            let cardStudyVC = UINavigationController(rootViewController: rootVC)
+            
+            cardStudyVC.modalPresentationStyle = .fullScreen
+            
+            present(cardStudyVC, animated: true)
+        }
     }
 }
 
