@@ -150,6 +150,23 @@ final class DBManager {
                 }
             }
     }
+    
+    
+    /// 데이터 삭제
+    /// - Parameters:
+    ///   - collectionType: 삭제할 콜렉션
+    ///   - documentName: 삭제할 도큐먼트
+    ///   - completion: 완료 컴플리션
+    func deleteDocument(
+        _ collectionType: DBCollectionType,
+        documentName: String,
+        completion: @escaping (Error?) -> Void
+    ) {
+        db
+            .collection(collectionType.collectionName)
+            .document(documentName)
+            .delete(completion: completion)
+    }
 }
 
 /// DB 콜렉션 타입

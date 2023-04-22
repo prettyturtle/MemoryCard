@@ -175,14 +175,48 @@ extension MyCardListViewController: UICollectionViewDelegateFlowLayout {
         if isEdit { // 편집 모드일 때
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
+            let closeAction = UIAlertAction(title: "닫기", style: .cancel)
             let modifyAction = UIAlertAction(title: "수정", style: .default)
-            let deleteAction = UIAlertAction(title: "삭제", style: .destructive)
-            let cancelAction = UIAlertAction(title: "닫기", style: .cancel)
+            let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+                
+                let deleteAlertController = UIAlertController(
+                    title: "정말 삭제할까요?",
+                    message: "삭제하면 다시 복구할 수 없어요!",
+                    preferredStyle: .alert
+                )
+                
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                let okAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+                    let deletedCard = self.cardZipList[indexPath.item]
+                    
+                    DBManager.shared.deleteDocument(.card, documentName: deletedCard.folderName) { error in
+                        if let error = error {
+                            print("💩 카드 삭제 실패 : \(error.localizedDescription)")
+                            return
+                        }
+                        
+                        self.cardZipList = []
+                        self.fetchCardZip()
+                    }
+                }
+                
+                [
+                    cancelAction,
+                    okAction
+                ].forEach {
+                    deleteAlertController.addAction($0)
+                }
+                
+                self.present(deleteAlertController, animated: true)
+            }
             
             [
                 modifyAction,
                 deleteAction,
-                cancelAction
+                closeAction
             ].forEach {
                 alertController.addAction($0)
             }
