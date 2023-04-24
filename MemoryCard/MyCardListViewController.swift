@@ -121,7 +121,7 @@ private extension MyCardListViewController {
     
     /// 카드집 삭제 함수
     func deleteCard(_ cardZip: CardZip) {
-        DBManager.shared.deleteDocument(.card, documentName: cardZip.folderName) { error in
+        DBManager.shared.deleteDocument(.card, documentName: cardZip.id) { error in
             if let error = error {
                 print("💩 카드 삭제 실패 : \(error.localizedDescription)")
                 return

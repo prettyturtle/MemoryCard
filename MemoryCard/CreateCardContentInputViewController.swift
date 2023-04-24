@@ -146,7 +146,7 @@ private extension CreateCardContentInputViewController {
         let cardZip = CardZip(folderName: folderName, cards: filteredCardList, mIdx: mIdx)  // 카드 집 생성
         
         // DB 저장 시작
-        DBManager.shared.save(.card, documentName: folderName, data: cardZip) { result in
+        DBManager.shared.save(.card, documentName: cardZip.id, data: cardZip) { result in
             // DB 저장 완료
             IndicatorManager.shared.stop()                                      // 인디케이터 중지
             
