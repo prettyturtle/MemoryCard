@@ -45,21 +45,10 @@ final class MyCardListViewController: UIViewController {
     
     // MARK: ========================= < 프로퍼티 > =========================
     
-    var cardZipList: [CardZip] // 카드 집 리스트
+    private var cardZipList = [CardZip]() // 카드 집 리스트
     private var isEdit = false // 수정중 플래그
     
     // MARK: ========================= </ 프로퍼티 > ========================
-    
-    // MARK: ========================= < init > =========================
-    init(cardZipList: [CardZip]) {
-        self.cardZipList = cardZipList
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    // MARK: ========================= </ init > ========================
 }
 
 // MARK: - 라이프 사이클
@@ -70,6 +59,8 @@ extension MyCardListViewController {
         
         setupNavigationBar()    // 내비게이션 설정
         setupLayout()           // 레이아웃 설정
+        
+        fetchCardZip()          // 카드 집 불러오기
     }
 }
 
@@ -82,6 +73,8 @@ private extension MyCardListViewController {
     ///
     /// - Parameter completion: 완료 컴플리션
     func fetchCardZip(completion: (() -> Void)? = nil) {
+        IndicatorManager.shared.start() // 인디케이터 시작
+        
         guard let currentUser = AuthManager.shared.getCurrentUser() else { // 현재 유저
             return  // TODO: - 현재 유저가 없을 때 예외처리
         }
@@ -96,6 +89,8 @@ private extension MyCardListViewController {
         ) { [weak self] result in
             // DB에서 카드 집 불러오기 완료
             guard let self = self else { return }
+            
+            IndicatorManager.shared.stop() // 인디케이터 종료
             
             switch result {
             case .success(let cardZip):                         // 불러오기 성공시
@@ -216,6 +211,13 @@ extension MyCardListViewController: UICollectionViewDelegateFlowLayout {
                 .setAction(title: "닫기", style: .cancel)
                 .setAction(title: "수정", style: .default)
                 .setAction(title: "삭제", style: .destructive, handler: deleteHandler)
+                .setAction(title: "MOCK 추가", style: .default, handler: { _ in
+                    for mock in CardZip.mockData {
+                        DBManager.shared.save(.card, documentName: mock.id, data: mock) { result in
+                            print(result)
+                        }
+                    }
+                })
                 .endSet()
             
             // 편집 얼럿 띄우기
@@ -246,7 +248,11 @@ extension MyCardListViewController: UICollectionViewDataSource {
         }
         
         cell.setupLayout()
-        cell.cardZip = cardZipList[indexPath.item]
+        
+        if !cardZipList.isEmpty {
+            cell.cardZip = cardZipList[indexPath.item]
+        }
+        
         cell.setupView()
         
         return cell
@@ -259,7 +265,7 @@ private extension MyCardListViewController {
     /// 내비게이션 바 설정
     func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.title = "나의 카드"
+        navigationItem.title = "카드리스트"
         navigationController?.navigationBar.topItem?.backButtonTitle = ""
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
