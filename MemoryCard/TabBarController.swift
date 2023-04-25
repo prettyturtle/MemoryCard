@@ -9,31 +9,65 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     
-    private let homeVC = UINavigationController(rootViewController: HomeViewController())
+    private let homeVC = UINavigationController(rootViewController: MyCardListViewController())
+    private let createCardTempVC = UIViewController()
+    private let createCardVC = UINavigationController(rootViewController: CreateCardIntroViewController())
     private let myInfoVC = UINavigationController(rootViewController: MyInfoViewController())
+    
+    private lazy var homeVCTabBarItem = UITabBarItem(
+        title: "카드리스트",
+        image: UIImage(systemName: "list.bullet"),
+        selectedImage: nil
+    ).then { $0.tag = 0 }
+    
+    private lazy var createCardVCTabBarItem = UITabBarItem(
+        title: "카드만들기",
+        image: UIImage(systemName: "plus.circle"),
+        selectedImage: nil
+    ).then { $0.tag = 1 }
+    
+    private lazy var myInfoVCTabBarItem = UITabBarItem(
+        title: "설정",
+        image: UIImage(systemName: "gearshape"),
+        selectedImage: nil
+    ).then { $0.tag = 2 }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTabBarItem()
         
+        tabBar.backgroundColor = .secondarySystemBackground
+        
         viewControllers = [
             homeVC,
+            createCardTempVC,
             myInfoVC
         ]
+        
+        delegate = self
     }
     
     private func setupTabBarItem() {
-        homeVC.tabBarItem = UITabBarItem(
-            title: "홈",
-            image: UIImage(systemName: "house"),
-            selectedImage: UIImage(systemName: "house.fill")
-        )
-        
-        myInfoVC.tabBarItem = UITabBarItem(
-            title: "내정보",
-            image: UIImage(systemName: "person"),
-            selectedImage: UIImage(systemName: "person.fill")
-        )
+        homeVC.tabBarItem = homeVCTabBarItem
+        createCardTempVC.tabBarItem = createCardVCTabBarItem
+        myInfoVC.tabBarItem = myInfoVCTabBarItem
+    }
+}
+
+extension TabBarController: UITabBarControllerDelegate {
+    func tabBarController(
+        _ tabBarController: UITabBarController,
+        shouldSelect viewController: UIViewController
+    ) -> Bool {
+        if tabBarController.tabBar.selectedItem?.tag == 1 {
+            
+            createCardVC.modalPresentationStyle = .overFullScreen
+            present(createCardVC, animated: true)
+            
+            return false
+        } else {
+            return true
+        }
     }
 }
