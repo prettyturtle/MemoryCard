@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class TabBarController: UITabBarController {
     
     private let homeVC = UINavigationController(rootViewController: MyCardListViewController())
     private let createCardTempVC = UIViewController()
     private let createCardVC = UINavigationController(rootViewController: CreateCardIntroViewController())
-    private let myInfoVC = UINavigationController(rootViewController: MyInfoViewController())
+    private let myInfoVC = UIHostingController(rootView: MyInfoView())
     
     private lazy var homeVCTabBarItem = UITabBarItem(
         title: "카드리스트",
