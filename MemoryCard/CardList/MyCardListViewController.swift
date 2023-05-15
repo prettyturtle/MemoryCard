@@ -149,9 +149,43 @@ private extension MyCardListViewController {
     @objc func didTapModifyButton(_ sender: UIBarButtonItem) {
         isEdit.toggle()
         
-        sender.title = isEdit ? "완료" : "편집"
+        if isEdit {
+            sender.title = "완료"
+            navigationItem.title = ""
+            homeMyCardListPreviewCollectionView.refreshControl = nil
+        } else {
+            sender.title = "편집"
+            navigationItem.title = "카드리스트"
+            homeMyCardListPreviewCollectionView.refreshControl = refreshControl
+        }
         
-        homeMyCardListPreviewCollectionView.refreshControl = isEdit ? nil : refreshControl
+        homeMyCardListPreviewCollectionView.reloadData()
+    }
+}
+
+// MARK: - CardListCollectionViewCellDelegate
+extension MyCardListViewController: CardListCollectionViewCellDelegate {
+    func didTapEditButton(_ cardZip: CardZip) {
+        print("수정!")
+    }
+    
+    func didTapDeleteButton(_ cardZip: CardZip) {
+        // 삭제 얼럿 정의
+        let deleteAlert = Alert(style: .alert)
+            .setTitle("정말 삭제할까요?")
+            .setMessage("삭제하면 다시 복구할 수 없어요!")
+            .setAction(title: "닫기", style: .cancel)
+            .setAction(title: "삭제", style: .destructive) { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+                
+                self.deleteCard(cardZip) // 카드집 삭제
+            }
+            .endSet()
+        
+        // 삭제 얼럿 띄우기
+        present(deleteAlert, animated: true)
     }
 }
 
@@ -181,48 +215,7 @@ extension MyCardListViewController: UICollectionViewDelegateFlowLayout {
             })
         })
         
-        if isEdit { // 편집 모드일 때
-            // 삭제를 선택했을 때 이벤트
-            let deleteHandler: (UIAlertAction) -> Void = { [weak self] _ in
-                guard let self = self else {
-                    return
-                }
-                
-                // 삭제 얼럿 정의
-                let deleteAlert = Alert(style: .alert)
-                    .setTitle("정말 삭제할까요?")
-                    .setMessage("삭제하면 다시 복구할 수 없어요!")
-                    .setAction(title: "닫기", style: .cancel)
-                    .setAction(title: "삭제", style: .destructive) { _ in
-                        // 삭제할 카드집
-                        let deletedCard = self.cardZipList[indexPath.item]
-                        
-                        // 카드집 삭제
-                        self.deleteCard(deletedCard)
-                    }
-                    .endSet()
-                
-                // 삭제 얼럿 띄우기
-                present(deleteAlert, animated: true)
-            }
-            
-            // 편집 얼럿 정의
-            let editAlert = Alert(style: .actionSheet)
-                .setAction(title: "닫기", style: .cancel)
-                .setAction(title: "수정", style: .default)
-                .setAction(title: "삭제", style: .destructive, handler: deleteHandler)
-                .setAction(title: "MOCK 추가", style: .default, handler: { _ in
-                    for mock in CardZip.mockData {
-                        DBManager.shared.save(.card, documentName: mock.id, data: mock) { result in
-                            print(result)
-                        }
-                    }
-                })
-                .endSet()
-            
-            // 편집 얼럿 띄우기
-            present(editAlert, animated: true)
-        } else {
+        if !isEdit { // 편집 모드가 아닐 때 (일반 탭 -> 학습모드 이동)
             let selectedCardZip = cardZipList[indexPath.item]
             let rootVC = CardStudyViewController(cardZip: selectedCardZip)
             let cardStudyVC = UINavigationController(rootViewController: rootVC)
@@ -247,7 +240,8 @@ extension MyCardListViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.setupLayout()
+        cell.delegate = self
+        cell.setupLayout(isEdit: isEdit)
         
         if !cardZipList.isEmpty {
             cell.cardZip = cardZipList[indexPath.item]
