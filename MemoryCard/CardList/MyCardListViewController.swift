@@ -166,7 +166,15 @@ private extension MyCardListViewController {
 // MARK: - CardListCollectionViewCellDelegate
 extension MyCardListViewController: CardListCollectionViewCellDelegate {
     func didTapEditButton(_ cardZip: CardZip) {
-        print("수정!")
+        
+        let rootVC = CreateCardFolderNameInputViewController()                                  // 카드 생성 VC (이름 입력 VC)
+        let createCardFolderNameInputVC = UINavigationController(rootViewController: rootVC)    // 내비게이션 감싸기
+        
+        rootVC.willEditCardZip = cardZip                                                        // 수정모드
+        createCardFolderNameInputVC.modalPresentationStyle = .fullScreen
+        
+        present(createCardFolderNameInputVC, animated: true)
+        
     }
     
     func didTapDeleteButton(_ cardZip: CardZip) {
@@ -281,49 +289,5 @@ private extension MyCardListViewController {
         homeMyCardListPreviewCollectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
-    }
-}
-
-struct Alert {
-    typealias AlertAction = (title: String, style: UIAlertAction.Style, handler: ((UIAlertAction) -> Void)?)
-    
-    let alertController: UIAlertController
-    
-    init(style: UIAlertController.Style) {
-        self.alertController = UIAlertController(title: nil, message: nil, preferredStyle: style)
-    }
-    
-    func setTitle(_ title: String) -> Self {
-        alertController.title = title
-        
-        return self
-    }
-    
-    func setMessage(_ message: String) -> Self {
-        alertController.message = message
-        
-        return self
-    }
-    
-    func setActions(_ actions: [AlertAction]) -> Self {
-        actions.forEach {
-            let action = UIAlertAction(title: $0.title, style: $0.style, handler: $0.handler)
-            alertController.addAction(action)
-        }
-        
-        return self
-    }
-    
-    func setAction(title: String, style: UIAlertAction.Style, handler: ((UIAlertAction) -> Void)? = nil) -> Self {
-        
-        let action = UIAlertAction(title: title, style: style, handler: handler)
-        
-        alertController.addAction(action)
-        
-        return self
-    }
-    
-    func endSet() -> UIAlertController {
-        return alertController
     }
 }

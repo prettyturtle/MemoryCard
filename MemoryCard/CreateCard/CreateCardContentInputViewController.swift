@@ -72,6 +72,8 @@ final class CreateCardContentInputViewController: UIViewController {
         }
     }
     
+    var willEditCardZip: CardZip? // nil이면 최소 생성, nil이 아니면 수정
+    
     // MARK: ========================= </ 프로퍼티 > =========================
     
     
@@ -94,8 +96,7 @@ extension CreateCardContentInputViewController {
         setupNavigationBar()                        // 내비게이션 바 설정
         setupLayout()                               // 레이아웃 설정
         
-        cardList = [Card.createDefault(id: 0)]      // 첫 카드 생성
-        currentCardIdx = 0                          // 현재 카드 인덱스
+        setupEditMode()                             // 신규/수정 모드 별 분기 세팅
     }
 }
 
@@ -116,6 +117,16 @@ private extension CreateCardContentInputViewController {
         )                                                   // 마지막 셀로 이동
         
         currentCardIdx = newLastIdx                         // 현재 카드 인덱스 업데이트
+    }
+    
+    /// 신규/수정 모드 별 분기 세팅
+    func setupEditMode() {
+        if let willEditCardZip = willEditCardZip {
+            cardList = willEditCardZip.cards
+        } else {
+            cardList = [Card.createDefault(id: 0)]      // 첫 카드 생성
+            currentCardIdx = 0                          // 현재 카드 인덱스
+        }
     }
 }
 
@@ -143,7 +154,22 @@ private extension CreateCardContentInputViewController {
         
         let mIdx = currentUser.uid                                              // 유저 아이디
         
-        let cardZip = CardZip(folderName: folderName, cards: filteredCardList, mIdx: mIdx)  // 카드 집 생성
+        var cardZip: CardZip                        // 저장할 카드집
+        
+        if let willEditCardZip = willEditCardZip {  // 수정모드
+            cardZip = CardZip(
+                id: willEditCardZip.id,
+                folderName: folderName,
+                cards: filteredCardList,
+                mIdx: willEditCardZip.mIdx
+            )   // 카드 집 생성
+        } else {                                    // 신규모드
+            cardZip = CardZip(
+                folderName: folderName,
+                cards: filteredCardList,
+                mIdx: mIdx
+            )   // 카드 집 생성
+        }
         
         // DB 저장 시작
         DBManager.shared.save(.card, documentName: cardZip.id, data: cardZip) { result in

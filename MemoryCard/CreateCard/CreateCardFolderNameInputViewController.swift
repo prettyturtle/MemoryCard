@@ -37,17 +37,37 @@ final class CreateCardFolderNameInputViewController: UIViewController {
         )
     }
     
+    var willEditCardZip: CardZip? // nil이면 최소 생성, nil이 아니면 수정
+}
+
+extension CreateCardFolderNameInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupNavigationBar()
         setupLayout()
+        
+        setupEditMode() // 수정 모드 세팅
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         folderNameTextField.becomeFirstResponder()
+    }
+}
+
+extension CreateCardFolderNameInputViewController {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+}
+
+private extension CreateCardFolderNameInputViewController {
+    func setupEditMode() {
+        if let willEditCardZip = willEditCardZip {
+            folderNameTextField.text = willEditCardZip.folderName
+        }
     }
 }
 
@@ -65,16 +85,11 @@ extension CreateCardFolderNameInputViewController: UITextFieldDelegate {
     }
 }
 
-extension CreateCardFolderNameInputViewController {
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-}
-
 private extension CreateCardFolderNameInputViewController {
     @objc func didTapNextButton(_ sender: UIButton) {
         guard let folderName = folderNameTextField.text else { return }
         let createCardContentInputViewController = CreateCardContentInputViewController(folderName: folderName)
+        createCardContentInputViewController.willEditCardZip = willEditCardZip // 수정모드
         navigationController?.pushViewController(createCardContentInputViewController, animated: true)
     }
     @objc func didTapDismissButton(_ sender: UIBarButtonItem) {
@@ -91,6 +106,16 @@ private extension CreateCardFolderNameInputViewController {
             target: self,
             action: nil
         )
+        
+        // 수정 모드 세팅
+        if let _ = willEditCardZip {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: UIImage(systemName: "xmark"),
+                style: .plain,
+                target: self,
+                action: #selector(didTapDismissButton)
+            )
+        }
     }
     func setupLayout() {
         [
