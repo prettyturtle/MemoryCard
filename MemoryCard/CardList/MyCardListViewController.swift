@@ -62,6 +62,17 @@ extension MyCardListViewController {
         
         fetchCardZip()          // 카드 집 불러오기
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        // 화면을 이탈할 때 수정중이라면, 수정 모드 해제 -> 화면 갱신
+        if isEdit {
+            isEdit = false
+            
+            refreshView(isEdit: isEdit)
+        }
+    }
 }
 
 // MARK: - 로직
@@ -126,6 +137,21 @@ private extension MyCardListViewController {
             self.fetchCardZip()
         }
     }
+    
+    /// 수정 모드인지 여부에 따라 화면 갱신
+    func refreshView(isEdit: Bool) {
+        if isEdit {
+            navigationItem.rightBarButtonItem?.title = "완료"
+            navigationItem.title = ""
+            homeMyCardListPreviewCollectionView.refreshControl = nil
+        } else {
+            navigationItem.rightBarButtonItem?.title = "편집"
+            navigationItem.title = "카드리스트"
+            homeMyCardListPreviewCollectionView.refreshControl = refreshControl
+        }
+        
+        homeMyCardListPreviewCollectionView.reloadData()
+    }
 }
 
 // MARK: - UI 이벤트
@@ -148,18 +174,7 @@ private extension MyCardListViewController {
     /// - Parameter sender: 편집 바 버튼
     @objc func didTapModifyButton(_ sender: UIBarButtonItem) {
         isEdit.toggle()
-        
-        if isEdit {
-            sender.title = "완료"
-            navigationItem.title = ""
-            homeMyCardListPreviewCollectionView.refreshControl = nil
-        } else {
-            sender.title = "편집"
-            navigationItem.title = "카드리스트"
-            homeMyCardListPreviewCollectionView.refreshControl = refreshControl
-        }
-        
-        homeMyCardListPreviewCollectionView.reloadData()
+        refreshView(isEdit: isEdit)
     }
 }
 

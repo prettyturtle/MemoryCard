@@ -64,7 +64,7 @@ extension TabBarController: UITabBarControllerDelegate {
             
             let createCardVC = UINavigationController(rootViewController: CreateCardIntroViewController())
             
-            createCardVC.modalPresentationStyle = .overFullScreen
+            createCardVC.modalPresentationStyle = .fullScreen
             present(createCardVC, animated: true)
             
             return false
