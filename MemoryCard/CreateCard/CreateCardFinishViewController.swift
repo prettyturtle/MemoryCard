@@ -79,7 +79,18 @@ private extension CreateCardFinishViewController {
     /// - Parameter sender: 완료 버튼
     @objc func didTapFinishButton(_ sender: UIButton) {
         dismiss(animated: true)
+        
+        NotificationCenter
+            .default
+            .post(
+                name: .didFinishCreateCard,
+                object: nil
+            )
     }
+}
+
+extension NSNotification.Name {
+    static let didFinishCreateCard = NSNotification.Name("DID_FINISH_CREATE_CARD")
 }
 
 private extension CreateCardFinishViewController {

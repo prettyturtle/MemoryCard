@@ -40,13 +40,20 @@ final class MyCardListViewController: UIViewController {
         $0.dataSource = self
         $0.delegate = self
     }
+    
+    /// 카드가 없을 때 보여주는 이미지 뷰
+    private lazy var emptyImageView = UIImageView().then {
+        $0.image = UIImage(systemName: "tray")
+        $0.tintColor = .placeholderText
+        $0.contentMode = .scaleAspectFit
+    }
     // MARK: ========================= </ UI 컴포넌트 > =========================
     
     
     // MARK: ========================= < 프로퍼티 > =========================
     
-    private var cardZipList = [CardZip]() // 카드 집 리스트
-    private var isEdit = false // 수정중 플래그
+    private var cardZipList = [CardZip]()   // 카드 집 리스트
+    private var isEdit = false              // 수정중 플래그
     
     // MARK: ========================= </ 프로퍼티 > ========================
 }
@@ -61,6 +68,15 @@ extension MyCardListViewController {
         setupLayout()           // 레이아웃 설정
         
         fetchCardZip()          // 카드 집 불러오기
+        
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(didFinishCreateCard),
+                name: .didFinishCreateCard,
+                object: nil
+            )
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -112,6 +128,9 @@ private extension MyCardListViewController {
                 print("💩 ERROR : \(error.localizedDescription)")
             }
             
+            self.emptyImageView.isHidden = !self.cardZipList.isEmpty
+            self.homeMyCardListPreviewCollectionView.isHidden = self.cardZipList.isEmpty
+            
             self.reloadMyCardListPreviewCollectionView()    // 콜렉션 뷰 새로고침
             
             completion?()                                       // 완료
@@ -156,6 +175,12 @@ private extension MyCardListViewController {
 
 // MARK: - UI 이벤트
 private extension MyCardListViewController {
+    
+    /// 카드 생성 완료
+    @objc func didFinishCreateCard() {
+        fetchCardZip()
+    }
+    
     
     /// 리프레시 컨트롤 시작 함수
     /// - Parameter sender: 리프레시 컨트롤
@@ -296,6 +321,7 @@ private extension MyCardListViewController {
     /// 레이아웃 설정
     func setupLayout() {
         [
+            emptyImageView,
             homeMyCardListPreviewCollectionView
         ].forEach {
             view.addSubview($0)
@@ -303,6 +329,10 @@ private extension MyCardListViewController {
         
         homeMyCardListPreviewCollectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        emptyImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(UIScreen.main.bounds.width / 2.0)
         }
     }
 }
