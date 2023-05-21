@@ -40,6 +40,7 @@
 		6B29BDF329CECCC000F39932 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDF229CECCC000F39932 /* Constant.swift */; };
 		6B29BDF529CED7A700F39932 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDF429CED7A600F39932 /* SignUpViewController.swift */; };
 		6B29BDF929CF547600F39932 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDF829CF547600F39932 /* AuthManager.swift */; };
+		6B682DFC2A1A68E700187262 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 6B682DFB2A1A68E700187262 /* Toast */; };
 		6B7C6C1129F80B930045C230 /* MyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7C6C1029F80B930045C230 /* MyInfoView.swift */; };
 		6B85569229DC646F0004E226 /* CardZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569129DC646F0004E226 /* CardZip.swift */; };
 		6B85569429DC64AA0004E226 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569329DC64AA0004E226 /* DBManager.swift */; };
@@ -103,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B682DFC2A1A68E700187262 /* Toast in Frameworks */,
 				6B29BDEB29CE132000F39932 /* FirebaseMessaging in Frameworks */,
 				6B29BDE529CE132000F39932 /* FirebaseDatabaseSwift in Frameworks */,
 				6B29BDE329CE132000F39932 /* FirebaseDatabase in Frameworks */,
@@ -295,6 +297,7 @@
 				6B29BDE829CE132000F39932 /* FirebaseFirestoreSwift */,
 				6B29BDEA29CE132000F39932 /* FirebaseMessaging */,
 				6B29BDEC29CE132000F39932 /* FirebaseStorage */,
+				6B682DFB2A1A68E700187262 /* Toast */,
 			);
 			productName = MemoryCard;
 			productReference = 6B29BDBE29CE10EB00F39932 /* MemoryCard.app */;
@@ -328,6 +331,7 @@
 				6B29BDD529CE111C00F39932 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6B29BDD829CE112B00F39932 /* XCRemoteSwiftPackageReference "Then" */,
 				6B29BDDD29CE132000F39932 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				6B682DFA2A1A68E700187262 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 6B29BDBF29CE10EB00F39932 /* Products */;
 			projectDirPath = "";
@@ -640,6 +644,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		6B682DFA2A1A68E700187262 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -692,6 +704,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B29BDDD29CE132000F39932 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		6B682DFB2A1A68E700187262 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B682DFA2A1A68E700187262 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

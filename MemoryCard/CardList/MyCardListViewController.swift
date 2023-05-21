@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Toast
 
 // MARK: - 나의 카드 리스트 뷰컨
 final class MyCardListViewController: UIViewController {
@@ -178,6 +179,7 @@ private extension MyCardListViewController {
     
     /// 카드 생성 완료
     @objc func didFinishCreateCard() {
+        view.makeToast("카드 생성 완료!")
         fetchCardZip()
     }
     
@@ -198,6 +200,11 @@ private extension MyCardListViewController {
     /// 편집 시작 함수
     /// - Parameter sender: 편집 바 버튼
     @objc func didTapModifyButton(_ sender: UIBarButtonItem) {
+        if cardZipList.isEmpty {
+            view.makeToast("생성된 카드가 없어요!")
+            return
+        }
+        
         isEdit.toggle()
         refreshView(isEdit: isEdit)
     }
