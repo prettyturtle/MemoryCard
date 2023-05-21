@@ -128,8 +128,8 @@ private extension MyCardListViewController {
                 print("💩 ERROR : \(error.localizedDescription)")
             }
             
-            self.emptyImageView.isHidden = !self.cardZipList.isEmpty
-            self.homeMyCardListPreviewCollectionView.isHidden = self.cardZipList.isEmpty
+            self.emptyImageView.isHidden = !self.cardZipList.isEmpty                        // 카드리스트 없을 때, 이미지 placeholder 보여줌
+            self.homeMyCardListPreviewCollectionView.isHidden = self.cardZipList.isEmpty    // 카드리스트 없을 때, 콜렉션 뷰 숨기기
             
             self.reloadMyCardListPreviewCollectionView()    // 콜렉션 뷰 새로고침
             
