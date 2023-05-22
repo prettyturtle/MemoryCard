@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Toast
 import FirebaseAuth
 
 // MARK: - 로그인 뷰컨
@@ -101,9 +102,12 @@ private extension LoginViewController {
             return                                                          // 이메일, 비밀번호가 nil일 때
         }
         
-        guard !email.isEmpty, !password.isEmpty else {                      // 이메일, 비밀번호가 공백이 아닌지 확인
-                                                                            // TODO: - 이메일, 비밀번호가 공백일 때 처리
-            return                                                          // 이메일, 비밀번호가 공백일 때
+        if email.isEmpty {                                                  // 이메일이 빈 문자열일 때
+            view.makeToast("이메일을 입력해주세요!")                              // 토스트 얼럿 노출 -> 리턴
+            return
+        } else if password.isEmpty {                                        // 이메일이 빈 문자열일 때
+            view.makeToast("비밀번호를 입력해주세요!")                             // 토스트 얼럿 노출 -> 리턴
+            return
         }
         
         IndicatorManager.shared.start()                                     // 로딩 인디케이터 시작
@@ -124,7 +128,7 @@ private extension LoginViewController {
                 self.changeRootVC(rootVC, animated: true)                   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
                 
             case .failure(let error):                                       // 로그인 실패 (`에러`)
-                                                                            // TODO: - 로그인 실패 처리
+                self.view.makeToast("사용자 정보를 찾을 수 없어요!")               // 토스트 얼럿 노출
                 print("🎉 이메일 로그인 실패", error)
             }
         }
