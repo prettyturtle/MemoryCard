@@ -146,13 +146,25 @@ private extension SignUpViewController {
     /// - Parameter sender: 회원가입 버튼
     @objc func didTapSignUpButton(_ sender: UIButton) {
         guard let email = emailTextField.text,
-              let password = passwordTextField.text else {                  // 이메일, 비밀번호 옵셔널 해제
-            return                                                          // 이메일, 비밀번호가 nil일 때
+              let password = passwordTextField.text,
+              let rePassword = rePasswordTextField.text else {              // 이메일, 비밀번호, 비밀번호 재입력 옵셔널 해제
+            return                                                          // 이메일, 비밀번호, 비밀번호 재입력이 nil일 때
         }
         
-        guard !email.isEmpty, !password.isEmpty else {                      // 이메일, 비밀번호가 공백이 아닌지 확인
-                                                                            // TODO: - 이메일, 비밀번호가 공백일 때 처리
-            return                                                          // 이메일, 비밀번호가 공백일 때
+        if email.isEmpty {                                                  // 이메일이 빈 문자열일 때
+            view.makeToast("이메일을 입력해주세요!")                              // 토스트 얼럿 노출 -> 리턴
+            return
+        } else if password.isEmpty {                                        // 비밀번호가 빈 문자열일 때
+            view.makeToast("비밀번호를 입력해주세요!")                             // 토스트 얼럿 노출 -> 리턴
+            return
+        } else if rePassword.isEmpty {                                      // 비밀번호 재입력이 빈 문자열일 때
+            view.makeToast("모두 입력해주세요!")                                 // 토스트 얼럿 노출 -> 리턴
+            return
+        }
+        
+        if password != rePassword {                                         // 비밀번호와 비밀번호 재입력이 다르면
+            view.makeToast("비밀번호를 확인해주세요!")                             // 토스트 얼럿 노출 -> 리턴
+            return
         }
         
         IndicatorManager.shared.start()                                     // 로딩 인디케이터 시작
@@ -183,7 +195,7 @@ private extension SignUpViewController {
                     }
                 }
             case .failure(let error):                                       // 회원가입 실패 (`에러`)
-                                                                            // TODO: - 회원가입 실패 처리
+                self.view.makeToast("다시 시도해주세요!")                        // 토스트 얼럿 노출
                 print("🎉 이메일 회원가입 실패", error)
             }
         }

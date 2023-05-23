@@ -105,7 +105,7 @@ private extension LoginViewController {
         if email.isEmpty {                                                  // 이메일이 빈 문자열일 때
             view.makeToast("이메일을 입력해주세요!")                              // 토스트 얼럿 노출 -> 리턴
             return
-        } else if password.isEmpty {                                        // 이메일이 빈 문자열일 때
+        } else if password.isEmpty {                                        // 비밀번호가 빈 문자열일 때
             view.makeToast("비밀번호를 입력해주세요!")                             // 토스트 얼럿 노출 -> 리턴
             return
         }
