@@ -162,10 +162,12 @@ private extension MyCardListViewController {
     func refreshView(isEdit: Bool) {
         if isEdit {
             navigationItem.rightBarButtonItem?.title = "완료"
+            navigationController?.navigationBar.prefersLargeTitles = false
             navigationItem.title = ""
             homeMyCardListPreviewCollectionView.refreshControl = nil
         } else {
             navigationItem.rightBarButtonItem?.title = "편집"
+            navigationController?.navigationBar.prefersLargeTitles = true
             navigationItem.title = "카드리스트"
             homeMyCardListPreviewCollectionView.refreshControl = refreshControl
         }
@@ -313,7 +315,7 @@ private extension MyCardListViewController {
     
     /// 내비게이션 바 설정
     func setupNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "카드리스트"
         navigationController?.navigationBar.topItem?.backButtonTitle = ""
         
