@@ -40,6 +40,21 @@ final class CreateCardContentInputCollectionViewCell: UICollectionViewCell {
         $0.delegate = self
         $0.offAutoChange(true)
     }
+    
+    /// 카드 앞면 텍스트뷰 플레이스홀더
+    private lazy var frontContentPlaceholder = UILabel().then {
+        $0.text = "앞"
+        $0.textColor = .placeholderText
+        $0.font = .systemFont(ofSize: 32.0, weight: .black)
+    }
+    
+    /// 카드 뒷면 텍스트뷰 플레이스홀더
+    private lazy var backContentPlaceholder = UILabel().then {
+        $0.text = "뒤"
+        $0.textColor = .placeholderText
+        $0.font = .systemFont(ofSize: 32.0, weight: .black)
+    }
+    
     // MARK: ========================= </ UI 컴포넌트 > =========================
     
     // MARK: ========================= < 프로퍼티 > =========================
@@ -75,11 +90,13 @@ extension CreateCardContentInputCollectionViewCell: UITextViewDelegate {
         
         var type: CardContentType
         
-        switch textView {               // 텍스트가 변경된 텍스트뷰가
-        case frontContentInputTextView: // 앞면 텍스트뷰일 때
-            type = .front               // 타입 할당
-        case backContentInputTextView:  // 뒷면 텍스트뷰일 때
-            type = .back                // 타입 할당
+        switch textView {                                   // 텍스트가 변경된 텍스트뷰가
+        case frontContentInputTextView:                     // 앞면 텍스트뷰일 때
+            type = .front                                   // 타입 할당
+            frontContentPlaceholder.isHidden = text != ""   // 플레이스홀더 노출/제거
+        case backContentInputTextView:                      // 뒷면 텍스트뷰일 때
+            type = .back                                    // 타입 할당
+            backContentPlaceholder.isHidden = text != ""    // 플레이스홀더 노출/제거
         default:
             return
         }
@@ -122,13 +139,21 @@ extension CreateCardContentInputCollectionViewCell {
         }
         
         frontCardView.addSubview(frontContentInputTextView)
+        frontCardView.addSubview(frontContentPlaceholder)
         backCardView.addSubview(backContentInputTextView)
+        backCardView.addSubview(backContentPlaceholder)
         
         frontContentInputTextView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(Constant.defaultInset / 2.0)
         }
+        frontContentPlaceholder.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
         backContentInputTextView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(Constant.defaultInset / 2.0)
+        }
+        backContentPlaceholder.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }
