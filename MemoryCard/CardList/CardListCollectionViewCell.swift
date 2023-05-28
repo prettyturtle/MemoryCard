@@ -112,7 +112,7 @@ extension CardListCollectionViewCell {
     /// 레이아웃 설정
     func setupLayout(isEdit: Bool) {
         layer.cornerRadius = 12.0
-        layer.borderColor = UIColor.separator.cgColor
+        layer.borderColor = UIColor.lightGray.cgColor
         layer.borderWidth = 0.4
         
         [
