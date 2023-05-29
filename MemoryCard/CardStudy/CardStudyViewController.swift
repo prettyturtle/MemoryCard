@@ -42,9 +42,9 @@ final class CardStudyViewController: UIViewController {
     private lazy var pageControlView = UIView()
     
     private lazy var prevCardButton = UIButton().then {
-        $0.contentHorizontalAlignment = .fill
-        $0.contentVerticalAlignment = .fill
-        $0.setImage(UIImage(systemName: "backward.fill"), for: .normal)
+        $0.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25.0), forImageIn: .normal)
+        $0.setImage(UIImage(systemName: "backward.end.fill"), for: .normal)
+        $0.tintColor = .black
         $0.addTarget(
             self,
             action: #selector(didTapPrevNextCardButton),
@@ -53,9 +53,9 @@ final class CardStudyViewController: UIViewController {
     }
     
     private lazy var playAutoButton = UIButton().then {
-        $0.contentHorizontalAlignment = .fill
-        $0.contentVerticalAlignment = .fill
+        $0.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 40.0), forImageIn: .normal)
         $0.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        $0.tintColor = .black
         $0.addTarget(
             self,
             action: #selector(didTapPlayAutoButton),
@@ -64,9 +64,9 @@ final class CardStudyViewController: UIViewController {
     }
     
     private lazy var nextCardButton = UIButton().then {
-        $0.contentHorizontalAlignment = .fill
-        $0.contentVerticalAlignment = .fill
-        $0.setImage(UIImage(systemName: "forward.fill"), for: .normal)
+        $0.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25.0), forImageIn: .normal)
+        $0.setImage(UIImage(systemName: "forward.end.fill"), for: .normal)
+        $0.tintColor = .black
         $0.addTarget(
             self,
             action: #selector(didTapPrevNextCardButton),
@@ -213,7 +213,7 @@ private extension CardStudyViewController {
             return
         }
         
-        playAutoButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        playAutoButton.setImage(UIImage(systemName: "stop.fill"), for: .normal)
         
         autoProgressView.progressTintColor = .systemOrange
         
@@ -406,24 +406,21 @@ private extension CardStudyViewController {
         
         autoProgressView.snp.makeConstraints {
             $0.leading.top.trailing.equalToSuperview()
-            $0.height.equalTo(1.0)
+            $0.height.equalTo(2.0)
         }
         
         playAutoButton.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.size.equalTo(40.0)
         }
         
         prevCardButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalTo(playAutoButton.snp.leading).offset(-Constant.defaultInset * 2)
-            $0.size.equalTo(40.0)
         }
         
         nextCardButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(playAutoButton.snp.trailing).offset(Constant.defaultInset * 2)
-            $0.size.equalTo(40.0)
         }
     }
 }
