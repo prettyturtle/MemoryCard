@@ -53,7 +53,7 @@ final class CardStudyCollectionViewCell: UICollectionViewCell {
     
     func setupLayout() {
         layer.cornerRadius = 12.0
-        layer.borderColor = UIColor.separator.cgColor
+        layer.borderColor = UIColor.darkGray.cgColor
         layer.borderWidth = 0.4
         
         [
