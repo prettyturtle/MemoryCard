@@ -80,7 +80,11 @@ final class CardStudyViewController: UIViewController {
     // MARK: ========================= < 프로퍼티 > =========================
     
     private let cardZip: CardZip
-    private var currentCardIdx = 0
+    private var currentCardIdx = 0 {
+        didSet {
+            setEnablePrevNextButton()
+        }
+    }
     private var isAuto = false
     private var autoHandler: DispatchWorkItem?
     private var autoTimer: Timer?
@@ -101,6 +105,7 @@ final class CardStudyViewController: UIViewController {
     }
     
     // MARK: ========================= </ init > ========================
+    
 }
 
 // MARK: - 라이프 사이클
@@ -111,6 +116,7 @@ extension CardStudyViewController {
         view.backgroundColor = .systemBackground    // 배경색 설정
         setupNavigationBar()                        // 내비게이션 설정
         setupLayout()                               // 레이아웃 설정
+        setEnablePrevNextButton()                   // prev, next 버튼 enable 세팅
     }
 }
 
@@ -187,6 +193,11 @@ extension CardStudyViewController: UICollectionViewDataSource {
 
 // MARK: - 로직
 private extension CardStudyViewController {
+    func setEnablePrevNextButton() {
+        prevCardButton.isEnabled = currentCardIdx != 0
+        nextCardButton.isEnabled = currentCardIdx != cardZip.cards.count - 1
+    }
+    
     func scrollToCard(direction: CardScrollDirection) {
         switch direction {
         case .prev:
@@ -411,6 +422,8 @@ private extension CardStudyViewController {
         
         playAutoButton.snp.makeConstraints {
             $0.center.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(16.0)
+            $0.width.equalTo(playAutoButton.snp.height)
         }
         
         prevCardButton.snp.makeConstraints {
