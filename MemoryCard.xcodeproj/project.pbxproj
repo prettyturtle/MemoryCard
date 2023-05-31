@@ -320,10 +320,10 @@
 			};
 			buildConfigurationList = 6B29BDB929CE10EB00F39932 /* Build configuration list for PBXProject "MemoryCard" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				ko,
 				Base,
 			);
 			mainGroup = 6B29BDB529CE10EB00F39932;
