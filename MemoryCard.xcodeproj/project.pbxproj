@@ -55,6 +55,7 @@
 		6BA3065929D8A5CC003CFAF2 /* CardContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065829D8A5CC003CFAF2 /* CardContentType.swift */; };
 		6BA3065B29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065A29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift */; };
 		6BA3065D29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065C29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift */; };
+		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +98,7 @@
 		6BA3065829D8A5CC003CFAF2 /* CardContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentType.swift; sourceTree = "<group>"; };
 		6BA3065A29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardContentInputCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
 		6BA3065C29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardFinishViewController.swift; sourceTree = "<group>"; };
+		6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +207,7 @@
 			children = (
 				6B088D2129D05CEA0056B4EF /* MyInfoViewController.swift */,
 				6B7C6C1029F80B930045C230 /* MyInfoView.swift */,
+				6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				6B29BDF129CECCA100F39932 /* UITextField+.swift in Sources */,
 				6B088D1E29D0375B0056B4EF /* IndicatorManager.swift in Sources */,
 				6B088D2A29D08B170056B4EF /* CreateCardContentInputViewController.swift in Sources */,
+				6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */,
 				6B29BDC229CE10EB00F39932 /* AppDelegate.swift in Sources */,
 				6B29BDC429CE10EB00F39932 /* SceneDelegate.swift in Sources */,
 				6B088D2229D05CEA0056B4EF /* MyInfoViewController.swift in Sources */,

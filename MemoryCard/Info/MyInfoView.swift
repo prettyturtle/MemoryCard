@@ -11,24 +11,45 @@ struct MyInfoView: View {
     
     @State private var isShowUserInfoAlert = false
     @State private var isShowLogoutAlert = false
-
+    
     var body: some View {
         NavigationView {
             List {
                 Button {
                     isShowUserInfoAlert = true
                 } label: {
-                    MyInfoViewCell(title: "회원정보", textColor: .blue)
+                    MyInfoViewCell(
+                        title: "회원정보",
+                        textColor: .blue
+                    )
                 }
+                
                 Button {
                     isShowLogoutAlert = true
                 } label: {
-                    MyInfoViewCell(title: "로그아웃", textColor: .red)
+                    MyInfoViewCell(
+                        title: "로그아웃",
+                        textColor: .red
+                    )
                 }
-                .listRowSeparator(.hidden)
-            }.listStyle(.plain)
                 
-                
+                ZStack {
+                    NavigationLink {
+                        
+                    } label: {
+                        EmptyView()
+                    }
+                    .opacity(0.0)
+                    
+                    MyInfoViewCell(
+                        title: "학습모드 설정",
+                        textColor: .black
+                    )
+                }
+            }
+            .listStyle(.plain)
+            
+            
             .navigationTitle("설정")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -72,31 +93,5 @@ struct MyInfoView: View {
 struct MyInfoView_Previews: PreviewProvider {
     static var previews: some View {
         MyInfoView()
-    }
-}
-
-struct MyInfoViewCell: View {
-    
-    let title: String
-    let textColor: Color
-    
-    var body: some View {
-        VStack {
-            Spacer()
-            
-            HStack {
-                Text(title)
-                    .font(.system(size: 18.0, weight: .medium))
-                    .foregroundColor(textColor)
-                
-                Spacer()
-            }
-            .frame(height: 36.0)
-            
-            Spacer()
-            
-            Divider()
-        }
-        
     }
 }
