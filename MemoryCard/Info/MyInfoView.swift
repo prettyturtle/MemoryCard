@@ -35,7 +35,7 @@ struct MyInfoView: View {
                 
                 ZStack {
                     NavigationLink {
-                        
+                        StudyModeConfigView()
                     } label: {
                         EmptyView()
                     }
@@ -79,6 +79,7 @@ struct MyInfoView: View {
             } label: {
                 Text("로그아웃")
             }
+            
             Button(role: .cancel) {
                 print("로그아웃 취소")
             } label: {
