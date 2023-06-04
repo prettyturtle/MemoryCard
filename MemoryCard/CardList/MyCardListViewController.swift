@@ -182,6 +182,7 @@ private extension MyCardListViewController {
     /// 카드 생성 완료
     @objc func didFinishCreateCard() {
         view.makeToast("카드 생성 완료!")
+        cardZipList = []
         fetchCardZip()
     }
     
