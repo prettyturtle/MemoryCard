@@ -183,7 +183,6 @@ extension CardStudyViewController: UICollectionViewDataSource {
         }
         
         cell.card = cardZip.cards[indexPath.item]
-        cell.cardContentType = .front
         cell.setupLayout()
         cell.setupView()
         

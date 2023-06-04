@@ -21,7 +21,7 @@ final class CardStudyCollectionViewCell: UICollectionViewCell {
     }
     
     var card: Card?
-    var cardContentType: CardContentType?
+    var cardContentType: CardContentType = .front
     
     func rotateCard() {
         var animationOption: UIView.AnimationOptions
@@ -35,8 +35,6 @@ final class CardStudyCollectionViewCell: UICollectionViewCell {
             cardContentLabel.text = card?.front.content
             cardContentType = .front
             animationOption = .transitionFlipFromLeft
-        case .none:
-            return
         }
         
         UIView.transition(
@@ -48,7 +46,18 @@ final class CardStudyCollectionViewCell: UICollectionViewCell {
     }
     
     func setupView() {
-        cardContentLabel.text = card?.front.content
+        if let savedCardStartState = UserDefaults.standard.string(forKey: "CARD_START_STATE") {
+            if savedCardStartState == "front" {
+                cardContentType = .front
+                cardContentLabel.text = card?.front.content
+            } else {
+                cardContentType = .back
+                cardContentLabel.text = card?.back.content
+            }
+        } else {
+            cardContentType = .front
+            cardContentLabel.text = card?.front.content
+        }
     }
     
     func setupLayout() {
