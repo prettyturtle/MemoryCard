@@ -62,10 +62,42 @@ extension TabBarController: UITabBarControllerDelegate {
     ) -> Bool {
         if tabBarController.tabBar.selectedItem?.tag == 1 {
             
-            let createCardVC = UINavigationController(rootViewController: CreateCardIntroViewController())
+            guard let currentUser = AuthManager.shared.getCurrentUser() else {
+                return false
+            }
             
-            createCardVC.modalPresentationStyle = .fullScreen
-            present(createCardVC, animated: true)
+            let mIdx = currentUser.uid
+            
+            IndicatorManager.shared.start()
+            
+            DBManager.shared.fetchAllDocumentsWhereField(
+                .card,
+                type: CardZip.self,
+                field: ("mIdx", mIdx)
+            ) { [weak self] result in
+                
+                IndicatorManager.shared.stop()
+                
+                switch result {
+                case .success(let cardZipList):
+                    if let cardZipList = cardZipList,
+                       cardZipList.count >= 10 {
+                        self?.view.makeToast("카드는 최대 10개까지 생성할 수 있어요.")
+                    } else {
+                        let createCardVC = UINavigationController(rootViewController: CreateCardIntroViewController())
+                        
+                        createCardVC.modalPresentationStyle = .fullScreen
+                        self?.present(createCardVC, animated: true)
+                    }
+                case .failure(let error):
+                    print("🤢 ERROR \(error.localizedDescription)")
+                    
+                    let createCardVC = UINavigationController(rootViewController: CreateCardIntroViewController())
+                    
+                    createCardVC.modalPresentationStyle = .fullScreen
+                    self?.present(createCardVC, animated: true)
+                }
+            }
             
             return false
         } else {
