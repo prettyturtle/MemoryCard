@@ -14,40 +14,73 @@ struct MyInfoView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                Button {
-                    isShowUserInfoAlert = true
-                } label: {
-                    MyInfoViewCell(
-                        title: "회원정보",
-                        textColor: .blue
-                    )
-                }
+            VStack(spacing: 0.0) {
+                Divider()
                 
-                Button {
-                    isShowLogoutAlert = true
-                } label: {
-                    MyInfoViewCell(
-                        title: "로그아웃",
-                        textColor: .red
-                    )
-                }
-                
-                ZStack {
-                    NavigationLink {
-                        StudyModeConfigView()
-                    } label: {
-                        EmptyView()
-                    }
-                    .opacity(0.0)
+                HStack(spacing: 0.0) {
+                    Image(systemName: "heart.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60.0, height: 60.0)
+                        .cornerRadius(30.0)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 30.0)
+                                .stroke(Color.secondary, lineWidth: 0.2)
+                        )
                     
-                    MyInfoViewCell(
-                        title: "학습모드 설정",
-                        textColor: .black
-                    )
+                    VStack(alignment: .leading, spacing: 0.0) {
+                        Text(AuthManager.shared.getCurrentUser()?.email ?? "bbb@bbb.com")
+                            .font(.system(size: 16.0, weight: .semibold))
+                        
+                        Text("카드 개수 : \(10)")
+                            .padding(.top, 8.0)
+                            .font(.system(size: 16.0, weight: .semibold))
+                            .foregroundColor(.secondary)
+                            
+                    }
+                    .padding(.horizontal, 16.0)
+                    
+                    Spacer()
                 }
+                .padding(16.0)
+                
+                Divider()
+                
+                List {
+                    Button {
+                        isShowUserInfoAlert = true
+                    } label: {
+                        MyInfoViewCell(
+                            title: "회원정보",
+                            textColor: .blue
+                        )
+                    }
+                    
+                    Button {
+                        isShowLogoutAlert = true
+                    } label: {
+                        MyInfoViewCell(
+                            title: "로그아웃",
+                            textColor: .red
+                        )
+                    }
+                    
+                    ZStack {
+                        NavigationLink {
+                            StudyModeConfigView()
+                        } label: {
+                            EmptyView()
+                        }
+                        .opacity(0.0)
+                        
+                        MyInfoViewCell(
+                            title: "학습모드 설정",
+                            textColor: .black
+                        )
+                    }
+                }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
             
             
             .navigationTitle("설정")
