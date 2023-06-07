@@ -12,37 +12,18 @@ struct MyInfoView: View {
     @State private var isShowUserInfoAlert = false
     @State private var isShowLogoutAlert = false
     
+    @State private var userEmail = ""
+    @State private var cardZipCount = 0
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0.0) {
                 Divider()
                 
-                HStack(spacing: 0.0) {
-                    Image(systemName: "heart.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 60.0, height: 60.0)
-                        .cornerRadius(30.0)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 30.0)
-                                .stroke(Color.secondary, lineWidth: 0.2)
-                        )
-                    
-                    VStack(alignment: .leading, spacing: 0.0) {
-                        Text(AuthManager.shared.getCurrentUser()?.email ?? "bbb@bbb.com")
-                            .font(.system(size: 16.0, weight: .semibold))
-                        
-                        Text("카드 개수 : \(10)")
-                            .padding(.top, 8.0)
-                            .font(.system(size: 16.0, weight: .semibold))
-                            .foregroundColor(.secondary)
-                            
-                    }
-                    .padding(.horizontal, 16.0)
-                    
-                    Spacer()
-                }
-                .padding(16.0)
+                ProfileView(
+                    userEmail: $userEmail,
+                    cardZipCount: $cardZipCount
+                )
                 
                 Divider()
                 
@@ -120,6 +101,32 @@ struct MyInfoView: View {
             }
         } message: {
             Text("정말로 로그아웃 하시겠습니까?")
+        }
+        .onAppear {
+            guard let currentUser = AuthManager.shared.getCurrentUser() else {
+                return
+            }
+            
+            let mIdx = currentUser.uid
+            
+            userEmail = currentUser.email ?? "..."
+            
+            DBManager.shared.fetchAllDocumentsWhereField(
+                .card,
+                type: CardZip.self,
+                field: ("mIdx", mIdx)
+            ) { result in
+                switch result {
+                case .success(let cardZipList):
+                    guard let cardZipList = cardZipList else {
+                        return
+                    }
+                    
+                    self.cardZipCount = cardZipList.count
+                case .failure(let error):
+                    print("👩🏻‍🦳ERROR \(error.localizedDescription)")
+                }
+            }
         }
     }
 }

@@ -55,6 +55,7 @@
 		6BA3065929D8A5CC003CFAF2 /* CardContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065829D8A5CC003CFAF2 /* CardContentType.swift */; };
 		6BA3065B29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065A29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift */; };
 		6BA3065D29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065C29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift */; };
+		6BA6A4362A2F8956002127E6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6A4352A2F8956002127E6 /* ProfileView.swift */; };
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,7 @@
 		6BA3065829D8A5CC003CFAF2 /* CardContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentType.swift; sourceTree = "<group>"; };
 		6BA3065A29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardContentInputCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
 		6BA3065C29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardFinishViewController.swift; sourceTree = "<group>"; };
+		6BA6A4352A2F8956002127E6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewCell.swift; sourceTree = "<group>"; };
 		6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeConfigView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -211,6 +213,7 @@
 				6B7C6C1029F80B930045C230 /* MyInfoView.swift */,
 				6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */,
 				6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */,
+				6BA6A4352A2F8956002127E6 /* ProfileView.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				6B7C6C1129F80B930045C230 /* MyInfoView.swift in Sources */,
 				6B9BC16229E9D26B00B32557 /* CardStudyViewController.swift in Sources */,
 				6BA3065B29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift in Sources */,
+				6BA6A4362A2F8956002127E6 /* ProfileView.swift in Sources */,
 				6BA3065D29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift in Sources */,
 				6B14A7BF2A1274F8002384B4 /* CardListCollectionViewCellDelegate.swift in Sources */,
 				6BA3065929D8A5CC003CFAF2 /* CardContentType.swift in Sources */,
