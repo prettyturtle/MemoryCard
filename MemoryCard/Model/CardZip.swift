@@ -17,7 +17,7 @@ struct CardZip: Codable {
     
     static var mockData: [CardZip] {
         return (1...10).map {
-            CardZip(folderName: "TEST\($0)", cards: [Card(id: $0, front: Card.CardContent(content: "front \($0)"), back: Card.CardContent(content: "back \($0)"))], mIdx: AuthManager.shared.getCurrentUser()?.uid ?? "")
+            CardZip(folderName: "TEST\($0)", cards: [Card(id: $0, front: Card.CardContent(content: "front \($0)"), back: Card.CardContent(content: "back \($0)"))], mIdx: AuthManager.shared.getCurrentUser()?.id ?? "")
         }
     }
 }

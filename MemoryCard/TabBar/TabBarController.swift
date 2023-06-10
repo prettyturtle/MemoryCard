@@ -66,7 +66,7 @@ extension TabBarController: UITabBarControllerDelegate {
                 return false
             }
             
-            let mIdx = currentUser.uid
+            let mIdx = currentUser.id
             
             IndicatorManager.shared.start()
             

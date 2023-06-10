@@ -152,7 +152,7 @@ private extension CreateCardContentInputViewController {
             return // TODO: - 현재 유저 없을 때 처리
         }
         
-        let mIdx = currentUser.uid                                              // 유저 아이디
+        let mIdx = currentUser.id                                               // 유저 아이디
         
         var cardZip: CardZip                        // 저장할 카드집
         

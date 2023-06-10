@@ -15,7 +15,7 @@ protocol AuthManagerProtocol {
     
     /// 현재 로그인된 유저를 반환하는 함수
     /// - Returns: 현재 로그인된 유저
-    func getCurrentUser() -> FirebaseAuth.User?
+    func getCurrentUser() -> User?
     
     /// 로그인 함수
     /// - Parameters:
@@ -46,8 +46,14 @@ final class AuthManager: AuthManagerProtocol {
     private let firAuth = Auth.auth() // 파이어베이스 Auth
     
     // 현재 유저 반환
-    func getCurrentUser() -> FirebaseAuth.User? {
-        return firAuth.currentUser
+    func getCurrentUser() -> User? {
+        if let firUser = firAuth.currentUser,
+           let email = firUser.email {
+            
+            return User(id: firUser.uid, email: email)
+        }
+        
+        return nil
     }
     
     // 로그인

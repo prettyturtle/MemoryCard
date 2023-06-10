@@ -43,9 +43,8 @@ private extension MyInfoViewController {
         
         let msg = """
             \(user?.email ?? "")
-            \(user?.displayName ?? "")
-            \(user?.metadata.creationDate ?? .now)
-            \(user?.metadata.lastSignInDate ?? .now)
+            \(user?.createdDate ?? .now)
+            \(user?.lastSignInDate ?? .now)
         """
         
         let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)

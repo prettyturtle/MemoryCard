@@ -74,9 +74,8 @@ struct MyInfoView: View {
             
             let msg = """
                 \(user?.email ?? "")
-                \(user?.displayName ?? "")
-                \(user?.metadata.creationDate ?? .now)
-                \(user?.metadata.lastSignInDate ?? .now)
+                \(user?.createdDate ?? .now)
+                \(user?.lastSignInDate ?? .now)
             """
             
             Text(msg)
@@ -107,9 +106,9 @@ struct MyInfoView: View {
                 return
             }
             
-            let mIdx = currentUser.uid
+            let mIdx = currentUser.id
             
-            userEmail = currentUser.email ?? "..."
+            userEmail = currentUser.email
             
             DBManager.shared.fetchAllDocumentsWhereField(
                 .card,

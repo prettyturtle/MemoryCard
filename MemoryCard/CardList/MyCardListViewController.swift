@@ -107,7 +107,7 @@ private extension MyCardListViewController {
             return  // TODO: - 현재 유저가 없을 때 예외처리
         }
         
-        let mIdx = currentUser.uid                              // 유저 mIdx
+        let mIdx = currentUser.id                               // 유저 mIdx
         
         // DB에서 카드 집 불러오기 시작
         DBManager.shared.fetchDocumentsWhereField(
