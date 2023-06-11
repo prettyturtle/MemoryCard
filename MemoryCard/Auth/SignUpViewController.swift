@@ -14,6 +14,18 @@ import FirebaseAuth
 final class SignUpViewController: UIViewController {
     
     // MARK: ========================= < UI 컴포넌트 > =========================
+    
+    /// 스크롤뷰
+    private lazy var scrollView = UIScrollView().then {
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(didTapScrollView))
+        $0.addGestureRecognizer(tapGesture)
+        $0.isUserInteractionEnabled = true
+    }
+    
+    /// 스크롤뷰 컨텐츠뷰
+    private lazy var contentView = UIView()
+    
     /// 이메일 라벨
     private lazy var emailLabel = UILabel().then {
         $0.text = "이메일"
@@ -97,6 +109,7 @@ extension SignUpViewController {
         view.backgroundColor = .systemBackground    // 배경색 설정
         setupNavigationBar()                        // 내비게이션 설정
         setupLayout()                               // 레이아웃 설정
+        setKeyboardObserver()                       // 키보드 옵저버
     }
 }
 
@@ -141,6 +154,50 @@ extension SignUpViewController: UITextFieldDelegate {
 
 // MARK: - UI 이벤트
 private extension SignUpViewController {
+    
+    /// 스크롤 뷰를 탭 했을 때
+    @objc func didTapScrollView() {
+        view.endEditing(true) // 키보드 내리기
+    }
+    
+    /// 키보드가 올라올 때
+    /// - Parameter notification: 노티피케이션
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                return
+        }
+        
+        scrollView.contentInset.bottom = keyboardFrame.size.height + 16.0
+        
+        let firstResponder = view.subviews.filter { $0.isFirstResponder }.first as? UITextField
+        
+        scrollView.scrollRectToVisible(firstResponder?.frame ?? CGRect.zero, animated: true)
+    }
+    
+    /// 키보드가 내려갈 때
+    /// - Parameter notification: 노티피케이션
+    @objc func keyboardWillHide(_ notification: Notification) {
+        let contentInset = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    /// 키보드 옵저버 Add
+    func setKeyboardObserver() {
+         NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+         )
+         
+         NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object:nil
+         )
+     }
     
     /// 회원가입 버튼을 눌렀을 때
     /// - Parameter sender: 회원가입 버튼
@@ -213,6 +270,20 @@ private extension SignUpViewController {
     
     /// 레이아읏 설정
     func setupLayout() {
+        
+        view.addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        scrollView.addSubview(contentView)
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+        
         [
             emailLabel,
             emailTextField,
@@ -225,52 +296,53 @@ private extension SignUpViewController {
             rePasswordErrorLabel,
             signUpButton
         ].forEach {
-            view.addSubview($0)
+            contentView.addSubview($0)
         }
         
         emailLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset * 2)
+            $0.leading.equalToSuperview().inset(Constant.defaultInset)
+            $0.top.equalToSuperview().inset(Constant.defaultInset * 2)
         }
         emailTextField.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(emailLabel.snp.bottom).offset(Constant.defaultInset / 2)
             $0.height.equalTo(48.0)
         }
         emailErrorLabel.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(emailTextField.snp.bottom).offset(Constant.defaultInset / 4)
         }
         passwordLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(emailErrorLabel.snp.bottom).offset(Constant.defaultInset * 2)
         }
         passwordTextField.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(passwordLabel.snp.bottom).offset(Constant.defaultInset / 2)
             $0.height.equalTo(48.0)
         }
         passwordErrorLabel.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(passwordTextField.snp.bottom).offset(Constant.defaultInset / 4)
         }
         rePasswordLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(passwordErrorLabel.snp.bottom).offset(Constant.defaultInset * 2)
         }
         rePasswordTextField.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(rePasswordLabel.snp.bottom).offset(Constant.defaultInset / 2)
             $0.height.equalTo(48.0)
         }
         rePasswordErrorLabel.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(rePasswordTextField.snp.bottom).offset(Constant.defaultInset / 4)
         }
         signUpButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(rePasswordErrorLabel.snp.bottom).offset(Constant.defaultInset)
             $0.height.equalTo(48.0)
+            $0.bottom.equalToSuperview()
         }
     }
 }
