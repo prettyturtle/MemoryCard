@@ -17,6 +17,8 @@ final class SignUpViewController: UIViewController {
     
     /// 스크롤뷰
     private lazy var scrollView = UIScrollView().then {
+        $0.alwaysBounceVertical = true
+        
         let tapGesture = UITapGestureRecognizer()
         tapGesture.addTarget(self, action: #selector(didTapScrollView))
         $0.addGestureRecognizer(tapGesture)
@@ -168,11 +170,13 @@ private extension SignUpViewController {
                 return
         }
         
-        scrollView.contentInset.bottom = keyboardFrame.size.height + 16.0
+        scrollView.contentInset.bottom = keyboardFrame.size.height + 48.0
         
         let firstResponder = view.subviews.filter { $0.isFirstResponder }.first as? UITextField
         
-        scrollView.scrollRectToVisible(firstResponder?.frame ?? CGRect.zero, animated: true)
+        UIView.animate(withDuration: 0.4) {
+            self.scrollView.scrollRectToVisible(firstResponder?.frame ?? CGRect.zero, animated: true)
+        }
     }
     
     /// 키보드가 내려갈 때
