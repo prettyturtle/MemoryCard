@@ -56,6 +56,17 @@ final class AuthManager: AuthManagerProtocol {
         return nil
     }
     
+    // 현재 유저 반환
+    func getCurrentUser(completion: @escaping (Result<User, Error>) -> Void) {
+        guard let firUser = firAuth.currentUser else {
+            return
+        }
+        
+        let uid = firUser.uid
+        
+        DBManager.shared.fetchDocument(.user, documentName: uid, type: User.self, completion: completion)
+    }
+    
     // 로그인
     func login(_ userInput: UserInput, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
         

@@ -8,11 +8,11 @@
 import Foundation
 
 /// 유저 정보
-struct User: Codable {
-    let id: String      // ID
-    let email: String   // 이메일
-    var name: String?
-    var profileImgURL: String?
-    var createdDate: Date?
-    var lastSignInDate: Date?
+struct User: Codable, Equatable {
+    let id: String              // ID
+    let email: String           // 이메일
+    var name: String?           // 이름
+    var profileImgURL: String?  // 프로필 이미지 URL
+    var createdDate: Date?      // 가입 날짜
+    var lastSignInDate: Date?   // 마지막 로그인 날짜
 }

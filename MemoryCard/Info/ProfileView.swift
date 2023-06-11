@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @Binding var userEmail: String
+    @Binding var currentUser: User
     @Binding var cardZipCount: Int
     
     @State var isShowImagePicker = false
@@ -41,7 +41,7 @@ struct ProfileView: View {
                 }
             
             VStack(alignment: .leading, spacing: 0.0) {
-                Text(userEmail)
+                Text(currentUser.name ?? currentUser.email)
                     .font(.system(size: 16.0, weight: .semibold))
                 
                 Text("카드 개수 : \(cardZipCount)")
@@ -68,23 +68,70 @@ struct ProfileView: View {
             }
         }
         .onAppear {
-            if let profileImageData = UserDefaults.standard.data(forKey: "PROFILE_IMG_DATA"),
-               let profileImage = UIImage(data: profileImageData) {
-                selectedImage = profileImage
-            }
+            fetchImage(user: currentUser)
+        }
+        .onChange(of: currentUser) { newCurrentUser in
+            fetchImage(user: newCurrentUser)
         }
     }
     
     
     private func saveImage(img: UIImage) {
-        let imgData = img.pngData()
-        // TODO: - 파이어베이스 프로필 이미지 저장
-        UserDefaults.standard.setValue(imgData, forKey: "PROFILE_IMG_DATA")
+        if let imgData = img.jpegData(compressionQuality: 0.1) {
+            UserDefaults.standard.setValue(
+                imgData,
+                forKey: "PROFILE_IMG_DATA_\(currentUser.id)"
+            )
+            
+            Task {
+                do {
+                    let imageURL = try await DBManager.shared.saveImage(
+                        data: imgData,
+                        mIdx: currentUser.id
+                    )
+                    
+                    currentUser.profileImgURL = imageURL
+                    
+                    DBManager.shared.save(
+                        .user,
+                        documentName: currentUser.id,
+                        data: currentUser
+                    ) {_ in}
+                } catch {
+                    print("💩 ERROR : \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    private func fetchImage(user: User) {
+        if let profileImageData = UserDefaults.standard.data(forKey: "PROFILE_IMG_DATA_\(user.id)"),
+           let profileImage = UIImage(data: profileImageData) {
+            selectedImage = profileImage
+        } else {
+            if let imageURLString = user.profileImgURL,
+               let imageURL = URL(string: imageURLString) {
+                Task {
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: imageURL)
+                        
+                        UserDefaults.standard.setValue(data, forKey: "PROFILE_IMG_DATA_\(user.id)")
+                        
+                        let profileImage = UIImage(data: data)
+                        
+                        selectedImage = profileImage
+                    } catch {
+                        print("ERROR : 저장된 이미지가 없음")
+                        print("ERROR : \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
     }
 }
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(userEmail: .constant("bbb.bbb.bbb"), cardZipCount: .constant(10))
+        ProfileView(currentUser: .constant(.init(id: "123123", email: "bbb.bbb.bbb")), cardZipCount: .constant(10))
     }
 }

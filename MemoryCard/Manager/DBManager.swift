@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 import FirebaseFirestore
+import FirebaseStorage
 
 /// DB 관련 클래스
 final class DBManager {
@@ -15,8 +16,9 @@ final class DBManager {
     
     private init() {}
     
-    private let db = Firestore.firestore() // 파이어베이스 DB
-     
+    private let db = Firestore.firestore()  // 파이어베이스 DB
+    private let st = Storage.storage()      // 파이어베이스 Storage
+    
     /// 데이터 저장
     /// - Parameters:
     ///   - collectionType: 콜렉션 타입
@@ -210,6 +212,19 @@ final class DBManager {
             .collection(collectionType.collectionName)
             .document(documentName)
             .delete(completion: completion)
+    }
+    
+    func saveImage(data: Data, mIdx: String) async throws -> String {
+        let storageRef = st.reference()
+        let dataRef = storageRef.child("profileImages/\(mIdx).png")
+        
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpeg"
+        
+        let _ = try await dataRef.putDataAsync(data, metadata: metaData)
+        let imageURL = try await dataRef.downloadURL()
+        
+        return imageURL.absoluteString
     }
 }
 

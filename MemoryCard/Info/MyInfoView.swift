@@ -12,7 +12,7 @@ struct MyInfoView: View {
     @State private var isShowUserInfoAlert = false
     @State private var isShowLogoutAlert = false
     
-    @State private var userEmail = ""
+    @State private var currentUser = User(id: "", email: "")
     @State private var cardZipCount = 0
     
     var body: some View {
@@ -21,7 +21,7 @@ struct MyInfoView: View {
                 Divider()
                 
                 ProfileView(
-                    userEmail: $userEmail,
+                    currentUser: $currentUser,
                     cardZipCount: $cardZipCount
                 )
                 
@@ -102,28 +102,32 @@ struct MyInfoView: View {
             Text("정말로 로그아웃 하시겠습니까?")
         }
         .onAppear {
-            guard let currentUser = AuthManager.shared.getCurrentUser() else {
-                return
-            }
-            
-            let mIdx = currentUser.id
-            
-            userEmail = currentUser.email
-            
-            DBManager.shared.fetchAllDocumentsWhereField(
-                .card,
-                type: CardZip.self,
-                field: ("mIdx", mIdx)
-            ) { result in
+            AuthManager.shared.getCurrentUser { result in
                 switch result {
-                case .success(let cardZipList):
-                    guard let cardZipList = cardZipList else {
-                        return
+                case .success(let currentUser):
+                    let mIdx = currentUser.id
+                    
+                    self.currentUser = currentUser
+                    
+                    DBManager.shared.fetchAllDocumentsWhereField(
+                        .card,
+                        type: CardZip.self,
+                        field: ("mIdx", mIdx)
+                    ) { result in
+                        switch result {
+                        case .success(let cardZipList):
+                            guard let cardZipList = cardZipList else {
+                                return
+                            }
+                            
+                            self.cardZipCount = cardZipList.count
+                        case .failure(let error):
+                            print("👩🏻‍🦳ERROR \(error.localizedDescription)")
+                        }
                     }
                     
-                    self.cardZipCount = cardZipList.count
                 case .failure(let error):
-                    print("👩🏻‍🦳ERROR \(error.localizedDescription)")
+                    print("👩🏻‍🦳 ERROR \(error.localizedDescription)")
                 }
             }
         }
