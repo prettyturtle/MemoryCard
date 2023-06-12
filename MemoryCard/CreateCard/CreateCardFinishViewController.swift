@@ -8,28 +8,22 @@
 import UIKit
 import SnapKit
 import Then
+import Lottie
 
 // MARK: - 카드 생성 완료 뷰컨
 final class CreateCardFinishViewController: UIViewController {
     // MARK: ========================= < UI 컴포넌트 > =========================
+    
+    /// 로티 애니메이션 뷰
+    private lazy var lottieAnimationView = LottieAnimationView(name: "complete_lottie").then {
+        $0.loopMode = .repeat(3)
+    }
     
     /// 카드 생성 완료 라벨
     private lazy var finishLabel = UILabel().then {
         $0.text = "카드 생성 완료!"
         $0.font = .systemFont(ofSize: 24.0, weight: .bold)
         $0.textAlignment = .center
-    }
-    
-    /// 카드 폴더 이름 라벨
-    private lazy var folderNameLabel = UILabel().then {
-        $0.text = "이름 : \(folderName)"
-        $0.font = .systemFont(ofSize: 18.0, weight: .medium)
-    }
-    
-    /// 카드 개수 라벨
-    private lazy var cardListCountLabel = UILabel().then {
-        $0.text = "카드 개수 : \(cardList.count)개"
-        $0.font = .systemFont(ofSize: 18.0, weight: .medium)
     }
     
     /// 완료 버튼
@@ -69,6 +63,8 @@ extension CreateCardFinishViewController {
         view.backgroundColor = .systemBackground
         setupNavigationBar()
         setupLayout()
+        
+        lottieAnimationView.play()
     }
 }
 
@@ -102,25 +98,21 @@ private extension CreateCardFinishViewController {
     /// 레이아웃 설정
     func setupLayout() {
         [
+            lottieAnimationView,
             finishLabel,
-            folderNameLabel,
-            cardListCountLabel,
             finishButton
         ].forEach {
             view.addSubview($0)
         }
         
+        lottieAnimationView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().multipliedBy(0.6)
+            $0.size.equalTo(view.frame.width / 1.5)
+        }
         finishLabel.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
-            $0.bottom.equalTo(view.snp.centerY).offset(-Constant.defaultInset)
-        }
-        folderNameLabel.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
-            $0.top.equalTo(finishLabel.snp.bottom).offset(Constant.defaultInset * 2)
-        }
-        cardListCountLabel.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
-            $0.top.equalTo(folderNameLabel.snp.bottom).offset(Constant.defaultInset / 2)
+            $0.top.equalTo(lottieAnimationView.snp.bottom).offset(Constant.defaultInset)
         }
         finishButton.snp.makeConstraints {
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
