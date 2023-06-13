@@ -147,6 +147,14 @@ private extension CreateCardContentInputViewController {
             $0.front.content != "" || $0.back.content != ""                     // 카드 중 앞, 뒤 둘 다 비어있는 카드는 제거
         }
         
+        if filteredCardList.isEmpty {                                           // 카드가 비어있을 때
+            IndicatorManager.shared.stop()                                      // 인디케이터 중지
+            
+            view.makeToast("카드를 채워주세요!")
+            
+            return
+        }
+        
         guard let currentUser = AuthManager.shared.getCurrentUser() else {
             IndicatorManager.shared.stop()                                      // 인디케이터 중지
             return // TODO: - 현재 유저 없을 때 처리
