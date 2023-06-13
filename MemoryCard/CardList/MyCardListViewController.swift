@@ -180,8 +180,12 @@ private extension MyCardListViewController {
 private extension MyCardListViewController {
     
     /// 카드 생성 완료
-    @objc func didFinishCreateCard() {
-        view.makeToast("카드 생성 완료!")
+    @objc func didFinishCreateCard(_ notification: Notification) {
+        guard let state = notification.userInfo?["isEdit"] as? Bool else {
+            return
+        }
+        
+        view.makeToast("카드 \(!state ? "생성" : "수정") 완료!")
         cardZipList = []
         fetchCardZip()
     }

@@ -264,25 +264,25 @@
 		6B29BDC029CE10EB00F39932 /* MemoryCard */ = {
 			isa = PBXGroup;
 			children = (
+				6B29BDDB29CE126600F39932 /* GoogleService-Info.plist */,
+				6B29BDCF29CE10EF00F39932 /* Info.plist */,
 				6B29BDC129CE10EB00F39932 /* AppDelegate.swift */,
-				6B8C598C2A3781E400CD8A96 /* Resource */,
 				6B29BDC329CE10EB00F39932 /* SceneDelegate.swift */,
-				6B14A7B32A1124CB002384B4 /* Manager */,
+				6B29BDCA29CE10EF00F39932 /* Assets.xcassets */,
 				6B14A7BC2A1125D2002384B4 /* Auth */,
-				6B14A7BB2A1125C7002384B4 /* Info */,
-				6B14A7B42A112501002384B4 /* CreateCard */,
-				6B14A7BD2A1125E3002384B4 /* Model */,
 				6B14A7B52A112513002384B4 /* CardList */,
 				6B14A7B92A112599002384B4 /* CardStudy */,
-				6B14A7BA2A1125B5002384B4 /* TabBar */,
-				6B14A7B62A112569002384B4 /* Extension */,
-				6B14A7B82A11257F002384B4 /* Util */,
 				6B14A7B72A112576002384B4 /* Component */,
-				6B29BDC729CE10EB00F39932 /* Main.storyboard */,
-				6B29BDCA29CE10EF00F39932 /* Assets.xcassets */,
+				6B14A7B42A112501002384B4 /* CreateCard */,
+				6B14A7B62A112569002384B4 /* Extension */,
+				6B14A7BB2A1125C7002384B4 /* Info */,
 				6B29BDCC29CE10EF00F39932 /* LaunchScreen.storyboard */,
-				6B29BDCF29CE10EF00F39932 /* Info.plist */,
-				6B29BDDB29CE126600F39932 /* GoogleService-Info.plist */,
+				6B29BDC729CE10EB00F39932 /* Main.storyboard */,
+				6B14A7B32A1124CB002384B4 /* Manager */,
+				6B14A7BD2A1125E3002384B4 /* Model */,
+				6B8C598C2A3781E400CD8A96 /* Resource */,
+				6B14A7BA2A1125B5002384B4 /* TabBar */,
+				6B14A7B82A11257F002384B4 /* Util */,
 			);
 			path = MemoryCard;
 			sourceTree = "<group>";

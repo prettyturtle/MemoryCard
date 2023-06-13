@@ -172,16 +172,24 @@ private extension CreateCardContentInputViewController {
         }
         
         // DB 저장 시작
-        DBManager.shared.save(.card, documentName: cardZip.id, data: cardZip) { result in
+        DBManager.shared.save(
+            .card,
+            documentName: cardZip.id,
+            data: cardZip
+        ) { [weak self] result in
             // DB 저장 완료
             IndicatorManager.shared.stop()                                      // 인디케이터 중지
             
-            // TODO: - DB 저장 결과 처리
+            guard let self = self else {
+                return
+            }
+            
             print("DB 저장 결과 \(result)")
             
             let createCardFinishVC = CreateCardFinishViewController(            // 카드 생성 완료 뷰컨
                 folderName: self.folderName,
-                cardList: filteredCardList
+                cardList: filteredCardList,
+                isEdit: self.willEditCardZip == nil ? false : true
             )
             self.navigationController?.pushViewController(                      // 카드 생성 완료 뷰컨으로 이동
                 createCardFinishVC,

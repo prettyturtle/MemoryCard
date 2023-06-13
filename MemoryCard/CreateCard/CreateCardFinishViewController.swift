@@ -21,7 +21,7 @@ final class CreateCardFinishViewController: UIViewController {
     
     /// 카드 생성 완료 라벨
     private lazy var finishLabel = UILabel().then {
-        $0.text = "카드 생성 완료!"
+        $0.text = !isEdit ? "카드 생성 완료!" : "카드 수정 완료!"
         $0.font = .systemFont(ofSize: 24.0, weight: .bold)
         $0.textAlignment = .center
     }
@@ -41,12 +41,14 @@ final class CreateCardFinishViewController: UIViewController {
     // MARK: ========================= < 프로퍼티 > =========================
     private let folderName: String  // 카드 폴더 명
     private let cardList: [Card]    // 카드 리스트
+    private let isEdit: Bool        // 최초 생성: false, 수정: true
     // MARK: ========================= </ 프로퍼티 > ========================
     
     // MARK: ========================= < init > =========================
-    init(folderName: String, cardList: [Card]) {
+    init(folderName: String, cardList: [Card], isEdit: Bool) {
         self.folderName = folderName
         self.cardList = cardList
+        self.isEdit = isEdit
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -80,7 +82,8 @@ private extension CreateCardFinishViewController {
             .default
             .post(
                 name: .didFinishCreateCard,
-                object: nil
+                object: nil,
+                userInfo: ["isEdit": isEdit]
             )
     }
 }
