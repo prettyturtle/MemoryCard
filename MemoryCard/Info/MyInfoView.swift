@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MyInfoView: View {
     
-    @State private var isShowUserInfoAlert = false
     @State private var isShowLogoutAlert = false
     
     @State private var currentUser = User(id: "", email: "")
@@ -28,24 +27,6 @@ struct MyInfoView: View {
                 Divider()
                 
                 List {
-                    Button {
-                        isShowUserInfoAlert = true
-                    } label: {
-                        MyInfoViewCell(
-                            title: "회원정보",
-                            textColor: .blue
-                        )
-                    }
-                    
-                    Button {
-                        isShowLogoutAlert = true
-                    } label: {
-                        MyInfoViewCell(
-                            title: "로그아웃",
-                            textColor: .red
-                        )
-                    }
-                    
                     ZStack {
                         NavigationLink {
                             StudyModeConfigView()
@@ -59,6 +40,15 @@ struct MyInfoView: View {
                             textColor: .black
                         )
                     }
+                    
+                    Button {
+                        isShowLogoutAlert = true
+                    } label: {
+                        MyInfoViewCell(
+                            title: "로그아웃",
+                            textColor: .red
+                        )
+                    }
                 }
                 .listStyle(.plain)
             }
@@ -66,19 +56,6 @@ struct MyInfoView: View {
             
             .navigationTitle("설정")
             .navigationBarTitleDisplayMode(.inline)
-        }
-        .alert("회원정보", isPresented: $isShowUserInfoAlert) {
-            Button("OK") {}
-        } message: {
-            let user = AuthManager.shared.getCurrentUser()
-            
-            let msg = """
-                \(user?.email ?? "")
-                \(user?.createdDate ?? .now)
-                \(user?.lastSignInDate ?? .now)
-            """
-            
-            Text(msg)
         }
         .alert("로그아웃", isPresented: $isShowLogoutAlert) {
             Button(role: .destructive) {
