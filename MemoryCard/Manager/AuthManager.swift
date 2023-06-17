@@ -111,4 +111,15 @@ final class AuthManager: AuthManagerProtocol {
             return false            // 로그아웃 실패
         }
     }
+    
+    // 회원 탈퇴
+    func delete(completion: @escaping (Result<Void, Error>) -> Void) {
+        firAuth.currentUser?.delete { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            completion(.success(()))
+        }
+    }
 }
