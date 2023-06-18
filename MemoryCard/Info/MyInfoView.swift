@@ -10,6 +10,7 @@ import SwiftUI
 struct MyInfoView: View {
     
     @State private var isShowLogoutAlert = false
+    @State private var isShowDeleteUserAlert = false
     
     @State private var currentUser = User(id: "", email: "")
     @State private var cardZipCount = 0
@@ -46,6 +47,15 @@ struct MyInfoView: View {
                     } label: {
                         MyInfoViewCell(
                             title: "로그아웃",
+                            textColor: .blue
+                        )
+                    }
+                    
+                    Button {
+                        isShowDeleteUserAlert = true
+                    } label: {
+                        MyInfoViewCell(
+                            title: "회원탈퇴",
                             textColor: .red
                         )
                     }
@@ -56,6 +66,21 @@ struct MyInfoView: View {
             
             .navigationTitle("설정")
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .alert("회원탈퇴", isPresented: $isShowDeleteUserAlert) {
+            Button(role: .destructive) {
+                
+            } label: {
+                Text("탈퇴하기")
+            }
+            
+            Button(role: .cancel) {
+                
+            } label: {
+                Text("취소")
+            }
+        } message: {
+            Text("정말로 탈퇴하시겠습니까?\n탈퇴 시 모든 데이터가 삭제되고\n복구할 수 없습니다.")
         }
         .alert("로그아웃", isPresented: $isShowLogoutAlert) {
             Button(role: .destructive) {
