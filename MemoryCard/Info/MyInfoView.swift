@@ -69,58 +69,7 @@ struct MyInfoView: View {
         }
         .alert("회원탈퇴", isPresented: $isShowDeleteUserAlert) {
             Button(role: .destructive) {
-                AuthManager.shared.getCurrentUser { userResult in
-                    switch userResult {
-                    case .success(let user):
-                        let mIdx = user.id
-                        
-                        DBManager.shared.fetchAllDocumentsWhereField(.card, type: CardZip.self, field: ("mIdx", mIdx)) { dbResult in
-                            switch dbResult {
-                            case .success(let deletedCardZipList):
-                                guard let deletedCardZipList = deletedCardZipList else {
-                                    return
-                                }
-                                for deletedCardZip in deletedCardZipList {
-                                    guard let deletedCardZip = deletedCardZip else {
-                                        return
-                                    }
-                                    
-                                    let documentName = deletedCardZip.id
-                                    
-                                    DBManager.shared.deleteDocument(.card, documentName: documentName) { error in
-                                        if let error = error {
-                                            print("ERROR : \(error.localizedDescription)")
-                                        }
-                                    }
-                                }
-                                
-                                DBManager.shared.deleteDocument(.user, documentName: mIdx) { error in
-                                    if let error = error {
-                                        print("ERROR : \(error.localizedDescription)")
-                                    }
-                                }
-                                
-                                AuthManager.shared.delete { result in
-                                    switch result {
-                                    case .success(_):
-                                        let rootVC = UINavigationController(rootViewController: LoginViewController())
-                                        
-                                        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-                                        
-                                        sceneDelegate?.changeRootViewController(rootVC, animated: true)
-                                    case .failure(let error):
-                                        print("탈퇴 실패 : \(error.localizedDescription)")
-                                    }
-                                }
-                                
-                            case .failure(let error):
-                                print("ERROR : \(error.localizedDescription)")
-                            }
-                        }
-                    case .failure(let error):
-                        print("ERROR : \(error.localizedDescription)")
-                    }
-                }
+                delete()
             } label: {
                 Text("탈퇴하기")
             }
@@ -135,13 +84,7 @@ struct MyInfoView: View {
         }
         .alert("로그아웃", isPresented: $isShowLogoutAlert) {
             Button(role: .destructive) {
-                if AuthManager.shared.logout() {
-                    let rootVC = UINavigationController(rootViewController: LoginViewController())
-                    
-                    let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-                    
-                    sceneDelegate?.changeRootViewController(rootVC, animated: true)
-                }
+                logout()
             } label: {
                 Text("로그아웃")
             }
@@ -155,33 +98,112 @@ struct MyInfoView: View {
             Text("정말로 로그아웃 하시겠습니까?")
         }
         .onAppear {
-            AuthManager.shared.getCurrentUser { result in
-                switch result {
-                case .success(let currentUser):
-                    let mIdx = currentUser.id
-                    
-                    self.currentUser = currentUser
-                    
-                    DBManager.shared.fetchAllDocumentsWhereField(
-                        .card,
-                        type: CardZip.self,
-                        field: ("mIdx", mIdx)
-                    ) { result in
-                        switch result {
-                        case .success(let cardZipList):
-                            guard let cardZipList = cardZipList else {
+            getCardZipCount()
+        }
+    }
+}
+
+private extension MyInfoView {
+    /// 회원탈퇴
+    func delete() {
+        AuthManager.shared.getCurrentUser { userResult in
+            switch userResult {
+            case .success(let user):
+                let mIdx = user.id
+                
+                DBManager.shared.fetchAllDocumentsWhereField(
+                    .card,
+                    type: CardZip.self,
+                    field: ("mIdx", mIdx)
+                ) { dbResult in
+                    switch dbResult {
+                    case .success(let deletedCardZipList):
+                        guard let deletedCardZipList = deletedCardZipList else {
+                            return
+                        }
+                        
+                        for deletedCardZip in deletedCardZipList {
+                            guard let deletedCardZip = deletedCardZip else {
                                 return
                             }
                             
-                            self.cardZipCount = cardZipList.count
-                        case .failure(let error):
-                            print("👩🏻‍🦳ERROR \(error.localizedDescription)")
+                            let documentName = deletedCardZip.id
+                            
+                            DBManager.shared.deleteDocument(.card, documentName: documentName) { error in
+                                if let error = error {
+                                    print("ERROR : \(error.localizedDescription)")
+                                }
+                            }
                         }
+                        
+                        DBManager.shared.deleteDocument(.user, documentName: mIdx) { error in
+                            if let error = error {
+                                print("ERROR : \(error.localizedDescription)")
+                            }
+                        }
+                        
+                        AuthManager.shared.delete { result in
+                            switch result {
+                            case .success(_):
+                                let rootVC = UINavigationController(rootViewController: LoginViewController())
+                                
+                                let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+                                
+                                sceneDelegate?.changeRootViewController(rootVC, animated: true)
+                            case .failure(let error):
+                                print("탈퇴 실패 : \(error.localizedDescription)")
+                            }
+                        }
+                        
+                    case .failure(let error):
+                        print("ERROR : \(error.localizedDescription)")
                     }
-                    
-                case .failure(let error):
-                    print("👩🏻‍🦳 ERROR \(error.localizedDescription)")
                 }
+            case .failure(let error):
+                print("ERROR : \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    /// 로그아웃
+    func logout() {
+        if AuthManager.shared.logout() {
+            let rootVC = UINavigationController(rootViewController: LoginViewController())
+            
+            let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+            
+            sceneDelegate?.changeRootViewController(rootVC, animated: true)
+        }
+    }
+    
+    /// 카드집 개수 구하기
+    func getCardZipCount() {
+        AuthManager.shared.getCurrentUser { result in
+            switch result {
+            case .success(let currentUser):
+                let mIdx = currentUser.id
+                
+                self.currentUser = currentUser
+                
+                DBManager.shared.fetchAllDocumentsWhereField(
+                    .card,
+                    type: CardZip.self,
+                    field: ("mIdx", mIdx)
+                ) { result in
+                    switch result {
+                    case .success(let cardZipList):
+                        guard let cardZipList = cardZipList else {
+                            return
+                        }
+                        
+                        self.cardZipCount = cardZipList.count
+                    case .failure(let error):
+                        print("👩🏻‍🦳ERROR \(error.localizedDescription)")
+                    }
+                }
+                
+            case .failure(let error):
+                print("👩🏻‍🦳 ERROR \(error.localizedDescription)")
             }
         }
     }
