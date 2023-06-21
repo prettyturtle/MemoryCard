@@ -56,11 +56,13 @@ final class SignUpViewController: UIViewController {
     
     /// 비밀번호 입력 텍스트 필드
     private lazy var passwordTextField = UITextField().then {
+        $0.textContentType = .oneTimeCode
         $0.placeholder = "비밀번호를 입력하세요..."   // 텍스트 필드 placeholder
         $0.borderStyle = .roundedRect           // 테두리 타입
         $0.isSecureTextEntry = true             // 비밀번호 가리기
         $0.delegate = self                      // 델리게이트 self
         $0.offAutoChange(true)                  // 오토 대문자, 오토 수정 off
+        
     }
     
     /// 비밀번호 에러 라벨
@@ -71,6 +73,7 @@ final class SignUpViewController: UIViewController {
     
     /// 비밀번호 재입력 텍스트 필드
     private lazy var rePasswordTextField = UITextField().then {
+        $0.textContentType = .oneTimeCode
         $0.placeholder = "비밀번호를 다시 입력하세요..."   // 텍스트 필드 placeholder
         $0.borderStyle = .roundedRect           // 테두리 타입
         $0.isSecureTextEntry = true             // 비밀번호 가리기

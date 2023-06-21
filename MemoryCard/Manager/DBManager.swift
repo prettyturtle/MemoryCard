@@ -226,6 +226,13 @@ final class DBManager {
         
         return imageURL.absoluteString
     }
+    
+    func deleteImage(mIdx: String) async throws {
+        let storageRef = st.reference()
+        let dataRef = storageRef.child("profileImages/\(mIdx).png")
+        
+        try await dataRef.delete()
+    }
 }
 
 /// DB 콜렉션 타입
