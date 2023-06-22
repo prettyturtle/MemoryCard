@@ -15,6 +15,19 @@ import FirebaseAuth
 final class LoginViewController: UIViewController {
     
     // MARK: ========================= < UI 컴포넌트 > =========================
+    /// 스크롤뷰
+    private lazy var scrollView = UIScrollView().then {
+        $0.alwaysBounceVertical = true
+        
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(didTapScrollView))
+        $0.addGestureRecognizer(tapGesture)
+        $0.isUserInteractionEnabled = true
+    }
+    
+    /// 스크롤뷰 컨텐츠뷰
+    private lazy var contentView = UIView()
+    
     /// 이메일 입력 텍스트 필드
     private lazy var emailTextField = UITextField().then {
         $0.placeholder = "이메일을 입력하세요..."    // 텍스트 필드 placeholder
@@ -87,6 +100,12 @@ extension LoginViewController {
 
 // MARK: - UI 이벤트
 private extension LoginViewController {
+    
+    /// 스크롤 뷰를 탭 했을 때
+    @objc func didTapScrollView() {
+        view.endEditing(true)
+    }
+    
     /// 회원가입 뷰컨 이동 버튼을 눌렀을 때
     /// - Parameter sender: 회원가입 뷰턴 이동 버튼
     @objc func didTapMoveToSignUpButton(_ sender: UIButton) {
@@ -146,32 +165,47 @@ private extension LoginViewController {
     
     /// 레이아웃 설정
     func setupLayout() {
+        
+        view.addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        scrollView.addSubview(contentView)
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+        
         [
             emailTextField,
             passwordTextField,
             loginButton,
             moveToSignUpButton
         ].forEach {
-            view.addSubview($0)
+            contentView.addSubview($0)
         }
         
         emailTextField.snp.makeConstraints {
-            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.top.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.height.equalTo(48.0)
         }
         passwordTextField.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(emailTextField.snp.bottom).offset(Constant.defaultInset)
             $0.height.equalTo(48.0)
         }
         loginButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalTo(passwordTextField.snp.bottom).offset(Constant.defaultInset)
             $0.height.equalTo(48.0)
         }
         moveToSignUpButton.snp.makeConstraints {
             $0.centerX.equalTo(loginButton.snp.centerX)
             $0.top.equalTo(loginButton.snp.bottom).offset(Constant.defaultInset)
+            $0.bottom.equalToSuperview()
         }
     }
 }
