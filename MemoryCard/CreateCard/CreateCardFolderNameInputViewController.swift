@@ -99,7 +99,6 @@ private extension CreateCardFolderNameInputViewController {
 
 private extension CreateCardFolderNameInputViewController {
     func setupNavigationBar() {
-        navigationController?.navigationBar.topItem?.backButtonTitle = ""
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "info.circle"),
             style: .plain,
@@ -107,15 +106,12 @@ private extension CreateCardFolderNameInputViewController {
             action: nil
         )
         
-        // 수정 모드 세팅
-        if let _ = willEditCardZip {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: UIImage(systemName: "xmark"),
-                style: .plain,
-                target: self,
-                action: #selector(didTapDismissButton)
-            )
-        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "xmark"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapDismissButton)
+        )
     }
     func setupLayout() {
         [
