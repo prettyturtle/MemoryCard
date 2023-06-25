@@ -61,6 +61,7 @@
 		6BA6A4382A320FE0002127E6 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6A4372A320FE0002127E6 /* ImagePickerView.swift */; };
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
+		6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +121,7 @@
 				6B29BDE529CE132000F39932 /* FirebaseDatabaseSwift in Frameworks */,
 				6B29BDE329CE132000F39932 /* FirebaseDatabase in Frameworks */,
 				6B29BDED29CE132000F39932 /* FirebaseStorage in Frameworks */,
+				6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */,
 				6B29BDD729CE111C00F39932 /* SnapKit in Frameworks */,
 				6B29BDE129CE132000F39932 /* FirebaseCrashlytics in Frameworks */,
 				6B29BDDF29CE132000F39932 /* FirebaseAuth in Frameworks */,
@@ -332,6 +334,7 @@
 				6B29BDEC29CE132000F39932 /* FirebaseStorage */,
 				6B682DFB2A1A68E700187262 /* Toast */,
 				6B8C598A2A37638500CD8A96 /* Lottie */,
+				6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */,
 			);
 			productName = MemoryCard;
 			productReference = 6B29BDBE29CE10EB00F39932 /* MemoryCard.app */;
@@ -367,6 +370,7 @@
 				6B29BDDD29CE132000F39932 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				6B682DFA2A1A68E700187262 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				6BF64BE02A475F99000F0EC7 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 6B29BDBF29CE10EB00F39932 /* Products */;
 			projectDirPath = "";
@@ -596,6 +600,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = YC.MemoryCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -627,6 +632,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = YC.MemoryCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -700,6 +706,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		6BF64BE02A475F99000F0EC7 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -762,6 +776,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BF64BE02A475F99000F0EC7 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

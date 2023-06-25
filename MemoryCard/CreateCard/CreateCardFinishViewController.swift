@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Then
 import Lottie
+import GoogleMobileAds
 
 // MARK: - 카드 생성 완료 뷰컨
 final class CreateCardFinishViewController: UIViewController {
@@ -36,6 +37,8 @@ final class CreateCardFinishViewController: UIViewController {
             for: .touchUpInside
         )
     }
+    
+    private var interstitial: GADInterstitialAd?
     // MARK: ========================= </ UI 컴포넌트 > ========================
     
     // MARK: ========================= < 프로퍼티 > =========================
@@ -67,15 +70,30 @@ extension CreateCardFinishViewController {
         setupLayout()
         
         lottieAnimationView.play()
+        
+        var adUnitID: String
+        
+        #if DEBUG
+        adUnitID = "ca-app-pub-3940256099942544/4411468910"
+        #else
+        adUnitID = "ca-app-pub-9209699720203850/5501990840"
+        #endif
+        
+        GADInterstitialAd.load(withAdUnitID: adUnitID, request: GADRequest()) { [weak self] ad, error in
+            if let error = error {
+                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                return
+            }
+            self?.interstitial = ad
+            self?.interstitial?.fullScreenContentDelegate = self
+        }
     }
 }
 
 // MARK: - UI 이벤트
 private extension CreateCardFinishViewController {
     
-    /// 완료 버튼을 눌렀을 때
-    /// - Parameter sender: 완료 버튼
-    @objc func didTapFinishButton(_ sender: UIButton) {
+    @objc func didTapDismissButton() {
         dismiss(animated: true)
         
         NotificationCenter
@@ -86,10 +104,65 @@ private extension CreateCardFinishViewController {
                 userInfo: ["isEdit": isEdit]
             )
     }
+    
+    /// 완료 버튼을 눌렀을 때
+    /// - Parameter sender: 완료 버튼
+    @objc func didTapFinishButton(_ sender: UIButton) {
+        if let interstitial = interstitial {
+            interstitial.present(fromRootViewController: self)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: UIImage(systemName: "xmark"),
+                style: .plain,
+                target: self,
+                action: #selector(self.didTapDismissButton)
+            )
+        }
+    }
 }
 
 extension NSNotification.Name {
     static let didFinishCreateCard = NSNotification.Name("DID_FINISH_CREATE_CARD")
+}
+
+extension CreateCardFinishViewController: GADFullScreenContentDelegate {
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+        dismiss(animated: true)
+        
+        NotificationCenter
+            .default
+            .post(
+                name: .didFinishCreateCard,
+                object: nil,
+                userInfo: ["isEdit": isEdit]
+            )
+    }
+    
+    /// Tells the delegate that the ad will present full screen content.
+    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad will present full screen content.")
+    }
+    
+    /// Tells the delegate that the ad dismissed full screen content.
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did dismiss full screen content.")
+        dismiss(animated: true)
+        
+        NotificationCenter
+            .default
+            .post(
+                name: .didFinishCreateCard,
+                object: nil,
+                userInfo: ["isEdit": isEdit]
+            )
+    }
 }
 
 private extension CreateCardFinishViewController {

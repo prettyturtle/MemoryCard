@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import GoogleMobileAds
 
 // MARK: - 카드 공부 뷰컨
 final class CardStudyViewController: UIViewController {
@@ -30,6 +31,19 @@ final class CardStudyViewController: UIViewController {
             forCellWithReuseIdentifier: CardStudyCollectionViewCell.identifier
         )
         $0.dataSource = self
+        $0.delegate = self
+    }
+    
+    /// Google AdMob Banner View 2
+    private lazy var bannerView = GADBannerView().then {
+#if DEBUG
+        $0.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+#else
+        $0.adUnitID = "ca-app-pub-9209699720203850/6900517207" // Banner2
+#endif
+        $0.adSize = GADAdSizeBanner
+        $0.rootViewController = self
+        $0.load(GADRequest())
         $0.delegate = self
     }
     
@@ -363,6 +377,33 @@ private extension CardStudyViewController {
     }
 }
 
+// MARK: - GADBannerViewDelegate
+extension CardStudyViewController: GADBannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("👛 bannerViewDidReceiveAd")
+    }
+    
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("👛 bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+    
+    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+        print("👛 bannerViewDidRecordImpression")
+    }
+    
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("👛 bannerViewWillPresentScreen")
+    }
+    
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("👛 bannerViewWillDIsmissScreen")
+    }
+    
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("👛 bannerViewDidDismissScreen")
+    }
+}
+
 // MARK: - UI 레이아웃
 private extension CardStudyViewController {
     
@@ -384,13 +425,18 @@ private extension CardStudyViewController {
         [
             cardStudyCollectionView,
             bottomTabView,
-            pageControlView
+            pageControlView,
+            bannerView
         ].forEach {
             view.addSubview($0)
         }
         
+        bannerView.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
         cardStudyCollectionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.top.equalTo(bannerView.snp.bottom).offset(Constant.defaultInset)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         

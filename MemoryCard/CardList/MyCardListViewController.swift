@@ -9,11 +9,25 @@ import UIKit
 import SnapKit
 import Then
 import Toast
+import GoogleMobileAds
 
 // MARK: - 나의 카드 리스트 뷰컨
 final class MyCardListViewController: UIViewController {
     
     // MARK: ========================= < UI 컴포넌트 > =========================
+    
+    /// Google AdMob Banner View 1
+    private lazy var bannerView = GADBannerView().then {
+#if DEBUG
+        $0.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+#else
+        $0.adUnitID = "ca-app-pub-9209699720203850/2441509399" // Banner1
+#endif
+        $0.adSize = GADAdSizeBanner
+        $0.rootViewController = self
+        $0.load(GADRequest())
+        $0.delegate = self
+    }
     
     /// 리프레시 컨트롤
     private lazy var refreshControl = UIRefreshControl().then {
@@ -315,6 +329,33 @@ extension MyCardListViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - GADBannerViewDelegate
+extension MyCardListViewController: GADBannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("👛 bannerViewDidReceiveAd")
+    }
+    
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("👛 bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+    
+    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+        print("👛 bannerViewDidRecordImpression")
+    }
+    
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("👛 bannerViewWillPresentScreen")
+    }
+    
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("👛 bannerViewWillDIsmissScreen")
+    }
+    
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("👛 bannerViewDidDismissScreen")
+    }
+}
+
 // MARK: - UI 레이아웃
 private extension MyCardListViewController {
     
@@ -336,17 +377,23 @@ private extension MyCardListViewController {
     func setupLayout() {
         [
             emptyImageView,
-            homeMyCardListPreviewCollectionView
+            homeMyCardListPreviewCollectionView,
+            bannerView
         ].forEach {
             view.addSubview($0)
         }
         
-        homeMyCardListPreviewCollectionView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
         emptyImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.size.equalTo(UIScreen.main.bounds.width / 2.0)
+        }
+        bannerView.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        homeMyCardListPreviewCollectionView.snp.makeConstraints {
+            $0.top.equalTo(bannerView.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
