@@ -42,6 +42,20 @@ struct MyInfoView: View {
                         )
                     }
                     
+                    ZStack {
+                        NavigationLink {
+                            AppIconConfigView()
+                        } label: {
+                            EmptyView()
+                        }
+                        .opacity(0.0)
+                        
+                        MyInfoViewCell(
+                            title: "앱 아이콘 변경",
+                            textColor: .black
+                        )
+                    }
+                    
                     Button {
                         isShowLogoutAlert = true
                     } label: {
