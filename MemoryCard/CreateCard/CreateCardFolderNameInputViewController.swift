@@ -99,13 +99,6 @@ private extension CreateCardFolderNameInputViewController {
 
 private extension CreateCardFolderNameInputViewController {
     func setupNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "info.circle"),
-            style: .plain,
-            target: self,
-            action: nil
-        )
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "xmark"),
             style: .plain,

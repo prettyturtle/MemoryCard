@@ -316,7 +316,7 @@ private extension CreateCardContentInputViewController {
     func setupNavigationBar() {
         navigationController?.navigationBar.topItem?.backButtonTitle = ""
         navigationItem.title = "카드 만들기"
-        navigationItem.rightBarButtonItems = [cardAddBarButton, infoRightBarButton]
+        navigationItem.rightBarButtonItem = cardAddBarButton
     }
     func setupLayout() {
         [
