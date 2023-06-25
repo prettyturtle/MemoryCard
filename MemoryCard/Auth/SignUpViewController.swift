@@ -28,6 +28,20 @@ final class SignUpViewController: UIViewController {
     /// 스크롤뷰 컨텐츠뷰
     private lazy var contentView = UIView()
     
+    /// 이름 라벨
+    private lazy var nameLabel = UILabel().then {
+        $0.text = "이름"
+        $0.font = .systemFont(ofSize: 18.0, weight: .medium)
+    }
+    
+    /// 이름 입력 텍스트 필드
+    private lazy var nameTextField = UITextField().then {
+        $0.placeholder = "이름을 입력하세요..."      // 텍스트 필드 placeholder
+        $0.keyboardType = .default              // 키보드 타입 : 이메일
+        $0.borderStyle = .roundedRect           // 테두리 타입
+        $0.offAutoChange(true)                  // 오토 대문자, 오토 수정 off
+    }
+    
     /// 이메일 라벨
     private lazy var emailLabel = UILabel().then {
         $0.text = "이메일"
@@ -62,7 +76,6 @@ final class SignUpViewController: UIViewController {
         $0.isSecureTextEntry = true             // 비밀번호 가리기
         $0.delegate = self                      // 델리게이트 self
         $0.offAutoChange(true)                  // 오토 대문자, 오토 수정 off
-        
     }
     
     /// 비밀번호 에러 라벨
@@ -209,13 +222,17 @@ private extension SignUpViewController {
     /// 회원가입 버튼을 눌렀을 때
     /// - Parameter sender: 회원가입 버튼
     @objc func didTapSignUpButton(_ sender: UIButton) {
-        guard let email = emailTextField.text,
+        guard let name = nameTextField.text,
+              let email = emailTextField.text,
               let password = passwordTextField.text,
-              let rePassword = rePasswordTextField.text else {              // 이메일, 비밀번호, 비밀번호 재입력 옵셔널 해제
-            return                                                          // 이메일, 비밀번호, 비밀번호 재입력이 nil일 때
+              let rePassword = rePasswordTextField.text else {              // 이름, 이메일, 비밀번호, 비밀번호 재입력 옵셔널 해제
+            return                                                          // 이름, 이메일, 비밀번호, 비밀번호 재입력이 nil일 때
         }
         
-        if email.isEmpty {                                                  // 이메일이 빈 문자열일 때
+        if name.isEmpty {                                                   // 이름이 빈 문자열일 때
+            view.makeToast("이름을 입력해주세요!")                               // 토스트 얼럿 노출 -> 리턴
+            return
+        } else if email.isEmpty {                                           // 이메일이 빈 문자열일 때
             view.makeToast("이메일을 입력해주세요!")                              // 토스트 얼럿 노출 -> 리턴
             return
         } else if password.isEmpty {                                        // 비밀번호가 빈 문자열일 때
@@ -245,7 +262,17 @@ private extension SignUpViewController {
             case .success(let authResult):                                  // 회원가입 성공 (`회원가입 결과`)
                 print("🎉 이메일 회원가입 성공", authResult)
                 
-                let user = User(id: authResult.user.uid, email: email)
+                let id = authResult.user.uid
+                let createdDate = authResult.user.metadata.creationDate
+                let lastSignInDate = authResult.user.metadata.lastSignInDate
+                
+                let user = User(
+                    id: id,
+                    email: email,
+                    name: name,
+                    createdDate: createdDate,
+                    lastSignInDate: lastSignInDate
+                )
                 
                 // 유저 정보 저장 시작
                 DBManager.shared.save(.user, documentName: user.id, data: user) { dbResult in
@@ -292,6 +319,8 @@ private extension SignUpViewController {
         }
         
         [
+            nameLabel,
+            nameTextField,
             emailLabel,
             emailTextField,
             emailErrorLabel,
@@ -306,9 +335,18 @@ private extension SignUpViewController {
             contentView.addSubview($0)
         }
         
-        emailLabel.snp.makeConstraints {
+        nameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Constant.defaultInset)
             $0.top.equalToSuperview().inset(Constant.defaultInset * 2)
+        }
+        nameTextField.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
+            $0.top.equalTo(nameLabel.snp.bottom).offset(Constant.defaultInset / 2)
+            $0.height.equalTo(48.0)
+        }
+        emailLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(Constant.defaultInset)
+            $0.top.equalTo(nameTextField.snp.bottom).offset(Constant.defaultInset * 2)
         }
         emailTextField.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)

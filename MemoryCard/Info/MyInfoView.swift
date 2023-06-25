@@ -123,15 +123,21 @@ private extension MyInfoView {
         IndicatorManager.shared.start()
         
         AuthManager.shared.getCurrentUser { userResult in
+            IndicatorManager.shared.stop()
+            
             switch userResult {
             case .success(let user):
                 let mIdx = user.id
+                
+                IndicatorManager.shared.start()
                 
                 DBManager.shared.fetchAllDocumentsWhereField(
                     .card,
                     type: CardZip.self,
                     field: ("mIdx", mIdx)
                 ) { dbResult in
+                    IndicatorManager.shared.stop()
+                    
                     switch dbResult {
                     case .success(let deletedCardZipList):
                         if let deletedCardZipList = deletedCardZipList {
@@ -142,7 +148,11 @@ private extension MyInfoView {
                                 
                                 let documentName = deletedCardZip.id
                                 
+                                IndicatorManager.shared.start()
+                                
                                 DBManager.shared.deleteDocument(.card, documentName: documentName) { error in
+                                    IndicatorManager.shared.stop()
+                                    
                                     if let error = error {
                                         print("ERROR : \(error.localizedDescription)")
                                     }
@@ -155,21 +165,32 @@ private extension MyInfoView {
                     
                     UserDefaults.standard.removeObject(forKey: "PROFILE_IMG_DATA_\(mIdx)")
                     
+                    IndicatorManager.shared.start()
+                    
                     Task {
                         do {
                             try await DBManager.shared.deleteImage(mIdx: mIdx)
+                            
                         } catch {
                             print("ERROR : \(error.localizedDescription)")
                         }
                     }
                     
+                    IndicatorManager.shared.stop()
+                    
+                    IndicatorManager.shared.start()
+                    
                     DBManager.shared.deleteDocument(.user, documentName: mIdx) { error in
+                        IndicatorManager.shared.stop()
+                        
                         if let error = error {
                             print("ERROR : \(error.localizedDescription)")
                         }
                     }
                     
+                    IndicatorManager.shared.start()
                     AuthManager.shared.delete { result in
+                        IndicatorManager.shared.stop()
                         switch result {
                         case .success(_):
                             IndicatorManager.shared.stop()
