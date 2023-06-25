@@ -83,8 +83,8 @@ extension TabBarController: UITabBarControllerDelegate {
                 switch result {
                 case .success(let cardZipList):
                     if let cardZipList = cardZipList,
-                       cardZipList.count >= 10 {
-                        self?.view.makeToast("카드는 최대 10개까지 생성할 수 있어요.")
+                       cardZipList.count >= 5 {
+                        self?.view.makeToast("카드는 최대 5개까지 생성할 수 있어요.")
                     } else {
                         let createCardVC = UINavigationController(rootViewController: rootVC)
                         
