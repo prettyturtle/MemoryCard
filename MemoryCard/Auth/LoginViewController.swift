@@ -146,6 +146,14 @@ private extension LoginViewController {
                 let rootVC = TabBarController()                             // 메인 탭바 컨트롤러
                 self.changeRootVC(rootVC, animated: true)                   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
                 
+                DBManager.shared.fetchDocument(.user, documentName: authResult.user.uid, type: User.self) { result in
+                    if case var .success(fetchedUser) = result {
+                        fetchedUser.lastSignInDate = authResult.user.metadata.lastSignInDate
+                        
+                        DBManager.shared.save(.user, documentName: authResult.user.uid, data: fetchedUser) { _ in}
+                    }
+                }
+                
             case .failure(let error):                                       // 로그인 실패 (`에러`)
                 self.view.makeToast("사용자 정보를 찾을 수 없어요!")               // 토스트 얼럿 노출
                 print("🎉 이메일 로그인 실패", error)

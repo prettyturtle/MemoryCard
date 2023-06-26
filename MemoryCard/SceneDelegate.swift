@@ -21,6 +21,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var rootViewController: UIViewController
         
         if let currentUser = AuthManager.shared.getCurrentUser() {
+            
+            let id = currentUser.id
+            
+            DBManager.shared.fetchDocument(.user, documentName: id, type: User.self) { result in
+                if case var .success(fetchedUser) = result {
+                    fetchedUser.lastSignInDate = Date.now
+                    
+                    DBManager.shared.save(.user, documentName: id, data: fetchedUser) { _ in}
+                }
+            }
+            
             rootViewController = TabBarController()
         } else {
             rootViewController = UINavigationController(rootViewController: LoginViewController())
