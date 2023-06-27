@@ -59,6 +59,7 @@
 		6BA3065D29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3065C29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift */; };
 		6BA6A4362A2F8956002127E6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6A4352A2F8956002127E6 /* ProfileView.swift */; };
 		6BA6A4382A320FE0002127E6 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6A4372A320FE0002127E6 /* ImagePickerView.swift */; };
+		6BD18CE02A4B283C0020433A /* EasyTipView in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD18CDF2A4B283C0020433A /* EasyTipView */; };
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
 		6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */; };
@@ -129,6 +130,7 @@
 				6B29BDDF29CE132000F39932 /* FirebaseAuth in Frameworks */,
 				6B29BDDA29CE112C00F39932 /* Then in Frameworks */,
 				6B29BDE729CE132000F39932 /* FirebaseFirestore in Frameworks */,
+				6BD18CE02A4B283C0020433A /* EasyTipView in Frameworks */,
 				6B29BDE929CE132000F39932 /* FirebaseFirestoreSwift in Frameworks */,
 				6B8C598B2A37638500CD8A96 /* Lottie in Frameworks */,
 			);
@@ -338,6 +340,7 @@
 				6B682DFB2A1A68E700187262 /* Toast */,
 				6B8C598A2A37638500CD8A96 /* Lottie */,
 				6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */,
+				6BD18CDF2A4B283C0020433A /* EasyTipView */,
 			);
 			productName = MemoryCard;
 			productReference = 6B29BDBE29CE10EB00F39932 /* MemoryCard.app */;
@@ -374,6 +377,7 @@
 				6B682DFA2A1A68E700187262 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				6BF64BE02A475F99000F0EC7 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				6BD18CDE2A4B283C0020433A /* XCRemoteSwiftPackageReference "EasyTipView" */,
 			);
 			productRefGroup = 6B29BDBF29CE10EB00F39932 /* Products */;
 			projectDirPath = "";
@@ -715,6 +719,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		6BD18CDE2A4B283C0020433A /* XCRemoteSwiftPackageReference "EasyTipView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/teodorpatras/EasyTipView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		6BF64BE02A475F99000F0EC7 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
@@ -785,6 +797,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		6BD18CDF2A4B283C0020433A /* EasyTipView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BD18CDE2A4B283C0020433A /* XCRemoteSwiftPackageReference "EasyTipView" */;
+			productName = EasyTipView;
 		};
 		6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;

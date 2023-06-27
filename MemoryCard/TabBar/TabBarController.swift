@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import EasyTipView
 
 final class TabBarController: UITabBarController {
     
@@ -32,6 +33,8 @@ final class TabBarController: UITabBarController {
         selectedImage: nil
     ).then { $0.tag = 2 }
     
+    private var tipView: EasyTipView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,6 +49,20 @@ final class TabBarController: UITabBarController {
         ]
         
         delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        var pre = EasyTipView.Preferences()
+        pre.drawing.font = .systemFont(ofSize: 13.0, weight: .medium)
+        pre.drawing.foregroundColor = .white
+        pre.drawing.backgroundColor = .darkGray
+        pre.drawing.arrowPosition = .bottom
+        pre.animating.dismissOnTap = false
+        
+        tipView = EasyTipView(text: "안녕하세요", preferences: pre)
+        
+        tipView?.show(forView: tabBar)
     }
     
     private func setupTabBarItem() {
