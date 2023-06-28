@@ -92,6 +92,13 @@ extension MyCardListViewController {
                 name: .didFinishCreateCard,
                 object: nil
             )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didTapTutorialDimView),
+            name: NSNotification.Name("TUTORIAL_DID_TAP_DIM_VIEW"),
+            object: nil
+        )
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -192,6 +199,15 @@ private extension MyCardListViewController {
 
 // MARK: - UI 이벤트
 private extension MyCardListViewController {
+    
+    @objc func didTapTutorialDimView(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: String],
+              let tutorialID = userInfo["id"] else {
+            return
+        }
+        
+        print(tutorialID, "🎉🎉")
+    }
     
     /// 카드 생성 완료
     @objc func didFinishCreateCard(_ notification: Notification) {
