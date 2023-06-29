@@ -200,13 +200,62 @@ private extension MyCardListViewController {
 // MARK: - UI 이벤트
 private extension MyCardListViewController {
     
+    /// 튜토리얼 딤 뷰 탭 했을 때
     @objc func didTapTutorialDimView(_ notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String: String],
+        guard let userInfo = notification.userInfo as? [String: Int],
               let tutorialID = userInfo["id"] else {
             return
         }
         
         print(tutorialID, "🎉🎉")
+        
+        let nextID = tutorialID + 1
+        
+        if tutorialID == 1 {
+            TutorialToolTip.shared.show(
+                at: tabBarController ?? UITabBarController(),
+                id: nextID,
+                for: navigationController?.navigationBar ?? UINavigationBar(),
+                text: "여기는 \"카드리스트\"에요",
+                arrowPosition: .top
+            )
+        } else if tutorialID == 2 {
+            TutorialToolTip.shared.show(
+                at: tabBarController ?? UITabBarController(),
+                id: nextID,
+                for: navigationController?.navigationBar ?? UINavigationBar(),
+                text: "만든 카드들을 볼 수 있는 곳이에요",
+                arrowPosition: .top
+            )
+        } else if tutorialID == 3 {
+            TutorialToolTip.shared.show(
+                at: tabBarController ?? UITabBarController(),
+                id: nextID,
+                for: homeMyCardListPreviewCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) ?? navigationController?.navigationBar ?? UINavigationBar(),
+                text: "카드를 선택하면 암기를 시작할 수 있어요!",
+                arrowPosition: .top
+            )
+        } else if tutorialID == 5 {
+            TutorialToolTip.shared.show(
+                at: tabBarController ?? UITabBarController(),
+                id: nextID,
+                for: navigationItem.rightBarButtonItem ?? UIBarButtonItem(),
+                text: "\"편집\"을 누르면 카드를 수정하거나 삭제할 수 있어요",
+                arrowPosition: .top
+            )
+        } else if tutorialID == 6 {
+            didTapModifyButton(navigationItem.rightBarButtonItem ?? UIBarButtonItem())
+            
+            TutorialToolTip.shared.show(
+                at: tabBarController ?? UITabBarController(),
+                id: nextID,
+                for: navigationItem.rightBarButtonItem ?? UIBarButtonItem(),
+                text: "편집이 끝나면 \"완료\"를 눌러주세요",
+                arrowPosition: .top
+            )
+        } else if tutorialID == 7 {
+            didTapModifyButton(navigationItem.rightBarButtonItem ?? UIBarButtonItem())
+        }
     }
     
     /// 카드 생성 완료

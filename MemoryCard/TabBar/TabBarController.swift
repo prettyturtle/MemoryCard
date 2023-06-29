@@ -62,7 +62,7 @@ final class TabBarController: UITabBarController {
         super.viewDidAppear(animated)
         TutorialToolTip.shared.show(
             at: self,
-            id: "0",
+            id: 0,
             for: createCardVCTabBarItem,
             text: "안녕하세요! 메모리마스터입니다 🙋",
             arrowPosition: .bottom
@@ -70,19 +70,29 @@ final class TabBarController: UITabBarController {
     }
     
     @objc func didTapTutorialDimView(_ notification: Notification) {
-        guard let userInfo = notification.userInfo as? [String: String],
+        guard let userInfo = notification.userInfo as? [String: Int],
               let tutorialID = userInfo["id"] else {
             return
         }
         
         print(tutorialID, "🎉")
         
-        if tutorialID == "0" {
+        let nextID = tutorialID + 1
+        
+        if tutorialID == 0 {
             TutorialToolTip.shared.show(
                 at: self,
-                id: "1",
+                id: nextID,
                 for: createCardVCTabBarItem,
                 text: "지금부터 메모리마스터를 소개해드릴게요 🙇‍♀️",
+                arrowPosition: .bottom
+            )
+        } else if tutorialID == 4 {
+            TutorialToolTip.shared.show(
+                at: self,
+                id: nextID,
+                for: createCardVCTabBarItem,
+                text: "카드는 만들고 싶으면 여기를 눌러주세요 👻",
                 arrowPosition: .bottom
             )
         }
@@ -164,7 +174,7 @@ final class TutorialToolTip {
     }
     
     private var tipView: EasyTipView?
-    private var currentID: String?
+    private var currentID: Int = -1
     
     private lazy var preference: EasyTipView.Preferences = {
         var p = EasyTipView.Preferences()
@@ -182,13 +192,13 @@ final class TutorialToolTip {
         NotificationCenter.default.post(
             name: NSNotification.Name("TUTORIAL_DID_TAP_DIM_VIEW"),
             object: nil,
-            userInfo: ["id": currentID ?? ""]
+            userInfo: ["id": currentID]
         )
     }
     
     func show(
         at target: UIViewController,
-        id: String,
+        id: Int,
         for view: UIView,
         text: String,
         arrowPosition: EasyTipView.ArrowPosition
@@ -209,7 +219,7 @@ final class TutorialToolTip {
     
     func show(
         at target: UIViewController,
-        id: String,
+        id: Int,
         for item: UIBarItem,
         text: String,
         arrowPosition: EasyTipView.ArrowPosition

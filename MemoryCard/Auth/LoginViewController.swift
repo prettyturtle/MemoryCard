@@ -116,10 +116,20 @@ private extension LoginViewController {
     /// 로그인 버튼을 눌렀을 때
     /// - Parameter sender: 로그인 버튼
     @objc func didTapLoginButton(_ sender: UIButton) {
-        guard let email = emailTextField.text,
-              let password = passwordTextField.text else {                  // 이메일, 비밀번호 옵셔널 해제
+        guard var email = emailTextField.text,
+              var password = passwordTextField.text else {                  // 이메일, 비밀번호 옵셔널 해제
             return                                                          // 이메일, 비밀번호가 nil일 때
         }
+        
+#if DEBUG
+        if email == "1" && password == "1" {
+            emailTextField.text = "test@test.com"
+            passwordTextField.text = "121212"
+            email = "test@test.com"
+            password = "121212"
+        }
+#endif
+        
         
         if email.isEmpty {                                                  // 이메일이 빈 문자열일 때
             view.makeToast("이메일을 입력해주세요!")                              // 토스트 얼럿 노출 -> 리턴
