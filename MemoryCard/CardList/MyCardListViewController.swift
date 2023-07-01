@@ -228,6 +228,18 @@ private extension MyCardListViewController {
                 arrowPosition: .top
             )
         } else if tutorialID == 3 {
+            
+            if cardZipList.isEmpty {
+                cardZipList = CardZip.tutorialCardZip
+                
+                emptyImageView.isHidden = !cardZipList.isEmpty                        // 카드리스트 없을 때, 이미지 placeholder 보여줌
+                homeMyCardListPreviewCollectionView.isHidden = cardZipList.isEmpty    // 카드리스트 없을 때, 콜렉션 뷰 숨기기
+                
+                homeMyCardListPreviewCollectionView.reloadData()
+            }
+            
+            view.layoutIfNeeded()
+            
             TutorialToolTip.shared.show(
                 at: tabBarController ?? UITabBarController(),
                 id: nextID,
@@ -255,6 +267,15 @@ private extension MyCardListViewController {
             )
         } else if tutorialID == 7 {
             didTapModifyButton(navigationItem.rightBarButtonItem ?? UIBarButtonItem())
+            
+            if cardZipList.first?.mIdx == "Tutorial_mIdx" {
+                cardZipList = []
+                
+                emptyImageView.isHidden = !cardZipList.isEmpty                        // 카드리스트 없을 때, 이미지 placeholder 보여줌
+                homeMyCardListPreviewCollectionView.isHidden = cardZipList.isEmpty    // 카드리스트 없을 때, 콜렉션 뷰 숨기기
+                
+                homeMyCardListPreviewCollectionView.reloadData()
+            }
         }
     }
     

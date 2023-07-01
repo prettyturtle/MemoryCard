@@ -20,4 +20,20 @@ struct CardZip: Codable {
             CardZip(folderName: "TEST\($0)", cards: [Card(id: $0, front: Card.CardContent(content: "front \($0)"), back: Card.CardContent(content: "back \($0)"))], mIdx: AuthManager.shared.getCurrentUser()?.id ?? "")
         }
     }
+    
+    static var tutorialCardZip: [CardZip] {
+        return [
+            CardZip(
+                folderName: "필수 영단어",
+                cards: [
+                    Card(
+                        id: 0,
+                        front: Card.CardContent(content: "Hello"),
+                        back: Card.CardContent(content: "안녕하세요")
+                    )
+                ],
+                mIdx: "Tutorial_mIdx"
+            )
+        ]
+    }
 }
