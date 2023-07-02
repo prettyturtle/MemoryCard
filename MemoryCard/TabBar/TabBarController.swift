@@ -60,13 +60,17 @@ final class TabBarController: UITabBarController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        TutorialToolTip.shared.show(
-            at: self,
-            id: 0,
-            for: createCardVCTabBarItem,
-            text: "안녕하세요! 메모리마스터입니다 🙋",
-            arrowPosition: .bottom
-        )
+        
+        let isDoneTutorialIntro = UserDefaults.standard.bool(forKey: "IS_DONE_TUTORIAL_INTRO")
+        if !isDoneTutorialIntro {
+            TutorialToolTip.shared.show(
+                at: self,
+                id: 0,
+                for: createCardVCTabBarItem,
+                text: "안녕하세요! 메모리마스터입니다 🙋",
+                arrowPosition: .bottom
+            )
+        }
     }
     
     @objc func didTapTutorialDimView(_ notification: Notification) {

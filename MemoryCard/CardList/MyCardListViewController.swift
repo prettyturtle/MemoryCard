@@ -276,6 +276,8 @@ private extension MyCardListViewController {
                 
                 homeMyCardListPreviewCollectionView.reloadData()
             }
+            
+            UserDefaults.standard.setValue(true, forKey: "IS_DONE_TUTORIAL_INTRO")
         }
     }
     
