@@ -60,6 +60,8 @@
 		6BA6A4362A2F8956002127E6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6A4352A2F8956002127E6 /* ProfileView.swift */; };
 		6BA6A4382A320FE0002127E6 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6A4372A320FE0002127E6 /* ImagePickerView.swift */; };
 		6BD18CE02A4B283C0020433A /* EasyTipView in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD18CDF2A4B283C0020433A /* EasyTipView */; };
+		6BD18CEA2A51C0F40020433A /* Notification_Name+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD18CE92A51C0F40020433A /* Notification_Name+.swift */; };
+		6BD18CEC2A51C10A0020433A /* TutorialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD18CEB2A51C10A0020433A /* TutorialManager.swift */; };
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
 		6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */; };
@@ -109,6 +111,8 @@
 		6BA3065C29D8AC1A003CFAF2 /* CreateCardFinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCardFinishViewController.swift; sourceTree = "<group>"; };
 		6BA6A4352A2F8956002127E6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		6BA6A4372A320FE0002127E6 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		6BD18CE92A51C0F40020433A /* Notification_Name+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification_Name+.swift"; sourceTree = "<group>"; };
+		6BD18CEB2A51C10A0020433A /* TutorialManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialManager.swift; sourceTree = "<group>"; };
 		6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewCell.swift; sourceTree = "<group>"; };
 		6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeConfigView.swift; sourceTree = "<group>"; };
 		6BF64BEE2A483A73000F0EC7 /* AppIconConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconConfigView.swift; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 				6B29BDF829CF547600F39932 /* AuthManager.swift */,
 				6B088D1D29D0375B0056B4EF /* IndicatorManager.swift */,
 				6B85569329DC64AA0004E226 /* DBManager.swift */,
+				6BD18CEB2A51C10A0020433A /* TutorialManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 				6BA3065629D896AA003CFAF2 /* UITextView+.swift */,
 				6B088D1B29D037220056B4EF /* UIApplication+.swift */,
 				6B9BC16329EAE4C200B32557 /* UINavigationItem+.swift */,
+				6BD18CE92A51C0F40020433A /* Notification_Name+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -408,6 +414,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BD18CEA2A51C0F40020433A /* Notification_Name+.swift in Sources */,
 				6B85569C29E464070004E226 /* MyCardListViewController.swift in Sources */,
 				6B85569629DF03F70004E226 /* User.swift in Sources */,
 				6B29BDC629CE10EB00F39932 /* LoginViewController.swift in Sources */,
@@ -430,6 +437,7 @@
 				6BA6A4382A320FE0002127E6 /* ImagePickerView.swift in Sources */,
 				6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */,
 				6BF64BEF2A483A73000F0EC7 /* AppIconConfigView.swift in Sources */,
+				6BD18CEC2A51C10A0020433A /* TutorialManager.swift in Sources */,
 				6B29BDC229CE10EB00F39932 /* AppDelegate.swift in Sources */,
 				6B29BDC429CE10EB00F39932 /* SceneDelegate.swift in Sources */,
 				6B088D2229D05CEA0056B4EF /* MyInfoViewController.swift in Sources */,

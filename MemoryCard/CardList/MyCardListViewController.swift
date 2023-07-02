@@ -212,7 +212,7 @@ private extension MyCardListViewController {
         let nextID = tutorialID + 1
         
         if tutorialID == 1 {
-            TutorialToolTip.shared.show(
+            TutorialManager.shared.show(
                 at: tabBarController ?? UITabBarController(),
                 id: nextID,
                 for: navigationController?.navigationBar ?? UINavigationBar(),
@@ -220,7 +220,7 @@ private extension MyCardListViewController {
                 arrowPosition: .top
             )
         } else if tutorialID == 2 {
-            TutorialToolTip.shared.show(
+            TutorialManager.shared.show(
                 at: tabBarController ?? UITabBarController(),
                 id: nextID,
                 for: navigationController?.navigationBar ?? UINavigationBar(),
@@ -240,7 +240,7 @@ private extension MyCardListViewController {
             
             view.layoutIfNeeded()
             
-            TutorialToolTip.shared.show(
+            TutorialManager.shared.show(
                 at: tabBarController ?? UITabBarController(),
                 id: nextID,
                 for: homeMyCardListPreviewCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) ?? navigationController?.navigationBar ?? UINavigationBar(),
@@ -248,7 +248,7 @@ private extension MyCardListViewController {
                 arrowPosition: .top
             )
         } else if tutorialID == 5 {
-            TutorialToolTip.shared.show(
+            TutorialManager.shared.show(
                 at: tabBarController ?? UITabBarController(),
                 id: nextID,
                 for: navigationItem.rightBarButtonItem ?? UIBarButtonItem(),
@@ -258,7 +258,7 @@ private extension MyCardListViewController {
         } else if tutorialID == 6 {
             didTapModifyButton(navigationItem.rightBarButtonItem ?? UIBarButtonItem())
             
-            TutorialToolTip.shared.show(
+            TutorialManager.shared.show(
                 at: tabBarController ?? UITabBarController(),
                 id: nextID,
                 for: navigationItem.rightBarButtonItem ?? UIBarButtonItem(),
