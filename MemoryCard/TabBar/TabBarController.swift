@@ -50,7 +50,7 @@ final class TabBarController: UITabBarController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didTapTutorialDimView),
-            name: NSNotification.Name("TUTORIAL_DID_TAP_DIM_VIEW"),
+            name: .TUTORIAL_DID_TAP_DIM_VIEW,
             object: nil
         )
     }

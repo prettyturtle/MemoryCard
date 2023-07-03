@@ -39,7 +39,7 @@ final class TutorialManager {
     @objc private func didTapDimView() {
         dismiss(step: .dim)
         NotificationCenter.default.post(
-            name: NSNotification.Name("TUTORIAL_DID_TAP_DIM_VIEW"),
+            name: .TUTORIAL_DID_TAP_DIM_VIEW,
             object: nil,
             userInfo: ["id": currentID]
         )

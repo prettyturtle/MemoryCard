@@ -99,7 +99,7 @@ private extension CreateCardFinishViewController {
         NotificationCenter
             .default
             .post(
-                name: .didFinishCreateCard,
+                name: .DID_FINISH_CREATE_CARD,
                 object: nil,
                 userInfo: ["isEdit": isEdit]
             )
@@ -127,10 +127,6 @@ private extension CreateCardFinishViewController {
     }
 }
 
-extension NSNotification.Name {
-    static let didFinishCreateCard = NSNotification.Name("DID_FINISH_CREATE_CARD")
-}
-
 extension CreateCardFinishViewController: GADFullScreenContentDelegate {
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         print("Ad did fail to present full screen content.")
@@ -139,7 +135,7 @@ extension CreateCardFinishViewController: GADFullScreenContentDelegate {
         NotificationCenter
             .default
             .post(
-                name: .didFinishCreateCard,
+                name: .DID_FINISH_CREATE_CARD,
                 object: nil,
                 userInfo: ["isEdit": isEdit]
             )
@@ -158,7 +154,7 @@ extension CreateCardFinishViewController: GADFullScreenContentDelegate {
         NotificationCenter
             .default
             .post(
-                name: .didFinishCreateCard,
+                name: .DID_FINISH_CREATE_CARD,
                 object: nil,
                 userInfo: ["isEdit": isEdit]
             )

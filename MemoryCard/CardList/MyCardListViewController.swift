@@ -89,14 +89,14 @@ extension MyCardListViewController {
             .addObserver(
                 self,
                 selector: #selector(didFinishCreateCard),
-                name: .didFinishCreateCard,
+                name: .DID_FINISH_CREATE_CARD,
                 object: nil
             )
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didTapTutorialDimView),
-            name: NSNotification.Name("TUTORIAL_DID_TAP_DIM_VIEW"),
+            name: .TUTORIAL_DID_TAP_DIM_VIEW,
             object: nil
         )
     }
