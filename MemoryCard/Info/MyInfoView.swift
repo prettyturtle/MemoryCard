@@ -30,6 +30,20 @@ struct MyInfoView: View {
                 List {
                     ZStack {
                         NavigationLink {
+                            ReminderSettingView()
+                        } label: {
+                            EmptyView()
+                        }
+                        .opacity(0.0)
+                        
+                        MyInfoViewCell(
+                            title: "암기 리마인더 설정",
+                            textColor: .black
+                        )
+                    }
+                    
+                    ZStack {
+                        NavigationLink {
                             StudyModeConfigView()
                         } label: {
                             EmptyView()
@@ -258,5 +272,12 @@ private extension MyInfoView {
 struct MyInfoView_Previews: PreviewProvider {
     static var previews: some View {
         MyInfoView()
+    }
+}
+
+
+struct ReminderSettingView: View {
+    var body: some View {
+        Text("ReminderSettingView")
     }
 }
