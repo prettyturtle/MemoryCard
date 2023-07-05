@@ -30,7 +30,7 @@ struct MyInfoView: View {
                 List {
                     ZStack {
                         NavigationLink {
-                            ReminderSettingView()
+                            ReminderListView()
                         } label: {
                             EmptyView()
                         }
@@ -272,12 +272,5 @@ private extension MyInfoView {
 struct MyInfoView_Previews: PreviewProvider {
     static var previews: some View {
         MyInfoView()
-    }
-}
-
-
-struct ReminderSettingView: View {
-    var body: some View {
-        Text("ReminderSettingView")
     }
 }
