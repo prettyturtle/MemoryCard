@@ -40,7 +40,7 @@ struct ReminderListView: View {
         .sheet(isPresented: $isShowAddReminderView) {
             print("HELLO")
         } content: {
-            Text("ADD REMINDER VIEW")
+            AddReminderView(isShow: $isShowAddReminderView)
         }
     }
 }
@@ -50,9 +50,26 @@ struct Reminder: Decodable, Identifiable {
     var title: String
     var date: Date
     var isOn: Bool
-    var cardZip: CardZip?
+    var cardZipID: String?
     
     static let mockData = (1...10).map {
-        Reminder(id: UUID(), title: "Title\($0)", date: Date.now, isOn: false, cardZip: nil)
+        Reminder(id: UUID(), title: "Title\($0)", date: Date.now, isOn: false, cardZipID: nil)
+    }
+}
+
+enum WeekDay: Int, CaseIterable, Decodable {
+    case mon, tue, wed, thu, fri, sat, sun
+    
+    var value: Int { self.rawValue + 1 }
+    var text: String {
+        switch self {
+        case .mon: return "월"
+        case .tue: return "화"
+        case .wed: return "수"
+        case .thu: return "목"
+        case .fri: return "금"
+        case .sat: return "토"
+        case .sun: return "일"
+        }
     }
 }
