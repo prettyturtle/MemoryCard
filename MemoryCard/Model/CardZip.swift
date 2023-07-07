@@ -8,12 +8,15 @@
 import Foundation
 
 /// 카드 집
-struct CardZip: Codable {
+struct CardZip: Codable, Equatable {
     var id: String = UUID().uuidString  // ID
     let folderName: String              // 카드 폴더 명
     let cards: [Card]                   // 카드 배열
     let mIdx: String                    // 유저 아이디
     
+    static func == (lhs: CardZip, rhs: CardZip) -> Bool {
+        return lhs.id == rhs.id
+    }
     
     static var mockData: [CardZip] {
         return (1...10).map {

@@ -112,8 +112,8 @@ extension CardListCollectionViewCell {
     /// 레이아웃 설정
     func setupLayout(isEdit: Bool) {
         layer.cornerRadius = 12.0
-        layer.borderColor = UIColor.lightGray.cgColor
-        layer.borderWidth = 0.4
+        layer.borderColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        layer.borderWidth = 1.0
         
         [
             cardFolderNameLabel
@@ -168,3 +168,30 @@ extension CardListCollectionViewCell {
         }
     }
 }
+
+import SwiftUI
+
+struct CardZipCell: UIViewRepresentable {
+    
+    let cardZip: CardZip
+    var borderColor: UIColor?
+    
+    func updateUIView(_ uiView: CardListCollectionViewCell, context: Context) {
+        if let borderColor = borderColor {
+            uiView.layer.borderColor = borderColor.cgColor
+        } else {
+            uiView.layer.borderColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        }
+    }
+    
+    func makeUIView(context: Context) -> CardListCollectionViewCell {
+        let cell = CardListCollectionViewCell()
+        
+        cell.setupLayout(isEdit: false)
+        cell.cardZip = cardZip
+        cell.setupView()
+        
+        return cell
+    }
+}
+

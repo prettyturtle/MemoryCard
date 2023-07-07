@@ -11,17 +11,27 @@ struct ReminderListView: View {
     
     @State var reminderList = [Reminder]()
     @State var isShowAddReminderView = false
+    @State var savedReminder: Reminder?
     
     var body: some View {
         Group {
-            if reminderList.isEmpty {
+            VStack(spacing: 0) {
                 Text("암기 리마인더를 설정해보세요")
-            } else {
-                List($reminderList) { reminder in
-                    Toggle(isOn: reminder.isOn) {
-                        Text(reminder.title.wrappedValue)
+                    .font(.system(size: 20, weight: .semibold))
+                Text("설정한 시간에 알림")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.secondary)
+                    .padding(.top, 8)
+                
+                if reminderList.isEmpty {
+                    Spacer()
+                } else {
+                    List($reminderList) { $reminder in
+                        Toggle(isOn: $reminder.isOn) {
+                            Text(reminder.title)
+                        }
+                        .tint(.orange)
                     }
-                    .tint(.red)
                 }
             }
         }
@@ -35,25 +45,36 @@ struct ReminderListView: View {
             }
         }
         .onAppear {
-            reminderList = Reminder.mockData
+            reminderList = []
         }
         .sheet(isPresented: $isShowAddReminderView) {
             print("HELLO")
         } content: {
-            AddReminderView(isShow: $isShowAddReminderView)
+            AddReminderView(isShow: $isShowAddReminderView, savedReminder: $savedReminder)
+        }
+        .onChange(of: savedReminder) { newReminder in
+            if let newReminder = newReminder {
+                reminderList.append(newReminder)
+                savedReminder = nil
+            }
         }
     }
 }
 
-struct Reminder: Decodable, Identifiable {
+struct Reminder: Decodable, Identifiable, Equatable {
     let id: UUID
     var title: String
     var date: Date
-    var isOn: Bool
+    var weekDayList: [WeekDay]
     var cardZipID: String?
+    var isOn: Bool
+    
+    static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+        return lhs.id == rhs.id
+    }
     
     static let mockData = (1...10).map {
-        Reminder(id: UUID(), title: "Title\($0)", date: Date.now, isOn: false, cardZipID: nil)
+        Reminder(id: UUID(), title: "Title\($0)", date: Date.now, weekDayList: WeekDay.allCases, cardZipID: nil, isOn: false)
     }
 }
 
