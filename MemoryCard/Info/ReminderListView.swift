@@ -61,7 +61,7 @@ struct ReminderListView: View {
     }
 }
 
-struct Reminder: Decodable, Identifiable, Equatable {
+class Reminder: Decodable, Identifiable, Equatable {
     let id: UUID
     var title: String
     var date: Date
@@ -69,7 +69,23 @@ struct Reminder: Decodable, Identifiable, Equatable {
     var cardZipID: String?
     var isOn: Bool
     
-    static func == (_ lhs: Self, _ rhs: Self) -> Bool {
+    init(
+        id: UUID,
+        title: String,
+        date: Date,
+        weekDayList: [WeekDay],
+        cardZipID: String? = nil,
+        isOn: Bool
+    ) {
+        self.id = id
+        self.title = title
+        self.date = date
+        self.weekDayList = weekDayList
+        self.cardZipID = cardZipID
+        self.isOn = isOn
+    }
+    
+    static func == (_ lhs: Reminder, _ rhs: Reminder) -> Bool {
         return lhs.id == rhs.id
     }
     
