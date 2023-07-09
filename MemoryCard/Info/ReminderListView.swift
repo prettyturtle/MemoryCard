@@ -14,27 +14,28 @@ struct ReminderListView: View {
     @State var savedReminder: Reminder?
     
     var body: some View {
-        Group {
-            VStack(spacing: 0) {
-                Text("암기 리마인더를 설정해보세요")
-                    .font(.system(size: 20, weight: .semibold))
-                Text("설정한 시간에 알림")
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.secondary)
-                    .padding(.top, 8)
-                
-                if reminderList.isEmpty {
-                    Spacer()
-                } else {
-                    List($reminderList) { $reminder in
-                        Toggle(isOn: $reminder.isOn) {
-                            Text(reminder.title)
-                        }
-                        .tint(.orange)
+        VStack(spacing: 0) {
+            Text("암기 리마인더 설정")
+                .font(.system(size: 20, weight: .semibold))
+            Text("원하는 시간에 암기를 시작해보세요")
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(.secondary)
+                .padding(.top, 8)
+            
+            if reminderList.isEmpty {
+                Spacer()
+            } else {
+                List($reminderList) { $reminder in
+                    Toggle(isOn: $reminder.isOn) {
+                        Text(reminder.title)
                     }
+                    .tint(.orange)
                 }
+                .listStyle(.plain)
+                .padding(.top, 16)
             }
         }
+        
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {

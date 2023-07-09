@@ -191,6 +191,8 @@ extension AddReminderView {
                 isOn: true
             )
             
+            saveReminder()
+            
             isShow = false
         } label: {
             Text("저장하기")
@@ -201,5 +203,11 @@ extension AddReminderView {
                 .cornerRadius(12)
         }
         .padding(.bottom, 16)
+    }
+}
+
+private extension AddReminderView {
+    func saveReminder() {
+        
     }
 }
