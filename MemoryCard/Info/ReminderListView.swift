@@ -46,7 +46,19 @@ struct ReminderListView: View {
             }
         }
         .onAppear {
-            reminderList = []
+            if let mIdx = AuthManager.shared.getCurrentUser()?.id,
+               let reminderListData = UserDefaults.standard.data(forKey: "REMINDER_LIST_\(mIdx)") {
+               
+               do {
+                   let savedReminderList = try JSONDecoder().decode([Reminder].self, from: reminderListData)
+                   
+                   reminderList = savedReminderList
+               } catch {
+                   reminderList = []
+               }
+            } else {
+                reminderList = []
+            }
         }
         .sheet(isPresented: $isShowAddReminderView) {
             print("HELLO")
@@ -62,7 +74,7 @@ struct ReminderListView: View {
     }
 }
 
-class Reminder: Decodable, Identifiable, Equatable {
+class Reminder: Codable, Identifiable, Equatable {
     let id: UUID
     var title: String
     var date: Date
@@ -95,7 +107,7 @@ class Reminder: Decodable, Identifiable, Equatable {
     }
 }
 
-enum WeekDay: Int, CaseIterable, Decodable {
+enum WeekDay: Int, CaseIterable, Codable {
     case mon, tue, wed, thu, fri, sat, sun
     
     var value: Int { self.rawValue + 1 }

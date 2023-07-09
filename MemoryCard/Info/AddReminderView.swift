@@ -17,6 +17,7 @@ struct AddReminderView: View {
     @State var selectedCardZip: CardZip?
     
     @Binding var savedReminder: Reminder?
+    @State var userID: String?
 }
 
 // MARK: - UI Components
@@ -62,6 +63,8 @@ extension AddReminderView {
             .onAppear {
                 if let currentUser = AuthManager.shared.getCurrentUser() {
                     let mIdx = currentUser.id
+                    
+                    userID = mIdx
                     
                     DBManager.shared.fetchAllDocumentsWhereField(.card, type: CardZip.self, field: ("mIdx", mIdx)) { result in
                         switch result {
@@ -182,7 +185,7 @@ extension AddReminderView {
         return Button {
             let weekDayList = selectedWeekDay.filter { $0.value }.map { $0.key }
             
-            savedReminder = Reminder(
+            let newReminder = Reminder(
                 id: UUID(),
                 title: title,
                 date: selectedDate,
@@ -191,9 +194,11 @@ extension AddReminderView {
                 isOn: true
             )
             
-            saveReminder()
-            
-            isShow = false
+            if saveReminder(newReminder) {
+                savedReminder = newReminder
+                
+                isShow = false
+            }
         } label: {
             Text("저장하기")
                 .frame(width: buttonWidth, height: buttonHeight)
@@ -207,7 +212,31 @@ extension AddReminderView {
 }
 
 private extension AddReminderView {
-    func saveReminder() {
+    func saveReminder(_ reminder: Reminder) -> Bool {
+        guard let mIdx = userID else {
+            return false
+        }
         
+        var newReminderList = [reminder]
+        
+        if let reminderListData = UserDefaults.standard.data(forKey: "REMINDER_LIST_\(mIdx)") {
+            do {
+                let reminderList = try JSONDecoder().decode([Reminder].self, from: reminderListData)
+                
+                newReminderList.append(contentsOf: reminderList)
+            } catch {
+                print("ERROR : \(error.localizedDescription)")
+            }
+        }
+        
+        do {
+            let encodedNewReminderList = try JSONEncoder().encode(newReminderList)
+            
+            UserDefaults.standard.setValue(encodedNewReminderList, forKey: "REMINDER_LIST_\(mIdx)")
+        } catch {
+            return false
+        }
+        
+        return true
     }
 }
