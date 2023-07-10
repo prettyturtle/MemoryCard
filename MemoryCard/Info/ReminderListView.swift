@@ -30,6 +30,14 @@ struct ReminderListView: View {
                         Text(reminder.title)
                     }
                     .tint(.orange)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button {
+                            deleteReminder(reminder)
+                        } label: {
+                            Label("삭제", systemImage: "trash")
+                        }
+                        .tint(.red)
+                    }
                 }
                 .listStyle(.plain)
                 .padding(.top, 16)
@@ -67,9 +75,29 @@ struct ReminderListView: View {
         }
         .onChange(of: savedReminder) { newReminder in
             if let newReminder = newReminder {
-                reminderList.append(newReminder)
+                reminderList.insert(newReminder, at: 0)
                 savedReminder = nil
             }
+        }
+    }
+    
+    private func deleteReminder(_ reminder: Reminder) {
+        if let mIdx = AuthManager.shared.getCurrentUser()?.id,
+           let reminderListData = UserDefaults.standard.data(forKey: "REMINDER_LIST_\(mIdx)") {
+           
+           do {
+               let savedReminderList = try JSONDecoder().decode([Reminder].self, from: reminderListData)
+               
+               let deletedReminderList = savedReminderList.filter { $0.id != reminder.id }
+               
+               let deletedReminderListData = try JSONEncoder().encode(deletedReminderList)
+               
+               UserDefaults.standard.setValue(deletedReminderListData, forKey: "REMINDER_LIST_\(mIdx)")
+               
+               reminderList = deletedReminderList
+           } catch {
+               return
+           }
         }
     }
 }
