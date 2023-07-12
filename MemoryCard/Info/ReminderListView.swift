@@ -33,11 +33,21 @@ struct ReminderListView: View {
                     .tint(.orange)
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button {
-                            deleteReminder(reminder)
+                            Task {
+                                await cancelReminder(reminder)
+                                deleteReminder(reminder)
+                            }
                         } label: {
                             Label("삭제", systemImage: "trash")
                         }
                         .tint(.red)
+                    }
+                    .onChange(of: reminder.isOn) { newIsOn in
+//                        if !newIsOn {
+//                            Task {
+//                                await cancelReminder(reminder)
+//                            }
+//                        }
                     }
                 }
                 .listStyle(.plain)
@@ -82,6 +92,14 @@ struct ReminderListView: View {
                 savedReminder = nil
             }
         }
+    }
+    
+    private func cancelReminder(_ reminder: Reminder) async {
+        let requests = await UNUserNotificationCenter.current().pendingNotificationRequests()
+        
+        let deletedReminderIDs = requests.map { $0.identifier }.filter { $0.hasPrefix(reminder.id.uuidString) }
+        
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: deletedReminderIDs)
     }
     
     private func deleteReminder(_ reminder: Reminder) {
