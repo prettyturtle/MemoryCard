@@ -27,7 +27,17 @@ struct ReminderListView: View {
                 Spacer()
             } else {
                 List($reminderList) { $reminder in
-                    Toggle(isOn: $reminder.isOn) {
+                    Toggle(isOn: Binding<Bool>(get: {
+                        return reminder.isOn
+                    }, set: { newIsOn, _ in
+                        if !newIsOn {
+                            Task {
+                                await cancelReminder(reminder)
+                                reminder.isOn = newIsOn
+                            }
+                        }
+                        
+                    })) {
                         Text(reminder.title)
                     }
                     .tint(.orange)
@@ -41,13 +51,6 @@ struct ReminderListView: View {
                             Label("삭제", systemImage: "trash")
                         }
                         .tint(.red)
-                    }
-                    .onChange(of: reminder.isOn) { newIsOn in
-//                        if !newIsOn {
-//                            Task {
-//                                await cancelReminder(reminder)
-//                            }
-//                        }
                     }
                 }
                 .listStyle(.plain)
