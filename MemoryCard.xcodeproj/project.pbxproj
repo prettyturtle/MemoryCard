@@ -49,6 +49,7 @@
 		6B85569C29E464070004E226 /* MyCardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569B29E464070004E226 /* MyCardListViewController.swift */; };
 		6B8C59882A37630600CD8A96 /* complete_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C59872A37630500CD8A96 /* complete_lottie.json */; };
 		6B8C598B2A37638500CD8A96 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8C598A2A37638500CD8A96 /* Lottie */; };
+		6B92AEEC2A658B0E0008297A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B92AEEB2A658B0E0008297A /* UserDefaultsManager.swift */; };
 		6B9BC16229E9D26B00B32557 /* CardStudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16129E9D26B00B32557 /* CardStudyViewController.swift */; };
 		6B9BC16429EAE4C200B32557 /* UINavigationItem+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16329EAE4C200B32557 /* UINavigationItem+.swift */; };
 		6B9BC16629EB213100B32557 /* CardStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16529EB213100B32557 /* CardStudyCollectionViewCell.swift */; };
@@ -103,6 +104,7 @@
 		6B85569729E2C10F0004E226 /* CardListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListCollectionViewCell.swift; sourceTree = "<group>"; };
 		6B85569B29E464070004E226 /* MyCardListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCardListViewController.swift; sourceTree = "<group>"; };
 		6B8C59872A37630500CD8A96 /* complete_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = complete_lottie.json; sourceTree = "<group>"; };
+		6B92AEEB2A658B0E0008297A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		6B9BC16129E9D26B00B32557 /* CardStudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStudyViewController.swift; sourceTree = "<group>"; };
 		6B9BC16329EAE4C200B32557 /* UINavigationItem+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+.swift"; sourceTree = "<group>"; };
 		6B9BC16529EB213100B32557 /* CardStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStudyCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				6B088D1D29D0375B0056B4EF /* IndicatorManager.swift */,
 				6B85569329DC64AA0004E226 /* DBManager.swift */,
 				6BD18CEB2A51C10A0020433A /* TutorialManager.swift */,
+				6B92AEEB2A658B0E0008297A /* UserDefaultsManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */,
 				6BF64BEF2A483A73000F0EC7 /* AppIconConfigView.swift in Sources */,
 				6BD18CEC2A51C10A0020433A /* TutorialManager.swift in Sources */,
+				6B92AEEC2A658B0E0008297A /* UserDefaultsManager.swift in Sources */,
 				6B29BDC229CE10EB00F39932 /* AppDelegate.swift in Sources */,
 				6B29BDC429CE10EB00F39932 /* SceneDelegate.swift in Sources */,
 				6B088D2229D05CEA0056B4EF /* MyInfoViewController.swift in Sources */,
