@@ -8,13 +8,23 @@
 import Foundation
 
 struct UserDefaultsManager<T: Codable & Equatable> {
+    enum Key {
+        case reminderList(mIdx: String)
+        
+        var value: String {
+            switch self {
+            case .reminderList(let mIdx):
+                return "REMINDER_LIST_\(mIdx)"
+            }
+        }
+    }
+    
+    let key: Key
     
     private let standard = UserDefaults.standard
     
-    let key: String
-    
     func read() -> [T]? {
-        guard let savedData = standard.data(forKey: key) else {
+        guard let savedData = standard.data(forKey: key.value) else {
             return []
         }
         
@@ -27,9 +37,9 @@ struct UserDefaultsManager<T: Codable & Equatable> {
     }
     
     @discardableResult
-    func save(_ newValue: T) -> Bool {
+    func save(_ newValue: T) -> [T]? {
         guard let savedList = read() else {
-            return false
+            return nil
         }
         
         let newSavedList = savedList + [newValue]
@@ -37,18 +47,18 @@ struct UserDefaultsManager<T: Codable & Equatable> {
         do {
             let newSavedData = try JSONEncoder().encode(newSavedList)
             
-            standard.setValue(newSavedData, forKey: key)
+            standard.setValue(newSavedData, forKey: key.value)
             
-            return true
+            return newSavedList
         } catch {
-            return false
+            return nil
         }
     }
     
     @discardableResult
-    func update(_ newValue: T) -> Bool {
+    func update(_ newValue: T) -> [T]? {
         guard let savedList = read() else {
-            return false
+            return nil
         }
         
         let updatedSavedList = savedList.filter { $0 != newValue } + [newValue]
@@ -56,18 +66,18 @@ struct UserDefaultsManager<T: Codable & Equatable> {
         do {
             let updatedSavedData = try JSONEncoder().encode(updatedSavedList)
             
-            standard.setValue(updatedSavedData, forKey: key)
+            standard.setValue(updatedSavedData, forKey: key.value)
             
-            return true
+            return updatedSavedList
         } catch {
-            return false
+            return nil
         }
     }
     
     @discardableResult
-    func delete(_ value: T) -> Bool {
+    func delete(_ value: T) -> [T]? {
         guard let saveList = read() else {
-            return false
+            return nil
         }
         
         let deletedSavedList = saveList.filter { $0 != value }
@@ -75,11 +85,11 @@ struct UserDefaultsManager<T: Codable & Equatable> {
         do {
             let deletedSavedData = try JSONEncoder().encode(deletedSavedList)
             
-            standard.setValue(deletedSavedData, forKey: key)
+            standard.setValue(deletedSavedData, forKey: key.value)
             
-            return true
+            return deletedSavedList
         } catch {
-            return false
+            return nil
         }
     }
 }

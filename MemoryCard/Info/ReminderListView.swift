@@ -132,22 +132,12 @@ struct ReminderListView: View {
     }
     
     private func deleteReminder(_ reminder: Reminder) {
-        if let mIdx = AuthManager.shared.getCurrentUser()?.id,
-           let reminderListData = UserDefaults.standard.data(forKey: "REMINDER_LIST_\(mIdx)") {
-           
-           do {
-               let savedReminderList = try JSONDecoder().decode([Reminder].self, from: reminderListData)
-               
-               let deletedReminderList = savedReminderList.filter { $0.id != reminder.id }
-               
-               let deletedReminderListData = try JSONEncoder().encode(deletedReminderList)
-               
-               UserDefaults.standard.setValue(deletedReminderListData, forKey: "REMINDER_LIST_\(mIdx)")
-               
-               reminderList = deletedReminderList
-           } catch {
-               return
-           }
+        if let mIdx = AuthManager.shared.getCurrentUser()?.id {
+            let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
+            
+            if let deletedReminderList = udm.delete(reminder) {
+                reminderList = deletedReminderList
+            }
         }
     }
 }
