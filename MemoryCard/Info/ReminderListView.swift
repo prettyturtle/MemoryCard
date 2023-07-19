@@ -35,7 +35,7 @@ struct ReminderListView: View {
                                 await cancelReminder(reminder)
                                 reminder.isOn = newIsOn
                                 
-                                modifyReminder(reminder)
+                                updateReminder(reminder)
                             }
                         }
                         
@@ -107,26 +107,12 @@ struct ReminderListView: View {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: deletedReminderIDs)
     }
     
-    private func modifyReminder(_ reminder: Reminder) {
-        if let mIdx = AuthManager.shared.getCurrentUser()?.id,
-           let reminderListData = UserDefaults.standard.data(forKey: "REMINDER_LIST_\(mIdx)") {
+    private func updateReminder(_ reminder: Reminder) {
+        if let mIdx = AuthManager.shared.getCurrentUser()?.id {
+            let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
             
-            do {
-                let savedReminderList = try JSONDecoder().decode([Reminder].self, from: reminderListData)
-                
-                var modifiedReminderList = savedReminderList
-                
-                if let modifiedReminderIndex = modifiedReminderList.firstIndex(of: reminder) {
-                    modifiedReminderList[modifiedReminderIndex] = reminder
-                }
-                
-                let modifiedReminderListData = try JSONEncoder().encode(modifiedReminderList)
-                
-                UserDefaults.standard.setValue(modifiedReminderListData, forKey: "REMINDER_LIST_\(mIdx)")
-                
-                reminderList = modifiedReminderList
-            } catch {
-                return
+            if let updatedReminderList = udm.update(reminder) {
+                reminderList = updatedReminderList
             }
         }
     }
