@@ -220,23 +220,9 @@ private extension AddReminderView {
             return false
         }
         
-        var newReminderList = [reminder]
+        let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
         
-        if let reminderListData = UserDefaults.standard.data(forKey: "REMINDER_LIST_\(mIdx)") {
-            do {
-                let reminderList = try JSONDecoder().decode([Reminder].self, from: reminderListData)
-                
-                newReminderList.append(contentsOf: reminderList)
-            } catch {
-                print("ERROR : \(error.localizedDescription)")
-            }
-        }
-        
-        do {
-            let encodedNewReminderList = try JSONEncoder().encode(newReminderList)
-            
-            UserDefaults.standard.setValue(encodedNewReminderList, forKey: "REMINDER_LIST_\(mIdx)")
-        } catch {
+        guard let _ = udm.save(reminder) else {
             return false
         }
         

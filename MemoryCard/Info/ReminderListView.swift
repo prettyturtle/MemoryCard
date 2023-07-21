@@ -70,20 +70,18 @@ struct ReminderListView: View {
             }
         }
         .onAppear {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge], completionHandler: { _,_ in })
+            let unNotiCenter = UNUserNotificationCenter.current()
+            let notiOptions: UNAuthorizationOptions = [.alert, .badge]
             
-            if let mIdx = AuthManager.shared.getCurrentUser()?.id,
-               let reminderListData = UserDefaults.standard.data(forKey: "REMINDER_LIST_\(mIdx)") {
-               
-               do {
-                   let savedReminderList = try JSONDecoder().decode([Reminder].self, from: reminderListData)
-                   
-                   reminderList = savedReminderList
-               } catch {
-                   reminderList = []
-               }
-            } else {
-                reminderList = []
+            unNotiCenter.requestAuthorization(options: notiOptions, completionHandler: { _,_ in })
+            
+            
+            if let mIdx = AuthManager.shared.getCurrentUser()?.id {
+                let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
+                
+                let savedReminderList = udm.read() ?? []
+                
+                reminderList = savedReminderList
             }
         }
         .sheet(isPresented: $isShowAddReminderView) {
