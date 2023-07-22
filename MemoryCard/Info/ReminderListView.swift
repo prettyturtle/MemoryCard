@@ -37,8 +37,13 @@ struct ReminderListView: View {
                                 
                                 updateReminder(reminder)
                             }
+                        } else {
+                            registerReminder(reminder)
+                            
+                            reminder.isOn = newIsOn
+                            
+                            updateReminder(reminder)
                         }
-                        
                     })) {
                         Text(reminder.title)
                     }
@@ -103,6 +108,38 @@ struct ReminderListView: View {
         let deletedReminderIDs = requests.map { $0.identifier }.filter { $0.hasPrefix(reminder.id.uuidString) }
         
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: deletedReminderIDs)
+    }
+    
+    private func registerReminder(_ reminder: Reminder) {
+        let notificationContent = UNMutableNotificationContent()
+        
+        notificationContent.title = reminder.title
+        notificationContent.body = "알림을 눌러 지금 바로 암기를 시작해봐요 👏"
+        notificationContent.badge = 1
+        notificationContent.userInfo = ["cardZipID": reminder.cardZipID ?? ""]
+        
+        let reminderDate = Calendar.current.dateComponents([.hour, .minute], from: reminder.date)
+        
+        let hour = reminderDate.hour
+        let minute = reminderDate.minute
+        
+        for i in 0..<reminder.weekDayList.count {
+            
+            var dateComponent = DateComponents()
+            dateComponent.hour = hour
+            dateComponent.minute = minute
+            dateComponent.weekday = reminder.weekDayList[i].value
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
+            
+            let notificationRequest = UNNotificationRequest(
+                identifier: reminder.id.uuidString + "_\(i)",
+                content: notificationContent,
+                trigger: trigger
+            )
+            
+            UNUserNotificationCenter.current().add(notificationRequest)
+        }
     }
     
     private func updateReminder(_ reminder: Reminder) {
