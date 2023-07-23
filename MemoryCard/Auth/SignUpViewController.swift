@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Toast
 import FirebaseAuth
 
 // MARK: - 회원가입 뷰컨
@@ -337,7 +338,7 @@ private extension SignUpViewController {
         
         nameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Constant.defaultInset)
-            $0.top.equalToSuperview().inset(Constant.defaultInset * 2)
+            $0.top.equalToSuperview().inset(Constant.defaultInset)
         }
         nameTextField.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
@@ -346,7 +347,7 @@ private extension SignUpViewController {
         }
         emailLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Constant.defaultInset)
-            $0.top.equalTo(nameTextField.snp.bottom).offset(Constant.defaultInset * 2)
+            $0.top.equalTo(nameTextField.snp.bottom).offset(Constant.defaultInset)
         }
         emailTextField.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
@@ -359,7 +360,7 @@ private extension SignUpViewController {
         }
         passwordLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Constant.defaultInset)
-            $0.top.equalTo(emailErrorLabel.snp.bottom).offset(Constant.defaultInset * 2)
+            $0.top.equalTo(emailErrorLabel.snp.bottom).offset(Constant.defaultInset)
         }
         passwordTextField.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
@@ -372,7 +373,7 @@ private extension SignUpViewController {
         }
         rePasswordLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Constant.defaultInset)
-            $0.top.equalTo(passwordErrorLabel.snp.bottom).offset(Constant.defaultInset * 2)
+            $0.top.equalTo(passwordErrorLabel.snp.bottom).offset(Constant.defaultInset)
         }
         rePasswordTextField.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
@@ -385,7 +386,7 @@ private extension SignUpViewController {
         }
         signUpButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
-            $0.top.equalTo(rePasswordErrorLabel.snp.bottom).offset(Constant.defaultInset)
+            $0.top.equalTo(rePasswordErrorLabel.snp.bottom).offset(Constant.defaultInset * 2)
             $0.height.equalTo(48.0)
             $0.bottom.equalToSuperview()
         }
