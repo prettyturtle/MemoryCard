@@ -41,6 +41,7 @@ struct ReminderListView: View {
                         if !newIsOn {
                             Task {
                                 await cancelReminder(reminder)
+                                
                                 reminder.isOn = newIsOn
                                 
                                 updateReminder(reminder)
@@ -94,7 +95,7 @@ struct ReminderListView: View {
                 
                 let savedReminderList = udm.read() ?? []
                 
-                reminderList = savedReminderList
+                reminderList = savedReminderList.sorted { $0.createdAt.compare($1.createdAt) == .orderedDescending }
             }
         }
         .sheet(isPresented: $isShowAddReminderView) {
@@ -155,7 +156,7 @@ struct ReminderListView: View {
             let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
             
             if let updatedReminderList = udm.update(reminder) {
-                reminderList = updatedReminderList
+                reminderList = updatedReminderList.sorted { $0.createdAt.compare($1.createdAt) == .orderedDescending }
             }
         }
     }
@@ -165,58 +166,8 @@ struct ReminderListView: View {
             let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
             
             if let deletedReminderList = udm.delete(reminder) {
-                reminderList = deletedReminderList
+                reminderList = deletedReminderList.sorted { $0.createdAt.compare($1.createdAt) == .orderedDescending }
             }
-        }
-    }
-}
-
-class Reminder: Codable, Identifiable, Equatable {
-    let id: UUID
-    var title: String
-    var date: Date
-    var weekDayList: [WeekDay]
-    var cardZipID: String?
-    var isOn: Bool
-    
-    init(
-        id: UUID,
-        title: String,
-        date: Date,
-        weekDayList: [WeekDay],
-        cardZipID: String? = nil,
-        isOn: Bool
-    ) {
-        self.id = id
-        self.title = title
-        self.date = date
-        self.weekDayList = weekDayList
-        self.cardZipID = cardZipID
-        self.isOn = isOn
-    }
-    
-    static func == (_ lhs: Reminder, _ rhs: Reminder) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    static let mockData = (1...10).map {
-        Reminder(id: UUID(), title: "Title\($0)", date: Date.now, weekDayList: WeekDay.allCases, cardZipID: nil, isOn: false)
-    }
-}
-
-enum WeekDay: Int, CaseIterable, Codable {
-    case sun, mon, tue, wed, thu, fri, sat
-    
-    var value: Int { self.rawValue + 1 }
-    var text: String {
-        switch self {
-        case .sun: return "일"
-        case .mon: return "월"
-        case .tue: return "화"
-        case .wed: return "수"
-        case .thu: return "목"
-        case .fri: return "금"
-        case .sat: return "토"
         }
     }
 }

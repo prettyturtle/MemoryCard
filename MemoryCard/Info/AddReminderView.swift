@@ -233,7 +233,8 @@ private extension AddReminderView {
             date: selectedDate,
             weekDayList: weekDayList,
             cardZipID: selectedCardZip?.id,
-            isOn: true
+            isOn: true,
+            createdAt: .now
         )
         
         if saveReminder(newReminder) {
