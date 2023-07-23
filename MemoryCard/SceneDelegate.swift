@@ -50,4 +50,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil)
         }
     }
+    
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
 }
