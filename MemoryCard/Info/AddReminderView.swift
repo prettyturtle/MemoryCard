@@ -7,18 +7,23 @@
 
 import SwiftUI
 import UserNotifications
+import SimpleToast
 
 struct AddReminderView: View {
     
     @Binding var isShow: Bool
     @State var selectedDate = Date.now
     @State var title = ""
-    @State var selectedWeekDay = Dictionary(uniqueKeysWithValues: WeekDay.allCases.map { ($0, false)})
+    @State var selectedWeekDay = Dictionary(uniqueKeysWithValues: WeekDay.allCases.map { ($0, false) })
     @State var cardZipList = [CardZip]()
     @State var selectedCardZip: CardZip?
     
     @Binding var savedReminder: Reminder?
     @State var userID: String?
+    
+    @State var showToast = false
+    @State var toastMessage = "다시 시도해주세요!"
+    private let toastOptions = SimpleToastOptions(hideAfter: 3, animation: .easeInOut)
 }
 
 // MARK: - UI Components
@@ -79,7 +84,16 @@ extension AddReminderView {
                         }
                     }
                 }
-                
+            }
+            .simpleToast(isPresented: $showToast, options: toastOptions) {
+                Label(toastMessage, systemImage: "exclamationmark.triangle")
+                    .padding(.vertical, 8)
+                    .font(.system(size: 16, weight: .medium))
+                    .frame(width: UIScreen.main.bounds.width - 32)
+                    .background(.pink.opacity(0.8))
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .padding(.top, 8)
             }
         }
     }
@@ -184,24 +198,7 @@ extension AddReminderView {
         let buttonHeight: CGFloat = 48
         
         return Button {
-            let weekDayList = selectedWeekDay.filter { $0.value }.map { $0.key }
-            
-            let newReminder = Reminder(
-                id: UUID(),
-                title: title,
-                date: selectedDate,
-                weekDayList: weekDayList,
-                cardZipID: selectedCardZip?.id,
-                isOn: true
-            )
-            
-            if saveReminder(newReminder) {
-                registerReminder(newReminder)
-                
-                savedReminder = newReminder
-                
-                isShow = false
-            }
+            didTapSaveButton()
         } label: {
             Text("저장하기")
                 .frame(width: buttonWidth, height: buttonHeight)
@@ -215,6 +212,39 @@ extension AddReminderView {
 }
 
 private extension AddReminderView {
+    func didTapSaveButton() {
+        if title == "" {
+            toastMessage = "알림 제목을 입력해주세요!"
+            showToast = true
+            return
+        }
+        
+        let weekDayList = selectedWeekDay.filter { $0.value }.map { $0.key }
+        
+        if weekDayList.isEmpty {
+            toastMessage = "요일을 선택해주세요!"
+            showToast = true
+            return
+        }
+        
+        let newReminder = Reminder(
+            id: UUID(),
+            title: title,
+            date: selectedDate,
+            weekDayList: weekDayList,
+            cardZipID: selectedCardZip?.id,
+            isOn: true
+        )
+        
+        if saveReminder(newReminder) {
+            registerReminder(newReminder)
+            
+            savedReminder = newReminder
+            
+            isShow = false
+        }
+    }
+    
     func saveReminder(_ reminder: Reminder) -> Bool {
         guard let mIdx = userID else {
             return false
