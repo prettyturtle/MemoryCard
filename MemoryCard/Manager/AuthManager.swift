@@ -50,7 +50,13 @@ final class AuthManager: AuthManagerProtocol {
         if let firUser = firAuth.currentUser,
            let email = firUser.email {
             
-            return User(id: firUser.uid, email: email)
+            let isEmailVerified = firUser.isEmailVerified
+            
+            return User(
+                id: firUser.uid,
+                email: email,
+                isEmailVerified: isEmailVerified
+            )
         }
         
         return nil
@@ -121,5 +127,15 @@ final class AuthManager: AuthManagerProtocol {
             }
             completion(.success(()))
         }
+    }
+    
+    // 이메일 인증 메일 전송
+    func verifyEmail() async throws {
+        try await firAuth.currentUser?.sendEmailVerification()
+    }
+    
+    // 이메일 인증 여부
+    func isVerifiedEmail() -> Bool {
+        return firAuth.currentUser?.isEmailVerified ?? false
     }
 }

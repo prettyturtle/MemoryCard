@@ -45,8 +45,20 @@ final class SignUpViewController: UIViewController {
     
     /// 이메일 라벨
     private lazy var emailLabel = UILabel().then {
-        $0.text = "이메일"
-        $0.font = .systemFont(ofSize: 18.0, weight: .medium)
+        let text = "이메일 (이메일 인증을 위해 유효한 이메일을 입력하세요)"
+        
+        let attribtuedString = NSMutableAttributedString(string: text)
+        
+        let titleRange = (text as NSString).range(of: "이메일")
+        let subRange = (text as NSString).range(of: " (이메일 인증을 위해 유효한 이메일을 입력하세요)")
+        
+        attribtuedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 18.0, weight: .medium), range: titleRange)
+        attribtuedString.addAttribute(.foregroundColor, value: UIColor.label, range: titleRange)
+        
+        attribtuedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 14.0, weight: .medium), range: subRange)
+        attribtuedString.addAttribute(.foregroundColor, value: UIColor.secondaryLabel, range: subRange)
+        
+        $0.attributedText = attribtuedString
     }
     
     /// 이메일 에러 라벨
@@ -183,8 +195,8 @@ private extension SignUpViewController {
     /// - Parameter notification: 노티피케이션
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
-            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-                return
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
         }
         
         scrollView.contentInset.bottom = keyboardFrame.size.height + 48.0
@@ -206,19 +218,19 @@ private extension SignUpViewController {
     
     /// 키보드 옵저버 Add
     func setKeyboardObserver() {
-         NotificationCenter.default.addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
-         )
-         
-         NotificationCenter.default.addObserver(
+        )
+        
+        NotificationCenter.default.addObserver(
             self, selector: #selector(keyboardWillHide),
             name: UIResponder.keyboardWillHideNotification,
             object:nil
-         )
-     }
+        )
+    }
     
     /// 회원가입 버튼을 눌렀을 때
     /// - Parameter sender: 회원가입 버튼
@@ -272,7 +284,8 @@ private extension SignUpViewController {
                     email: email,
                     name: name,
                     createdDate: createdDate,
-                    lastSignInDate: lastSignInDate
+                    lastSignInDate: lastSignInDate,
+                    isEmailVerified: false
                 )
                 
                 // 유저 정보 저장 시작
@@ -282,7 +295,7 @@ private extension SignUpViewController {
                         let rootVC = TabBarController()                             // 메인 탭바 컨트롤러
                         self.changeRootVC(rootVC, animated: true)                   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
                     case .failure(let error):
-                                                                                    // TODO: - 유저 저장 실패 처리
+                        // TODO: - 유저 저장 실패 처리
                         print("🎉 유저 저장 실패", error)
                     }
                 }

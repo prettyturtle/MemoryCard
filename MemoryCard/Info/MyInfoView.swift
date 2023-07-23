@@ -28,6 +28,22 @@ struct MyInfoView: View {
                 Divider()
                 
                 List {
+                    if !AuthManager.shared.isVerifiedEmail() {
+                        ZStack {
+                            NavigationLink {
+                                EmailVerifyView()
+                            } label: {
+                                EmptyView()
+                            }
+                            .opacity(0.0)
+                            
+                            MyInfoViewCell(
+                                title: "이메일 인증",
+                                textColor: .orange
+                            )
+                        }
+                    }
+                    
                     ZStack {
                         NavigationLink {
                             ReminderListView()
@@ -266,11 +282,5 @@ private extension MyInfoView {
                 print("👩🏻‍🦳 ERROR \(error.localizedDescription)")
             }
         }
-    }
-}
-
-struct MyInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyInfoView()
     }
 }

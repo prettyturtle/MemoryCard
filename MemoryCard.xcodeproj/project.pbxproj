@@ -68,6 +68,7 @@
 		6BD5B55E2A6CD0ED00FC82AD /* SimpleToast in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD5B55D2A6CD0ED00FC82AD /* SimpleToast */; };
 		6BD5B5602A6CFC8700FC82AD /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5B55F2A6CFC8700FC82AD /* Reminder.swift */; };
 		6BD5B5622A6CFC9F00FC82AD /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5B5612A6CFC9F00FC82AD /* WeekDay.swift */; };
+		6BD5B5642A6D879100FC82AD /* EmailVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5B5632A6D879100FC82AD /* EmailVerifyView.swift */; };
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
 		6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */; };
@@ -124,6 +125,7 @@
 		6BD18CEF2A56F2460020433A /* AddReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderView.swift; sourceTree = "<group>"; };
 		6BD5B55F2A6CFC8700FC82AD /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		6BD5B5612A6CFC9F00FC82AD /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
+		6BD5B5632A6D879100FC82AD /* EmailVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerifyView.swift; sourceTree = "<group>"; };
 		6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewCell.swift; sourceTree = "<group>"; };
 		6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeConfigView.swift; sourceTree = "<group>"; };
 		6BF64BEE2A483A73000F0EC7 /* AppIconConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconConfigView.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				6BD18CED2A55ADFC0020433A /* ReminderListView.swift */,
 				6BD18CEF2A56F2460020433A /* AddReminderView.swift */,
 				6BA6A4372A320FE0002127E6 /* ImagePickerView.swift */,
+				6BD5B5632A6D879100FC82AD /* EmailVerifyView.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				6B29BDF929CF547600F39932 /* AuthManager.swift in Sources */,
 				6B85569429DC64AA0004E226 /* DBManager.swift in Sources */,
 				6B85569229DC646F0004E226 /* CardZip.swift in Sources */,
+				6BD5B5642A6D879100FC82AD /* EmailVerifyView.swift in Sources */,
 				6B9BC16629EB213100B32557 /* CardStudyCollectionViewCell.swift in Sources */,
 				6BA3065729D896AA003CFAF2 /* UITextView+.swift in Sources */,
 				6B088D1A29D02EBE0056B4EF /* UIViewController+.swift in Sources */,
