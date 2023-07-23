@@ -25,6 +25,14 @@ struct ReminderListView: View {
             
             if reminderList.isEmpty {
                 Spacer()
+                
+                Image(systemName: "clock.badge")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: UIScreen.main.bounds.width / 2.0, height: UIScreen.main.bounds.width / 2.0)
+                    .foregroundColor(Color(uiColor: .placeholderText))
+                
+                Spacer()
             } else {
                 List($reminderList) { $reminder in
                     Toggle(isOn: Binding<Bool>(get: {
