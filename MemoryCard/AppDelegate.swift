@@ -46,17 +46,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse,
-        withCompletionHandler completionHandler: @escaping () -> Void
-    ) {
-        completionHandler()
-    }
-    
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
         willPresent noti: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         completionHandler([.badge, .banner, .list])
+    }
+    
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        
+        let userInfo = response.notification.request.content.userInfo
+        
+        NotificationCenter.default.post(
+            name: .DID_RECEIVE_PUSH,
+            object: nil,
+            userInfo: userInfo
+        )
+        
+        completionHandler()
     }
 }

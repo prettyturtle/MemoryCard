@@ -32,6 +32,15 @@ final class TabBarController: UITabBarController {
         selectedImage: nil
     ).then { $0.tag = 2 }
     
+    private func setupTabBarItem() {
+        homeVC.tabBarItem = homeVCTabBarItem
+        createCardTempVC.tabBarItem = createCardVCTabBarItem
+        myInfoVC.tabBarItem = myInfoVCTabBarItem
+    }
+}
+
+// MARK: - Life Cycle
+extension TabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,6 +62,15 @@ final class TabBarController: UITabBarController {
             name: .TUTORIAL_DID_TAP_DIM_VIEW,
             object: nil
         )
+        
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(didReceivePush),
+                name: .DID_RECEIVE_PUSH,
+                object: nil
+            )
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,6 +85,32 @@ final class TabBarController: UITabBarController {
                 text: "안녕하세요! 메모리마스터입니다 🙋",
                 arrowPosition: .bottom
             )
+        }
+    }
+}
+
+// MARK: - UI 이벤트
+extension TabBarController {
+    /// 푸시를 눌러서 들어왔을 때 카드 열기
+    @objc func didReceivePush(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: String],
+              let cardZipID = userInfo["cardZipID"] else {
+            return
+        }
+        
+        DBManager.shared.fetchDocument(.card, documentName: cardZipID, type: CardZip.self) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
+            if case .success(let cardZip) = result {
+                let rootVC = CardStudyViewController(cardZip: cardZip)
+                let cardStudyVC = UINavigationController(rootViewController: rootVC)
+                
+                cardStudyVC.modalPresentationStyle = .fullScreen
+                
+                self.present(cardStudyVC, animated: true)
+            }
         }
     }
     
@@ -98,14 +142,9 @@ final class TabBarController: UITabBarController {
             )
         }
     }
-    
-    private func setupTabBarItem() {
-        homeVC.tabBarItem = homeVCTabBarItem
-        createCardTempVC.tabBarItem = createCardVCTabBarItem
-        myInfoVC.tabBarItem = myInfoVCTabBarItem
-    }
 }
 
+// MARK: - UITabBarControllerDelegate
 extension TabBarController: UITabBarControllerDelegate {
     func tabBarController(
         _ tabBarController: UITabBarController,

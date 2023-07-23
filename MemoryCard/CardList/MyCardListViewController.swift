@@ -93,12 +93,14 @@ extension MyCardListViewController {
                 object: nil
             )
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(didTapTutorialDimView),
-            name: .TUTORIAL_DID_TAP_DIM_VIEW,
-            object: nil
-        )
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(didTapTutorialDimView),
+                name: .TUTORIAL_DID_TAP_DIM_VIEW,
+                object: nil
+            )
     }
     
     override func viewDidDisappear(_ animated: Bool) {
