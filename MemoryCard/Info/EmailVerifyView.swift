@@ -156,6 +156,17 @@ extension EmailVerifyView {
                 toastBackgroundColor = .cyan.opacity(0.8)
                 showToast = true
                 
+                if let mIdx = AuthManager.shared.getCurrentUser()?.id {
+                    DBManager.shared.fetchDocument(.user, documentName: mIdx, type: User.self) { result in
+                        if case .success(let user) = result {
+                            var updatedUser = user
+                            updatedUser.isEmailVerified = true
+                            
+                            DBManager.shared.save(.user, documentName: mIdx, data: updatedUser) { _ in}
+                        }
+                    }
+                }
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     isVerifiedEmail = verifiedStatus
                     presentationMode.wrappedValue.dismiss()
