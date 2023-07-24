@@ -23,6 +23,8 @@ struct EmailVerifyView: View {
         animation: .easeInOut
     )
     
+    @Binding var isVerifiedEmail: Bool
+    
     var body: some View {
         VStack(alignment: .center) {
             VStack(spacing: 0) {
@@ -145,20 +147,25 @@ extension EmailVerifyView {
     }
     
     private func didTapVerifyEndButton() {
-        if AuthManager.shared.isVerifiedEmail() {
-            toastMessage = "인증이 완료됐어요!"
-            toastIcon = "checkmark.circle"
-            toastBackgroundColor = .cyan.opacity(0.8)
-            showToast = true
+        Task {
+            let verifiedStatus = try await AuthManager.shared.isVerifiedEmail()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                presentationMode.wrappedValue.dismiss()
+            if verifiedStatus {
+                toastMessage = "인증이 완료됐어요!"
+                toastIcon = "checkmark.circle"
+                toastBackgroundColor = .cyan.opacity(0.8)
+                showToast = true
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    isVerifiedEmail = verifiedStatus
+                    presentationMode.wrappedValue.dismiss()
+                }
+            } else {
+                toastMessage = "인증에 실패했어요!"
+                toastIcon = "exclamationmark.triangle"
+                toastBackgroundColor = .pink.opacity(0.8)
+                showToast = true
             }
-        } else {
-            toastMessage = "인증에 실패했어요!"
-            toastIcon = "exclamationmark.triangle"
-            toastBackgroundColor = .pink.opacity(0.8)
-            showToast = true
         }
     }
 }

@@ -15,6 +15,8 @@ struct MyInfoView: View {
     @State private var currentUser = User(id: "", email: "")
     @State private var cardZipCount = 0
     
+    @State private var isVerifiedEmail = true
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0.0) {
@@ -28,10 +30,10 @@ struct MyInfoView: View {
                 Divider()
                 
                 List {
-                    if !AuthManager.shared.isVerifiedEmail() {
+                    if !isVerifiedEmail {
                         ZStack {
                             NavigationLink {
-                                EmailVerifyView()
+                                EmailVerifyView(isVerifiedEmail: $isVerifiedEmail)
                             } label: {
                                 EmptyView()
                             }
@@ -143,6 +145,9 @@ struct MyInfoView: View {
         }
         .onAppear {
             getCardZipCount()
+        }
+        .task {
+            isVerifiedEmail = (try? await AuthManager.shared.isVerifiedEmail()) ?? true
         }
     }
 }

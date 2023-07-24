@@ -49,7 +49,6 @@ final class AuthManager: AuthManagerProtocol {
     func getCurrentUser() -> User? {
         if let firUser = firAuth.currentUser,
            let email = firUser.email {
-            
             let isEmailVerified = firUser.isEmailVerified
             
             return User(
@@ -135,7 +134,8 @@ final class AuthManager: AuthManagerProtocol {
     }
     
     // 이메일 인증 여부
-    func isVerifiedEmail() -> Bool {
+    func isVerifiedEmail() async throws -> Bool {
+        try await firAuth.currentUser?.reload()
         return firAuth.currentUser?.isEmailVerified ?? false
     }
 }
