@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import Toast
 
 final class TabBarController: UITabBarController {
     
@@ -157,6 +158,14 @@ extension TabBarController: UITabBarControllerDelegate {
             }
             
             let mIdx = currentUser.id
+            
+            if !AuthManager.shared.isVerifiedEmail() {
+                view.makeToast("[설정]에서 이메일을 인증해주세요!", duration: 2) { [weak self] _ in
+                    self?.selectedIndex = 2
+                }
+                
+                return false
+            }
             
             IndicatorManager.shared.start()
             
