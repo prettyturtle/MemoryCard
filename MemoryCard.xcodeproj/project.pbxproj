@@ -69,6 +69,7 @@
 		6BD5B5602A6CFC8700FC82AD /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5B55F2A6CFC8700FC82AD /* Reminder.swift */; };
 		6BD5B5622A6CFC9F00FC82AD /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5B5612A6CFC9F00FC82AD /* WeekDay.swift */; };
 		6BD5B5642A6D879100FC82AD /* EmailVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5B5632A6D879100FC82AD /* EmailVerifyView.swift */; };
+		6BD990BB2A716F6A00B1F322 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD990BA2A716F6A00B1F322 /* LoginView.swift */; };
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
 		6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */; };
@@ -126,6 +127,7 @@
 		6BD5B55F2A6CFC8700FC82AD /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		6BD5B5612A6CFC9F00FC82AD /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		6BD5B5632A6D879100FC82AD /* EmailVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerifyView.swift; sourceTree = "<group>"; };
+		6BD990BA2A716F6A00B1F322 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewCell.swift; sourceTree = "<group>"; };
 		6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeConfigView.swift; sourceTree = "<group>"; };
 		6BF64BEE2A483A73000F0EC7 /* AppIconConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconConfigView.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				6B29BDC529CE10EB00F39932 /* LoginViewController.swift */,
+				6BD990BA2A716F6A00B1F322 /* LoginView.swift */,
 				6B29BDF429CED7A600F39932 /* SignUpViewController.swift */,
 			);
 			path = Auth;
@@ -471,6 +474,7 @@
 				6B29BDEF29CEA06500F39932 /* OpacityButton.swift in Sources */,
 				6B7C6C1129F80B930045C230 /* MyInfoView.swift in Sources */,
 				6B9BC16229E9D26B00B32557 /* CardStudyViewController.swift in Sources */,
+				6BD990BB2A716F6A00B1F322 /* LoginView.swift in Sources */,
 				6BA3065B29D8A5EF003CFAF2 /* CreateCardContentInputCollectionViewCellDelegate.swift in Sources */,
 				6BA6A4362A2F8956002127E6 /* ProfileView.swift in Sources */,
 				6BD5B5602A6CFC8700FC82AD /* Reminder.swift in Sources */,

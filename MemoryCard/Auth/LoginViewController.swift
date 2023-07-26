@@ -86,6 +86,13 @@ final class LoginViewController: UIViewController {
         $0.setAttributedTitle(attrText, for: .normal)                   // 꾸며진 버튼 텍스트 설정
     }
     // MARK: ========================= </ UI 컴포넌트 > =========================
+    
+    // MARK: ========================= < 프로퍼티 > =========================
+    
+    var isRevokeLogin: Bool?                    // 탈퇴 전 로그인
+    var isRevokeLoginCompletion: (() -> Void)?  // 탈퇴 전 로그인 후 이벤트
+    
+    // MARK: ========================= </ 프로퍼티 > ========================
 }
 
 // MARK: - 라이프 사이클
@@ -93,13 +100,20 @@ extension LoginViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBar()    // 내비게이션 설정
-        setupLayout()           // 레이아웃 설정
+        setupViewWhenIsRevokeLogin()    // 탈퇴전 로그인 화면 예외처리
+        setupNavigationBar()            // 내비게이션 설정
+        setupLayout()                   // 레이아웃 설정
+        
     }
 }
 
 // MARK: - UI 이벤트
 private extension LoginViewController {
+    
+    /// 나가기 버튼 눌렀을 때
+    @objc func didTapDismissButton() {
+        dismiss(animated: true)
+    }
     
     /// 스크롤 뷰를 탭 했을 때
     @objc func didTapScrollView() {
@@ -152,6 +166,12 @@ private extension LoginViewController {
             switch result {
             case .success(let authResult):                                  // 로그인 성공 (`로그인 결과`)
                 print("🎉 이메일 로그인 성공", authResult)
+                
+                if isRevokeLogin == true {                                  // 탈퇴전 로그인은 화면 닫기 (예외처리)
+                    dismiss(animated: true, completion: isRevokeLoginCompletion)
+                    
+                    return
+                }
                 
                 let rootVC = TabBarController()                             // 메인 탭바 컨트롤러
                 self.changeRootVC(rootVC, animated: true)                   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
@@ -225,5 +245,22 @@ private extension LoginViewController {
             $0.top.equalTo(loginButton.snp.bottom).offset(Constant.defaultInset)
             $0.bottom.equalToSuperview()
         }
+    }
+    
+    /// 탈퇴전 로그인 화면 예외처리
+    func setupViewWhenIsRevokeLogin() {
+        guard let isRevokeLogin = isRevokeLogin,
+              isRevokeLogin else {
+            return
+        }
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "xmark"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapDismissButton)
+        )
+        
+        moveToSignUpButton.isHidden = true
     }
 }

@@ -17,6 +17,9 @@ struct MyInfoView: View {
     
     @State private var isVerifiedEmail = true
     
+    @State private var isShowLoginView = false
+    @State private var isSuccessLogin = false
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0.0) {
@@ -115,7 +118,7 @@ struct MyInfoView: View {
         }
         .alert("회원탈퇴", isPresented: $isShowDeleteUserAlert) {
             Button(role: .destructive) {
-                delete()
+                showLoginView()
             } label: {
                 Text("탈퇴하기")
             }
@@ -143,16 +146,30 @@ struct MyInfoView: View {
         } message: {
             Text("정말로 로그아웃 하시겠습니까?")
         }
+        .sheet(isPresented: $isShowLoginView) {
+            LoginView(isShowLoginView: $isShowLoginView, isSuccessLogin: $isSuccessLogin)
+        }
         .onAppear {
             getCardZipCount()
         }
         .task {
             isVerifiedEmail = (try? await AuthManager.shared.isVerifiedEmail()) ?? true
         }
+        .onChange(of: isSuccessLogin) { willDeleteUser in
+            if willDeleteUser {
+                delete()
+            }
+        }
     }
 }
 
 private extension MyInfoView {
+    
+    /// 회원탈퇴 전 로그인
+    func showLoginView() {
+        isShowLoginView = true
+    }
+    
     /// 회원탈퇴
     func delete() {
         IndicatorManager.shared.start()
