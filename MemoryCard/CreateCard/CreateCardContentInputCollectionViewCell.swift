@@ -42,14 +42,14 @@ final class CreateCardContentInputCollectionViewCell: UICollectionViewCell {
     }
     
     /// 카드 앞면 텍스트뷰 플레이스홀더
-    private lazy var frontContentPlaceholder = UILabel().then {
+    lazy var frontContentPlaceholder = UILabel().then {
         $0.text = "앞"
         $0.textColor = .placeholderText
         $0.font = .systemFont(ofSize: 32.0, weight: .black)
     }
     
     /// 카드 뒷면 텍스트뷰 플레이스홀더
-    private lazy var backContentPlaceholder = UILabel().then {
+    lazy var backContentPlaceholder = UILabel().then {
         $0.text = "뒤"
         $0.textColor = .placeholderText
         $0.font = .systemFont(ofSize: 32.0, weight: .black)

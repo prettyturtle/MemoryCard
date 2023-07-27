@@ -48,10 +48,29 @@ extension CreateCardFolderNameInputViewController {
         setupLayout()
         
         setupEditMode() // 수정 모드 세팅
+        
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(didTapTutorialDimView),
+                name: .TUTORIAL_DID_TAP_DIM_VIEW,
+                object: nil
+            )
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if true {
+            TutorialManager.shared.show(
+                at: self,
+                id: 30,
+                for: nextButton,
+                text: "이제 카드를 만들어 볼까요? 🙆‍♀️",
+                arrowPosition: .bottom
+            )
+        }
         
         folderNameTextField.becomeFirstResponder()
     }
@@ -86,6 +105,37 @@ extension CreateCardFolderNameInputViewController: UITextFieldDelegate {
 }
 
 private extension CreateCardFolderNameInputViewController {
+    
+    /// 튜토리얼 딤 뷰 탭 했을 때
+    @objc func didTapTutorialDimView(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Int],
+              let tutorialID = userInfo["id"] else {
+            return
+        }
+        
+        print(tutorialID, "🎉🎉")
+        
+        let nextID = tutorialID + 1
+        
+        if tutorialID == 30 {
+            TutorialManager.shared.show(
+                at: self,
+                id: nextID,
+                for: folderNameTextField,
+                text: "제일 먼저 카드들을 대표하는 폴더 이름을 정해주세요",
+                arrowPosition: .top
+            )
+        } else if tutorialID == 31 {
+            TutorialManager.shared.show(
+                at: self,
+                id: nextID,
+                for: nextButton,
+                text: "폴더 이름을 정했으면 다음으로 이동하세요!",
+                arrowPosition: .bottom
+            )
+        }
+    }
+    
     @objc func didTapNextButton(_ sender: UIButton) {
         guard let folderName = folderNameTextField.text else { return }
         let createCardContentInputViewController = CreateCardContentInputViewController(folderName: folderName)

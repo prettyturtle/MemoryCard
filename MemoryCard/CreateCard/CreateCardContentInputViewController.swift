@@ -97,6 +97,27 @@ extension CreateCardContentInputViewController {
         setupLayout()                               // 레이아웃 설정
         
         setupEditMode()                             // 신규/수정 모드 별 분기 세팅
+        
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(didTapTutorialDimView),
+                name: .TUTORIAL_DID_TAP_DIM_VIEW,
+                object: nil
+            )
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        TutorialManager.shared.show(
+            at: self,
+            id: 32,
+            for: nextButton,
+            text: "이제 카드를 만들어볼게요 😆",
+            arrowPosition: .bottom
+        )
     }
 }
 
@@ -132,6 +153,57 @@ private extension CreateCardContentInputViewController {
 
 // MARK: - UI 이벤트
 private extension CreateCardContentInputViewController {
+    
+    /// 튜토리얼 딤 뷰 탭 했을 때
+    @objc func didTapTutorialDimView(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Int],
+              let tutorialID = userInfo["id"] else {
+            return
+        }
+        
+        print(tutorialID, "🎉🎉")
+        
+        let nextID = tutorialID + 1
+        
+        if tutorialID == 32 {
+            if let firstCell = contentInputCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? CreateCardContentInputCollectionViewCell {
+                TutorialManager.shared.show(
+                    at: self,
+                    id: nextID,
+                    for: firstCell.frontContentPlaceholder,
+                    text: "여기에 카드의 앞면을 채워주세요",
+                    arrowPosition: .bottom
+                )
+            }
+        } else if tutorialID == 33 {
+            if let firstCell = contentInputCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? CreateCardContentInputCollectionViewCell {
+                TutorialManager.shared.show(
+                    at: self,
+                    id: nextID,
+                    for: firstCell.backContentPlaceholder,
+                    text: "여기에 카드의 뒷면을 채워주세요",
+                    arrowPosition: .bottom
+                )
+            }
+        } else if tutorialID == 34 {
+            TutorialManager.shared.show(
+                at: self,
+                id: nextID,
+                for: cardAddBarButton,
+                text: "다른 카드를 추가하고 싶으면 여기를 눌러주세요!",
+                arrowPosition: .top
+            )
+        } else if tutorialID == 35 {
+            TutorialManager.shared.show(
+                at: self,
+                id: nextID,
+                for: nextButton,
+                text: "카드를 다 만들었다면 저장을 위해 다음으로 이동해주세요!",
+                arrowPosition: .bottom
+            )
+        }
+    }
+    
     /// 새 카드 생성 버튼을 눌렀을 때
     /// - Parameter sender: 새 카드 생성 버튼
     @objc func didTapCardAddBarButton(_ sender: UIBarButtonItem) {
