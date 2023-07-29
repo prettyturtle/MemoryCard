@@ -92,6 +92,9 @@ final class CreateCardContentInputViewController: UIViewController {
 extension CreateCardContentInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.delegate = self       // UINavigationControllerDelegate
+        
         view.backgroundColor = .systemBackground    // 배경색 설정
         setupNavigationBar()                        // 내비게이션 바 설정
         setupLayout()                               // 레이아웃 설정
@@ -290,6 +293,19 @@ extension CreateCardContentInputViewController {
     /// 화면 터치했을 때
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true) // 키보드 내리기
+    }
+}
+
+// MARK: - UINavigationControllerDelegate
+extension CreateCardContentInputViewController: UINavigationControllerDelegate {
+    func navigationController(
+        _ navigationController: UINavigationController,
+        willShow viewController: UIViewController,
+        animated: Bool
+    ) {
+        if viewController is CreateCardFolderNameInputViewController { // 이전 화면으로 이동할 때
+            TutorialManager.shared.dismiss(step: .dim)
+        }
     }
 }
 
