@@ -62,9 +62,11 @@ extension CreateCardFolderNameInputViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if true {
+        let isDoneTutorialCreateCardFolderNameInput = UserDefaults.standard.bool(forKey: "IS_DONE_TUTORIAL_CREATE_CARD_FOLDER_NAME_INPUT")
+        
+        if !isDoneTutorialCreateCardFolderNameInput {
             TutorialManager.shared.show(
-                at: self,
+                at: navigationController ?? self,
                 id: 30,
                 for: nextButton,
                 text: "이제 카드를 만들어 볼까요? 🙆‍♀️",
@@ -119,7 +121,7 @@ private extension CreateCardFolderNameInputViewController {
         
         if tutorialID == 30 {
             TutorialManager.shared.show(
-                at: self,
+                at: navigationController ?? self,
                 id: nextID,
                 for: folderNameTextField,
                 text: "제일 먼저 카드들을 대표하는 폴더 이름을 정해주세요",
@@ -127,12 +129,14 @@ private extension CreateCardFolderNameInputViewController {
             )
         } else if tutorialID == 31 {
             TutorialManager.shared.show(
-                at: self,
+                at: navigationController ?? self,
                 id: nextID,
                 for: nextButton,
                 text: "폴더 이름을 정했으면 다음으로 이동하세요!",
                 arrowPosition: .bottom
             )
+            
+            UserDefaults.standard.setValue(true, forKey: "IS_DONE_TUTORIAL_CREATE_CARD_FOLDER_NAME_INPUT")
         }
     }
     

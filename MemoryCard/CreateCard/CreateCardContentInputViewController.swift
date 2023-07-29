@@ -111,13 +111,17 @@ extension CreateCardContentInputViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        TutorialManager.shared.show(
-            at: self,
-            id: 32,
-            for: nextButton,
-            text: "이제 카드를 만들어볼게요 😆",
-            arrowPosition: .bottom
-        )
+        let isDoneTutorialCreateCardContentInput = UserDefaults.standard.bool(forKey: "IS_DONE_TUTORIAL_CREATE_CARD_CONTENT_INPUT")
+        
+        if !isDoneTutorialCreateCardContentInput {
+            TutorialManager.shared.show(
+                at: navigationController ?? self,
+                id: 32,
+                for: nextButton,
+                text: "이제 카드를 만들어볼게요 😆",
+                arrowPosition: .bottom
+            )
+        }
     }
 }
 
@@ -168,7 +172,7 @@ private extension CreateCardContentInputViewController {
         if tutorialID == 32 {
             if let firstCell = contentInputCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? CreateCardContentInputCollectionViewCell {
                 TutorialManager.shared.show(
-                    at: self,
+                    at: navigationController ?? self,
                     id: nextID,
                     for: firstCell.frontContentPlaceholder,
                     text: "여기에 카드의 앞면을 채워주세요",
@@ -178,7 +182,7 @@ private extension CreateCardContentInputViewController {
         } else if tutorialID == 33 {
             if let firstCell = contentInputCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? CreateCardContentInputCollectionViewCell {
                 TutorialManager.shared.show(
-                    at: self,
+                    at: navigationController ?? self,
                     id: nextID,
                     for: firstCell.backContentPlaceholder,
                     text: "여기에 카드의 뒷면을 채워주세요",
@@ -187,7 +191,7 @@ private extension CreateCardContentInputViewController {
             }
         } else if tutorialID == 34 {
             TutorialManager.shared.show(
-                at: self,
+                at: navigationController ?? self,
                 id: nextID,
                 for: cardAddBarButton,
                 text: "다른 카드를 추가하고 싶으면 여기를 눌러주세요!",
@@ -195,12 +199,14 @@ private extension CreateCardContentInputViewController {
             )
         } else if tutorialID == 35 {
             TutorialManager.shared.show(
-                at: self,
+                at: navigationController ?? self,
                 id: nextID,
                 for: nextButton,
                 text: "카드를 다 만들었다면 저장을 위해 다음으로 이동해주세요!",
                 arrowPosition: .bottom
             )
+            
+            UserDefaults.standard.setValue(true, forKey: "IS_DONE_TUTORIAL_CREATE_CARD_CONTENT_INPUT")
         }
     }
     
