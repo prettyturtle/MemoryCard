@@ -13,83 +13,95 @@ struct ReminderListView: View {
     @State var reminderList = [Reminder]()
     @State var isShowAddReminderView = false
     @State var savedReminder: Reminder?
+    @State var isAllowReminder = false
+    @State var isShowAllowNotiAlert = false
     
     var body: some View {
         VStack(spacing: 0) {
-            Text("암기 리마인더 설정")
-                .font(.system(size: 20, weight: .semibold))
-            Text("원하는 시간에 암기를 시작해보세요")
-                .font(.system(size: 16, weight: .medium))
-                .foregroundColor(.secondary)
-                .padding(.top, 8)
             
-            if reminderList.isEmpty {
-                Spacer()
-                
-                Image(systemName: "clock.badge")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: UIScreen.main.bounds.width / 2.0, height: UIScreen.main.bounds.width / 2.0)
-                    .foregroundColor(Color(uiColor: .placeholderText))
-                
-                Spacer()
-            } else {
-                List($reminderList) { $reminder in
-                    Toggle(isOn: Binding<Bool>(get: {
-                        return reminder.isOn
-                    }, set: { newIsOn, _ in
-                        if !newIsOn {
-                            Task {
-                                await cancelReminder(reminder)
+            Toggle(isOn: $isAllowReminder) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("리마인더 알림 허용")
+                        .font(.system(size: 18, weight: .medium))
+                    
+                    Text("원하는 시간에 암기를 시작해보세요")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.secondary)
+                }
+            }
+            .tint(.cyan)
+            .padding(16)
+            
+            Divider()
+            
+            if isAllowReminder {
+                if reminderList.isEmpty {
+                    Spacer()
+                    
+                    Image(systemName: "clock.badge")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: UIScreen.main.bounds.width / 2.0, height: UIScreen.main.bounds.width / 2.0)
+                        .foregroundColor(Color(uiColor: .placeholderText))
+                    
+                    Spacer()
+                } else {
+                    List($reminderList) { $reminder in
+                        Toggle(isOn: Binding<Bool>(get: {
+                            return reminder.isOn
+                        }, set: { newIsOn, _ in
+                            if !newIsOn {
+                                Task {
+                                    await cancelReminder(reminder)
+                                    
+                                    reminder.isOn = newIsOn
+                                    
+                                    updateReminder(reminder)
+                                }
+                            } else {
+                                registerReminder(reminder)
                                 
                                 reminder.isOn = newIsOn
                                 
                                 updateReminder(reminder)
                             }
-                        } else {
-                            registerReminder(reminder)
-                            
-                            reminder.isOn = newIsOn
-                            
-                            updateReminder(reminder)
+                        })) {
+                            Text(reminder.title)
                         }
-                    })) {
-                        Text(reminder.title)
-                    }
-                    .tint(.orange)
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        Button {
-                            Task {
-                                await cancelReminder(reminder)
-                                deleteReminder(reminder)
+                        .tint(.orange)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button {
+                                Task {
+                                    await cancelReminder(reminder)
+                                    deleteReminder(reminder)
+                                }
+                            } label: {
+                                Label("삭제", systemImage: "trash")
                             }
-                        } label: {
-                            Label("삭제", systemImage: "trash")
+                            .tint(.red)
                         }
-                        .tint(.red)
                     }
+                    .listStyle(.plain)
+                    .padding(.top, 16)
                 }
-                .listStyle(.plain)
-                .padding(.top, 16)
+            } else {
+                Spacer()
             }
         }
+        .navigationTitle("암기 리마인더 설정")
         
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    isShowAddReminderView = true
-                } label: {
-                    Image(systemName: "plus")
+                if isAllowReminder {
+                    Button {
+                        isShowAddReminderView = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
                 }
             }
         }
         .onAppear {
-            let unNotiCenter = UNUserNotificationCenter.current()
-            let notiOptions: UNAuthorizationOptions = [.alert, .badge]
-            
-            unNotiCenter.requestAuthorization(options: notiOptions, completionHandler: { _,_ in })
-            
-            
             if let mIdx = AuthManager.shared.getCurrentUser()?.id {
                 let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
                 
@@ -97,11 +109,33 @@ struct ReminderListView: View {
                 
                 reminderList = savedReminderList.sorted { $0.createdAt.compare($1.createdAt) == .orderedDescending }
             }
+            
+            let isAllowReminderNoti = UserDefaults.standard.bool(forKey: "IS_ALLOW_REMINDER_NOTI")
+            
+            isAllowReminder = isAllowReminderNoti
         }
         .sheet(isPresented: $isShowAddReminderView) {
             print("HELLO")
         } content: {
             AddReminderView(isShow: $isShowAddReminderView, savedReminder: $savedReminder)
+        }
+        .alert("회원탈퇴", isPresented: $isShowAllowNotiAlert) {
+            Button(role: nil) {
+                DispatchQueue.main.async {
+                    Task {
+                        await moveToSettings()
+                    }
+                }
+            } label: {
+                Text("설정으로 이동")
+            }
+            
+            Button(role: .cancel) {
+            } label: {
+                Text("취소")
+            }
+        } message: {
+            Text("암기 리마인더를 사용하려면 \"설정\"에서 알림을 허용해주세요")
         }
         .onChange(of: savedReminder) { newReminder in
             if let newReminder = newReminder {
@@ -109,6 +143,58 @@ struct ReminderListView: View {
                 savedReminder = nil
             }
         }
+        .onChange(of: isAllowReminder) { isToggleAllow in
+            UserDefaults.standard.setValue(isToggleAllow, forKey: "IS_ALLOW_REMINDER_NOTI")
+            
+            let unNotiCenter = UNUserNotificationCenter.current()
+            
+            if isToggleAllow {
+                let notiOptions: UNAuthorizationOptions = [.alert, .badge]
+                
+                Task {
+                    let settings = await unNotiCenter.notificationSettings()
+                    
+                    let allowStatus = settings.authorizationStatus
+                    
+                    switch allowStatus {
+                    case .notDetermined:
+                        let isAllow = try await unNotiCenter.requestAuthorization(options: notiOptions)
+                        
+                        isAllowReminder = isAllow
+                    case .denied:
+                        isAllowReminder = false
+                        isShowAllowNotiAlert = true
+                    default:
+                        break
+                    }
+                }
+                
+                for reminder in reminderList {
+                    if reminder.isOn {
+                        registerReminder(reminder)
+                    }
+                }
+            } else {
+                unNotiCenter.removeAllPendingNotificationRequests()
+            }
+        }
+    }
+    
+    @MainActor
+    private func moveToSettings() async {
+        var settingsURLString = UIApplication.openSettingsURLString
+        
+        if #available(iOS 16.0, *) {
+            settingsURLString = UIApplication.openNotificationSettingsURLString
+        } else if #available(iOS 15.4, *) {
+            settingsURLString = UIApplicationOpenNotificationSettingsURLString
+        }
+        
+        guard let settingsURL = URL(string: settingsURLString) else {
+            return
+        }
+        
+        await UIApplication.shared.open(settingsURL)
     }
     
     private func cancelReminder(_ reminder: Reminder) async {

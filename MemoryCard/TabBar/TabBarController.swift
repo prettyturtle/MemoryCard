@@ -99,18 +99,20 @@ extension TabBarController {
             return
         }
         
-        DBManager.shared.fetchDocument(.card, documentName: cardZipID, type: CardZip.self) { [weak self] result in
-            guard let self = self else {
-                return
-            }
-            
-            if case .success(let cardZip) = result {
-                let rootVC = CardStudyViewController(cardZip: cardZip)
-                let cardStudyVC = UINavigationController(rootViewController: rootVC)
+        if cardZipID != "" {
+            DBManager.shared.fetchDocument(.card, documentName: cardZipID, type: CardZip.self) { [weak self] result in
+                guard let self = self else {
+                    return
+                }
                 
-                cardStudyVC.modalPresentationStyle = .fullScreen
-                
-                self.present(cardStudyVC, animated: true)
+                if case .success(let cardZip) = result {
+                    let rootVC = CardStudyViewController(cardZip: cardZip)
+                    let cardStudyVC = UINavigationController(rootViewController: rootVC)
+                    
+                    cardStudyVC.modalPresentationStyle = .fullScreen
+                    
+                    self.present(cardStudyVC, animated: true)
+                }
             }
         }
     }
