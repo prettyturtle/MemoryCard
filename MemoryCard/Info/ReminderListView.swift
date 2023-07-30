@@ -47,39 +47,7 @@ struct ReminderListView: View {
                     Spacer()
                 } else {
                     List($reminderList) { $reminder in
-                        Toggle(isOn: Binding<Bool>(get: {
-                            return reminder.isOn
-                        }, set: { newIsOn, _ in
-                            if !newIsOn {
-                                Task {
-                                    await cancelReminder(reminder)
-                                    
-                                    reminder.isOn = newIsOn
-                                    
-                                    updateReminder(reminder)
-                                }
-                            } else {
-                                registerReminder(reminder)
-                                
-                                reminder.isOn = newIsOn
-                                
-                                updateReminder(reminder)
-                            }
-                        })) {
-                            Text(reminder.title)
-                        }
-                        .tint(.orange)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button {
-                                Task {
-                                    await cancelReminder(reminder)
-                                    deleteReminder(reminder)
-                                }
-                            } label: {
-                                Label("삭제", systemImage: "trash")
-                            }
-                            .tint(.red)
-                        }
+                        ReminderListCell(reminderList: $reminderList, reminder: $reminder)
                     }
                     .listStyle(.plain)
                     .padding(.top, 16)
