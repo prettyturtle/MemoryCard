@@ -32,7 +32,7 @@ struct ReminderListCell: View {
                 updateReminder(reminder)
             }
         })) {
-            Text(reminder.title)
+            ReminderToggleLabel()
         }
         .tint(.orange)
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -45,6 +45,26 @@ struct ReminderListCell: View {
                 Label("삭제", systemImage: "trash")
             }
             .tint(.red)
+        }
+    }
+    
+    private func ReminderToggleLabel() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(reminder.title)
+                .font(.system(size: 20, weight: .medium))
+            
+            HStack(spacing: 4) {
+                ForEach(reminder.weekDayList.sorted { $0.rawValue < $1.rawValue }, id: \.self) { weekDay in
+                    Text(weekDay.text)
+                        .foregroundColor(.secondary)
+                        .font(.system(size: 16, weight: .medium))
+                        .frame(width: 25, height: 25)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(.secondary.opacity(0.3), lineWidth: 1.0)
+                        }
+                }
+            }
         }
     }
     

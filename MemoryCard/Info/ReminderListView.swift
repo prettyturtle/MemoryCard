@@ -50,7 +50,6 @@ struct ReminderListView: View {
                         ReminderListCell(reminderList: $reminderList, reminder: $reminder)
                     }
                     .listStyle(.plain)
-                    .padding(.top, 16)
                 }
             } else {
                 Spacer()
