@@ -9,88 +9,111 @@ import SwiftUI
 import UserNotifications
 
 struct ReminderListView: View {
-    
-    @State var reminderList = [Reminder]()
-    @State var isShowAddReminderView = false
-    @State var savedReminder: Reminder?
-    @State var isAllowReminder = false
-    @State var isShowAllowNotiAlert = false
+    @ObservedObject var viewModel: ReminderListViewModel
     
     var body: some View {
         VStack(spacing: 0) {
             
-            Toggle(isOn: $isAllowReminder) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("리마인더 알림 허용")
-                        .font(.system(size: 18, weight: .medium))
-                    
-                    Text("원하는 시간에 암기를 시작해보세요")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.secondary)
-                }
-            }
-            .tint(.cyan)
-            .padding(16)
+            TotalReminderToggleView()
             
             Divider()
             
-            if isAllowReminder {
-                if reminderList.isEmpty {
-                    Spacer()
-                    
-                    Image(systemName: "clock.badge")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: UIScreen.main.bounds.width / 2.0, height: UIScreen.main.bounds.width / 2.0)
-                        .foregroundColor(Color(uiColor: .placeholderText))
-                    
-                    Spacer()
-                } else {
-                    List($reminderList) { $reminder in
-                        ReminderListCell(reminderList: $reminderList, reminder: $reminder)
-                    }
-                    .listStyle(.plain)
-                }
+            if !viewModel.isAllowReminder || viewModel.reminderList.isEmpty {
+                ReminderListEmptyView()
             } else {
-                Spacer()
+                ReminderToggleListView()
             }
         }
         .navigationTitle("암기 리마인더 설정")
-        
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                if isAllowReminder {
-                    Button {
-                        isShowAddReminderView = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+            AddReminderToolbarItem()
+        }
+        .onAppear {
+            viewModel.viewOnAppear()
+        }
+        .sheet(isPresented: $viewModel.isShowAddReminderView) {
+            print("HELLO")
+        } content: {
+            AddReminderView(
+                isShow: $viewModel.isShowAddReminderView,
+                savedReminder: $viewModel.savedReminder
+            )
+        }
+        .alert("회원탈퇴", isPresented: $viewModel.isShowAllowNotiAlert) {
+            AlertMoveToSettings()
+        } message: {
+            Text("암기 리마인더를 사용하려면 \"설정\"에서 알림을 허용해주세요")
+        }
+        .onChange(of: viewModel.savedReminder) { newReminder in
+            if let newReminder = newReminder {
+                viewModel.reminderList.insert(newReminder, at: 0)
+                viewModel.savedReminder = nil
+            }
+        }
+        .onChange(of: viewModel.isAllowReminder) { isToggleAllow in
+            viewModel.onChangeIsAllowReminder(isToggleAllow)
+        }
+    }
+}
+
+private extension ReminderListView {
+    func TotalReminderToggleView() -> some View {
+        Toggle(isOn: $viewModel.isAllowReminder) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("리마인더 알림 허용")
+                    .font(.system(size: 18, weight: .medium))
+                
+                Text("원하는 시간에 암기를 시작해보세요")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.secondary)
+            }
+        }
+        .tint(.cyan)
+        .padding(16)
+    }
+    
+    func ReminderListEmptyView() -> some View {
+        Group {
+            Spacer()
+            
+            Image(systemName: "clock.badge")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: UIScreen.main.bounds.width / 2.0, height: UIScreen.main.bounds.width / 2.0)
+                .foregroundColor(Color(uiColor: .placeholderText))
+            
+            Spacer()
+        }
+    }
+    
+    func ReminderToggleListView() -> some View {
+        List($viewModel.reminderList) { $reminder in
+            ReminderListCell(
+                reminderList: $viewModel.reminderList,
+                reminder: $reminder
+            )
+        }
+        .listStyle(.plain)
+    }
+    
+    func AddReminderToolbarItem() -> some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            if viewModel.isAllowReminder {
+                Button {
+                    viewModel.isShowAddReminderView = true
+                } label: {
+                    Image(systemName: "plus")
                 }
             }
         }
-        .onAppear {
-            if let mIdx = AuthManager.shared.getCurrentUser()?.id {
-                let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
-                
-                let savedReminderList = udm.read() ?? []
-                
-                reminderList = savedReminderList.sorted { $0.createdAt.compare($1.createdAt) == .orderedDescending }
-            }
-            
-            let isAllowReminderNoti = UserDefaults.standard.bool(forKey: "IS_ALLOW_REMINDER_NOTI")
-            
-            isAllowReminder = isAllowReminderNoti
-        }
-        .sheet(isPresented: $isShowAddReminderView) {
-            print("HELLO")
-        } content: {
-            AddReminderView(isShow: $isShowAddReminderView, savedReminder: $savedReminder)
-        }
-        .alert("회원탈퇴", isPresented: $isShowAllowNotiAlert) {
+    }
+    
+    func AlertMoveToSettings() -> some View {
+        Group {
             Button(role: nil) {
                 DispatchQueue.main.async {
                     Task {
-                        await moveToSettings()
+                        await viewModel.moveToSettings()
                     }
                 }
             } label: {
@@ -100,126 +123,6 @@ struct ReminderListView: View {
             Button(role: .cancel) {
             } label: {
                 Text("취소")
-            }
-        } message: {
-            Text("암기 리마인더를 사용하려면 \"설정\"에서 알림을 허용해주세요")
-        }
-        .onChange(of: savedReminder) { newReminder in
-            if let newReminder = newReminder {
-                reminderList.insert(newReminder, at: 0)
-                savedReminder = nil
-            }
-        }
-        .onChange(of: isAllowReminder) { isToggleAllow in
-            UserDefaults.standard.setValue(isToggleAllow, forKey: "IS_ALLOW_REMINDER_NOTI")
-            
-            let unNotiCenter = UNUserNotificationCenter.current()
-            
-            if isToggleAllow {
-                let notiOptions: UNAuthorizationOptions = [.alert, .badge]
-                
-                Task {
-                    let settings = await unNotiCenter.notificationSettings()
-                    
-                    let allowStatus = settings.authorizationStatus
-                    
-                    switch allowStatus {
-                    case .notDetermined:
-                        let isAllow = try await unNotiCenter.requestAuthorization(options: notiOptions)
-                        
-                        isAllowReminder = isAllow
-                    case .denied:
-                        isAllowReminder = false
-                        isShowAllowNotiAlert = true
-                    default:
-                        break
-                    }
-                }
-                
-                for reminder in reminderList {
-                    if reminder.isOn {
-                        registerReminder(reminder)
-                    }
-                }
-            } else {
-                unNotiCenter.removeAllPendingNotificationRequests()
-            }
-        }
-    }
-    
-    @MainActor
-    private func moveToSettings() async {
-        var settingsURLString = UIApplication.openSettingsURLString
-        
-        if #available(iOS 16.0, *) {
-            settingsURLString = UIApplication.openNotificationSettingsURLString
-        } else if #available(iOS 15.4, *) {
-            settingsURLString = UIApplicationOpenNotificationSettingsURLString
-        }
-        
-        guard let settingsURL = URL(string: settingsURLString) else {
-            return
-        }
-        
-        await UIApplication.shared.open(settingsURL)
-    }
-    
-    private func cancelReminder(_ reminder: Reminder) async {
-        let requests = await UNUserNotificationCenter.current().pendingNotificationRequests()
-        
-        let deletedReminderIDs = requests.map { $0.identifier }.filter { $0.hasPrefix(reminder.id.uuidString) }
-        
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: deletedReminderIDs)
-    }
-    
-    private func registerReminder(_ reminder: Reminder) {
-        let notificationContent = UNMutableNotificationContent()
-        
-        notificationContent.title = reminder.title
-        notificationContent.body = "알림을 눌러 지금 바로 암기를 시작해봐요 👏"
-        notificationContent.badge = 1
-        notificationContent.userInfo = ["cardZipID": reminder.cardZipID ?? ""]
-        
-        let reminderDate = Calendar.current.dateComponents([.hour, .minute], from: reminder.date)
-        
-        let hour = reminderDate.hour
-        let minute = reminderDate.minute
-        
-        for i in 0..<reminder.weekDayList.count {
-            
-            var dateComponent = DateComponents()
-            dateComponent.hour = hour
-            dateComponent.minute = minute
-            dateComponent.weekday = reminder.weekDayList[i].value
-            
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: true)
-            
-            let notificationRequest = UNNotificationRequest(
-                identifier: reminder.id.uuidString + "_\(i)",
-                content: notificationContent,
-                trigger: trigger
-            )
-            
-            UNUserNotificationCenter.current().add(notificationRequest)
-        }
-    }
-    
-    private func updateReminder(_ reminder: Reminder) {
-        if let mIdx = AuthManager.shared.getCurrentUser()?.id {
-            let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
-            
-            if let updatedReminderList = udm.update(reminder) {
-                reminderList = updatedReminderList.sorted { $0.createdAt.compare($1.createdAt) == .orderedDescending }
-            }
-        }
-    }
-    
-    private func deleteReminder(_ reminder: Reminder) {
-        if let mIdx = AuthManager.shared.getCurrentUser()?.id {
-            let udm = UserDefaultsManager<Reminder>(key: .reminderList(mIdx: mIdx))
-            
-            if let deletedReminderList = udm.delete(reminder) {
-                reminderList = deletedReminderList.sorted { $0.createdAt.compare($1.createdAt) == .orderedDescending }
             }
         }
     }

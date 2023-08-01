@@ -51,7 +51,7 @@ struct MyInfoView: View {
                     
                     ZStack {
                         NavigationLink {
-                            ReminderListView()
+                            ReminderListView(viewModel: ReminderListViewModel())
                         } label: {
                             EmptyView()
                         }
