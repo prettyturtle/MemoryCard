@@ -87,11 +87,8 @@ private extension ReminderListView {
     }
     
     func ReminderToggleListView() -> some View {
-        List($viewModel.reminderList) { $reminder in
-            ReminderListCell(
-                reminderList: $viewModel.reminderList,
-                reminder: $reminder
-            )
+        List(viewModel.reminderList) { reminder in
+            ReminderListCell(viewModel: viewModel, reminder: reminder)
         }
         .listStyle(.plain)
     }
