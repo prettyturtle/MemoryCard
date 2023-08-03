@@ -77,7 +77,7 @@ extension TabBarController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let isDoneTutorialIntro = UserDefaults.standard.bool(forKey: "IS_DONE_TUTORIAL_INTRO")
+        let isDoneTutorialIntro = UserDefaults.standard.bool(forKey: IS_DONE_TUTORIAL_INTRO)
         if !isDoneTutorialIntro {
             TutorialManager.shared.show(
                 at: self,

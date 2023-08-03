@@ -46,7 +46,7 @@ final class CardStudyCollectionViewCell: UICollectionViewCell {
     }
     
     func setupView() {
-        if let savedCardStartState = UserDefaults.standard.string(forKey: "CARD_START_STATE") {
+        if let savedCardStartState = UserDefaults.standard.string(forKey: CARD_START_STATE) {
             if savedCardStartState == "front" {
                 cardContentType = .front
                 cardContentLabel.text = card?.front.content

@@ -18,7 +18,7 @@ struct StudyModeConfigView: View {
                 Button {
                     cardStartState = .front
                     
-                    UserDefaults.standard.setValue("front", forKey: "CARD_START_STATE")
+                    UserDefaults.standard.setValue("front", forKey: CARD_START_STATE)
                 } label: {
                     
                     HStack {
@@ -36,7 +36,7 @@ struct StudyModeConfigView: View {
                 Button {
                     cardStartState = .back
                     
-                    UserDefaults.standard.setValue("back", forKey: "CARD_START_STATE")
+                    UserDefaults.standard.setValue("back", forKey: CARD_START_STATE)
                 } label: {
                     Text("뒤 부터")
                         .foregroundColor(cardStartState == .back ? .gray : .black)
@@ -64,7 +64,7 @@ struct StudyModeConfigView: View {
             )
         }
         .onAppear {
-            if let savedCardStartState = UserDefaults.standard.string(forKey: "CARD_START_STATE") {
+            if let savedCardStartState = UserDefaults.standard.string(forKey: CARD_START_STATE) {
                 cardStartState = savedCardStartState == "front" ? .front : .back
             } else {
                 cardStartState = .front

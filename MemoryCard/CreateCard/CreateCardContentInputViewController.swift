@@ -114,7 +114,7 @@ extension CreateCardContentInputViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let isDoneTutorialCreateCardContentInput = UserDefaults.standard.bool(forKey: "IS_DONE_TUTORIAL_CREATE_CARD_CONTENT_INPUT")
+        let isDoneTutorialCreateCardContentInput = UserDefaults.standard.bool(forKey: IS_DONE_TUTORIAL_CREATE_CARD_CONTENT_INPUT)
         
         if !isDoneTutorialCreateCardContentInput {
             TutorialManager.shared.show(
@@ -209,7 +209,7 @@ private extension CreateCardContentInputViewController {
                 arrowPosition: .bottom
             )
             
-            UserDefaults.standard.setValue(true, forKey: "IS_DONE_TUTORIAL_CREATE_CARD_CONTENT_INPUT")
+            UserDefaults.standard.setValue(true, forKey: IS_DONE_TUTORIAL_CREATE_CARD_CONTENT_INPUT)
         }
     }
     

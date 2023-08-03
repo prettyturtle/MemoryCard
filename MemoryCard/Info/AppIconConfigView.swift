@@ -55,7 +55,7 @@ struct AppIconConfigView: View {
                                                 return
                                             }
                                             
-                                            UserDefaults.standard.set(selectedIconName, forKey: "APP_ICON")
+                                            UserDefaults.standard.set(selectedIconName, forKey: APP_ICON)
                                         }
                                 }
                         }
@@ -67,7 +67,7 @@ struct AppIconConfigView: View {
         .navigationBarTitleDisplayMode(.inline)
         
         .onAppear {
-            let currAppIcon = UserDefaults.standard.string(forKey: "APP_ICON")
+            let currAppIcon = UserDefaults.standard.string(forKey: APP_ICON)
             
             currentAppIcon = currAppIcon ?? iconNames.first
         }

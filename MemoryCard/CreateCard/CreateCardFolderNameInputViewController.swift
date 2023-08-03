@@ -62,7 +62,7 @@ extension CreateCardFolderNameInputViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let isDoneTutorialCreateCardFolderNameInput = UserDefaults.standard.bool(forKey: "IS_DONE_TUTORIAL_CREATE_CARD_FOLDER_NAME_INPUT")
+        let isDoneTutorialCreateCardFolderNameInput = UserDefaults.standard.bool(forKey: IS_DONE_TUTORIAL_CREATE_CARD_FOLDER_NAME_INPUT)
         
         if !isDoneTutorialCreateCardFolderNameInput {
             TutorialManager.shared.show(
@@ -136,7 +136,7 @@ private extension CreateCardFolderNameInputViewController {
                 arrowPosition: .bottom
             )
             
-            UserDefaults.standard.setValue(true, forKey: "IS_DONE_TUTORIAL_CREATE_CARD_FOLDER_NAME_INPUT")
+            UserDefaults.standard.setValue(true, forKey: IS_DONE_TUTORIAL_CREATE_CARD_FOLDER_NAME_INPUT)
         }
     }
     

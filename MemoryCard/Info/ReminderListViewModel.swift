@@ -25,13 +25,13 @@ extension ReminderListViewModel {
             reminderList = savedReminderList.sorted { $0.createdAt.compare($1.createdAt) == .orderedDescending }
         }
         
-        let isAllowReminderNoti = UserDefaults.standard.bool(forKey: "IS_ALLOW_REMINDER_NOTI")
+        let isAllowReminderNoti = UserDefaults.standard.bool(forKey: IS_ALLOW_REMINDER_NOTI)
         
         isAllowReminder = isAllowReminderNoti
     }
     
     func onChangeIsAllowReminder(_ isAllow: Bool) {
-        UserDefaults.standard.setValue(isAllow, forKey: "IS_ALLOW_REMINDER_NOTI")
+        UserDefaults.standard.setValue(isAllow, forKey: IS_ALLOW_REMINDER_NOTI)
         
         let unNotiCenter = UNUserNotificationCenter.current()
         
