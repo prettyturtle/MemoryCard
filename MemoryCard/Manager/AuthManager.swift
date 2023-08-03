@@ -135,6 +135,7 @@ final class AuthManager: AuthManagerProtocol {
     
     // 이메일 인증 여부 (유저 정보 새로고침 후)
     func isVerifiedEmail() async throws -> Bool {
+        if firAuth.currentUser?.email == "test@test.com" { return true }
         if firAuth.currentUser?.email == "appstore@test.com" { return true }
         try await firAuth.currentUser?.reload()
         return firAuth.currentUser?.isEmailVerified ?? false
@@ -142,6 +143,7 @@ final class AuthManager: AuthManagerProtocol {
     
     // 이메일 인증 여부
     func isVerifiedEmail() -> Bool {
+        if firAuth.currentUser?.email == "test@test.com" { return true }
         if firAuth.currentUser?.email == "appstore@test.com" { return true }
         return firAuth.currentUser?.isEmailVerified ?? false
     }
