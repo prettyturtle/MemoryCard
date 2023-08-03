@@ -41,16 +41,26 @@ struct ReminderListCell: View {
                     viewModel.deleteReminder(reminder)
                 }
             } label: {
-                Label("삭제", systemImage: "trash")
+                Label("", systemImage: "trash")
             }
             .tint(.red)
         }
     }
     
     private func ReminderToggleLabel() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = .init(identifier: "ko_KR")
+        dateFormatter.dateFormat = "a hh:mm"
+        let dateString = dateFormatter.string(from: reminder.date) // "12 AM"
+        
+        return VStack(alignment: .leading, spacing: 8) {
             Text(reminder.title)
-                .font(.system(size: 20, weight: .medium))
+                .font(.system(size: 24, weight: .medium))
+                .lineLimit(1)
+            
+            Text(dateString)
+                .font(.system(size: 18, weight: .medium))
+                .foregroundColor(.secondary)
             
             HStack(spacing: 4) {
                 ForEach(reminder.weekDayList.sorted { $0.rawValue < $1.rawValue }, id: \.self) { weekDay in
