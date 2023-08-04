@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SwiftUI
+import AuthenticationServices
 import SnapKit
 import Then
 import Toast
@@ -53,6 +55,17 @@ final class LoginViewController: UIViewController {
             action: #selector(didTapLoginButton),
             for: .touchUpInside
         )
+    }
+    
+    // 라인 디바이더
+    private let lineSeparatorRootView = UIHostingController(rootView: LineSeparator())
+    private lazy var lineSeparator = lineSeparatorRootView.view ?? UIView()
+    
+    // 애플 로그인 버튼
+    private lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black).then {
+        $0.cornerRadius = 12.0
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAppleLogInButton))
+        $0.addGestureRecognizer(tapGesture)
     }
     
     /// 회원가입 뷰컨 이동 버튼
@@ -144,7 +157,6 @@ private extension LoginViewController {
         }
 #endif
         
-        
         if email.isEmpty {                                                  // 이메일이 빈 문자열일 때
             view.makeToast("이메일을 입력해주세요!")                              // 토스트 얼럿 노출 -> 리턴
             return
@@ -190,6 +202,27 @@ private extension LoginViewController {
             }
         }
     }
+    
+    /// Apple 로그인 버튼 눌렀을 때
+    @objc func didTapAppleLogInButton() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    
+}
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
+    }
 }
 
 // MARK: - UI 레이아웃
@@ -221,6 +254,8 @@ private extension LoginViewController {
             emailTextField,
             passwordTextField,
             loginButton,
+            appleLoginButton,
+            lineSeparator,
             moveToSignUpButton
         ].forEach {
             contentView.addSubview($0)
@@ -240,9 +275,18 @@ private extension LoginViewController {
             $0.top.equalTo(passwordTextField.snp.bottom).offset(Constant.defaultInset)
             $0.height.equalTo(48.0)
         }
+        lineSeparator.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset * 3)
+            $0.top.equalTo(loginButton.snp.bottom).offset(Constant.defaultInset * 2)
+        }
+        appleLoginButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
+            $0.top.equalTo(lineSeparator.snp.bottom).offset(Constant.defaultInset * 2)
+            $0.height.equalTo(48.0)
+        }
         moveToSignUpButton.snp.makeConstraints {
-            $0.centerX.equalTo(loginButton.snp.centerX)
-            $0.top.equalTo(loginButton.snp.bottom).offset(Constant.defaultInset)
+            $0.centerX.equalTo(appleLoginButton.snp.centerX)
+            $0.top.equalTo(appleLoginButton.snp.bottom).offset(Constant.defaultInset)
             $0.bottom.equalToSuperview()
         }
     }
