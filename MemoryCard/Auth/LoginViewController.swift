@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import AuthenticationServices
+import CryptoKit
 import SnapKit
 import Then
 import Toast
@@ -104,6 +105,8 @@ final class LoginViewController: UIViewController {
     
     var isRevokeLogin: Bool?                    // 탈퇴 전 로그인
     var isRevokeLoginCompletion: (() -> Void)?  // 탈퇴 전 로그인 후 이벤트
+    
+    var currentNonce: String?                   // 애플로그인 시 난수
     
     // MARK: ========================= </ 프로퍼티 > ========================
 }
@@ -205,19 +208,148 @@ private extension LoginViewController {
     
     /// Apple 로그인 버튼 눌렀을 때
     @objc func didTapAppleLogInButton() {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
+        IndicatorManager.shared.start()                                     // 로딩 인디케이터 시작
         
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        let nonce = randomNonceString()                                     // 난수 생성
+        currentNonce = nonce
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()              // 애플 로그인
+        let request = appleIDProvider.createRequest()                       // 로그인 요청 생성
+        request.requestedScopes = [.fullName, .email]                       // 이름, 이메일 요청
+        request.nonce = sha256(nonce)                                       // SHA256 해시 난수
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])   // 애플 로그인 모달
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
+        authorizationController.performRequests()                                                   // 모달 노출
     }
 }
 
+// MARK: - ASAuthorizationControllerDelegate
 extension LoginViewController: ASAuthorizationControllerDelegate {
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        var randomBytes = [UInt8](repeating: 0, count: length)
+        let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
+        if errorCode != errSecSuccess {
+            fatalError(
+                "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+            )
+        }
+        
+        let charset: [Character] =
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        
+        let nonce = randomBytes.map { byte in
+            charset[Int(byte) % charset.count]
+        }
+        
+        return String(nonce)
+    }
     
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
+        
+        return hashString
+    }
+    
+    // 애플 로그인 완료
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+              let appleIDToken = appleIDCredential.identityToken,
+              let idTokenString = String(data: appleIDToken, encoding: .utf8),
+              let nonce = currentNonce else {
+            IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
+            view.makeToast("다시 시도해주세요!")
+            return
+        }
+        
+        let credential = OAuthProvider.credential(
+            withProviderID: "apple.com",
+            idToken: idTokenString,
+            rawNonce: nonce
+        )
+        
+        Auth.auth().signIn(with: credential) { [weak self] authResult, error in
+            IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
+            
+            guard let self = self else { return }
+            
+            if let authResult = authResult {
+                
+                if isRevokeLogin == true {                                  // 탈퇴전 로그인은 화면 닫기 (예외처리)
+                    dismiss(animated: true, completion: isRevokeLoginCompletion)
+                    
+                    return
+                }
+                
+                DBManager.shared.fetchDocument(.user, documentName: authResult.user.uid, type: User.self) { result in
+                    switch result {
+                    case .success(var fetchedUser): // 로그인
+                        
+                        fetchedUser.lastSignInDate = authResult.user.metadata.lastSignInDate
+                        
+                        DBManager.shared.save(.user, documentName: authResult.user.uid, data: fetchedUser) { _ in}
+                        
+                        let rootVC = TabBarController()         // 메인 탭바 컨트롤러
+                        self.changeRootVC(rootVC, animated: true)    // 메인 탭바 컨트롤러로 루트 뷰컨 변경
+                        
+                    case .failure(_): // 로그인 시 회원정보가 없으면, 회원가입
+                        
+                        let id = authResult.user.uid
+                        let email = authResult.user.email ?? "NIL"
+                        let name = appleIDCredential.fullName?.givenName ?? String(email.split(separator: "@").first ?? "NIL")
+                        let createdDate = authResult.user.metadata.creationDate
+                        let lastSignInDate = authResult.user.metadata.lastSignInDate
+                        
+                        let user = User(
+                            id: id,
+                            email: email,
+                            name: name,
+                            createdDate: createdDate,
+                            lastSignInDate: lastSignInDate,
+                            isEmailVerified: false
+                        )
+                        
+                        // 유저 정보 저장 시작
+                        DBManager.shared.save(
+                            .user,
+                            documentName: user.id,
+                            data: user
+                        ) { dbResult in
+                            switch dbResult {
+                            case .success(_):                               // 유저 저장 성공
+                                let rootVC = TabBarController()             // 메인 탭바 컨트롤러
+                                self.changeRootVC(rootVC, animated: true)   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
+                            case .failure(let error):
+                                // TODO: - 유저 저장 실패 처리
+                                print("🎉 유저 저장 실패", error)
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if let error = error {
+                view.makeToast("사용자 정보를 찾을 수 없어요!")               // 토스트 얼럿 노출
+            }
+        }
+    }
+    
+    // 애플 로그인 취소/에러
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithError error: Error
+    ) {
+        IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
+    }
 }
 extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
