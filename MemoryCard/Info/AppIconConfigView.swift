@@ -51,11 +51,13 @@ struct AppIconConfigView: View {
                                     UIApplication
                                         .shared
                                         .setAlternateIconName(selectedIconName) { error in
-                                            if let error = error {
+                                            if let _ = error {
                                                 return
                                             }
                                             
                                             UserDefaults.standard.set(selectedIconName, forKey: APP_ICON)
+                                            
+                                            moveToBackground()
                                         }
                                 }
                         }
@@ -71,6 +73,13 @@ struct AppIconConfigView: View {
             
             currentAppIcon = currAppIcon ?? iconNames.first
         }
+    }
+    
+    // 백그라운드로 이동
+    private func moveToBackground() {
+        let selector = NSSelectorFromString("suspend")
+        let sharedUIApplication = UIApplication.perform(NSSelectorFromString("sharedApplication"))?.takeUnretainedValue()
+        _ = sharedUIApplication?.perform(selector, with: nil)
     }
 }
 
