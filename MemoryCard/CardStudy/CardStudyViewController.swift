@@ -103,7 +103,7 @@ final class CardStudyViewController: UIViewController {
     private var autoHandler: DispatchWorkItem?
     private var autoTimer: Timer?
     private var autoProgress: Float = 0.0
-    private var currentAutoPlaySpeed = 3
+    private var currentAutoPlaySpeed = UserDefaults.standard.integer(forKey: AUTO_PLAY_SPEED) == 0 ? 3 : UserDefaults.standard.integer(forKey: AUTO_PLAY_SPEED)
     
     // MARK: ========================= </ 프로퍼티 > ========================
     
@@ -339,6 +339,7 @@ private extension CardStudyViewController {
         )
         
         let cancelAction = UIAlertAction(title: "닫기", style: .cancel)
+        
         let autoPlaySpeed = UIAlertAction(title: "자동 재생 속도", style: .default) { [weak self] _ in
             let autoPlaySpeedAlertController = UIAlertController(
                 title: "자동 재생 속도",
@@ -352,6 +353,7 @@ private extension CardStudyViewController {
                     style: .default
                 ) { _ in
                     self?.currentAutoPlaySpeed = speed
+                    UserDefaults.standard.setValue(speed, forKey: AUTO_PLAY_SPEED)
                 }
                 
                 autoPlaySpeedAlertController.addAction(speedAction)
