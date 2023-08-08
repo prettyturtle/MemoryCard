@@ -29,6 +29,9 @@ final class CreateCardContentInputViewController: UIViewController {
         action: #selector(didTapCardAddBarButton)
     )
     
+    private lazy var scrollView = UIScrollView()
+    private lazy var contentView = UIView()
+    
     /// 카드 콜렉션뷰 레이아웃
     private lazy var contentInputCollectionViewLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal // 스크롤 방향 좌우
@@ -413,19 +416,44 @@ private extension CreateCardContentInputViewController {
         navigationItem.rightBarButtonItem = cardAddBarButton
     }
     func setupLayout() {
+        view.addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        scrollView.addSubview(contentView)
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+        
         [
             contentInputCollectionView,
             nextButton
         ].forEach {
-            view.addSubview($0)
+            contentView.addSubview($0)
         }
         
+        let window = UIApplication.shared.windows.first
+        let top = window?.safeAreaInsets.top
+        let bottom = window?.safeAreaInsets.bottom
+        
+        var contentInputCollectionViewHeight = UIScreen.main.bounds.height
+        contentInputCollectionViewHeight -= 48.0
+        contentInputCollectionViewHeight -= top ?? 0
+        contentInputCollectionViewHeight -= bottom ?? 0
+        contentInputCollectionViewHeight -= CGFloat(Constant.defaultInset * 3)
+        contentInputCollectionViewHeight -= (navigationController?.navigationBar.frame.height ?? 0)
+        
         contentInputCollectionView.snp.makeConstraints {
-            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.top.trailing.equalToSuperview().inset(Constant.defaultInset)
+            $0.height.equalTo(contentInputCollectionViewHeight)
         }
         nextButton.snp.makeConstraints {
             $0.top.equalTo(contentInputCollectionView.snp.bottom).offset(Constant.defaultInset)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constant.defaultInset)
             $0.height.equalTo(48.0)
         }
     }
