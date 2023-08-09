@@ -104,6 +104,8 @@ extension CreateCardContentInputViewController {
         
         setupEditMode()                             // 신규/수정 모드 별 분기 세팅
         
+        setKeyboardObserver()
+        
         NotificationCenter
             .default
             .addObserver(
@@ -159,10 +161,60 @@ private extension CreateCardContentInputViewController {
             currentCardIdx = 0                          // 현재 카드 인덱스
         }
     }
+    
+    /// 키보드 옵저버 Add
+    func setKeyboardObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object:nil
+        )
+    }
 }
 
 // MARK: - UI 이벤트
 private extension CreateCardContentInputViewController {
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        
+        scrollView.contentInset.bottom = keyboardFrame.size.height
+        
+        let currentCollectionViewCellIndex = IndexPath(item: currentCardIdx, section: 0)
+        
+        let currentCollectionViewCell = contentInputCollectionView.cellForItem(
+            at: currentCollectionViewCellIndex
+        ) as? CreateCardContentInputCollectionViewCell
+        
+        let currentCollectionViewCellContentView = currentCollectionViewCell?.contentView
+        
+        let firstResponder = currentCollectionViewCellContentView?
+            .subviews
+            .flatMap { $0.subviews }
+            .map { $0 as? UITextView }
+            .filter { $0?.isFirstResponder == true }
+            .compactMap { $0 }
+            .first
+        
+        UIView.animate(withDuration: 0.4) {
+            self.scrollView.scrollRectToVisible(firstResponder?.frame ?? CGRect.zero, animated: true)
+        }
+    }
+    @objc func keyboardWillHide(_ notification: Notification) {
+        let contentInset = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
     
     /// 튜토리얼 딤 뷰 탭 했을 때
     @objc func didTapTutorialDimView(_ notification: Notification) {
