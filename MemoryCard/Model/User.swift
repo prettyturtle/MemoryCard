@@ -16,4 +16,5 @@ struct User: Codable, Equatable {
     var createdDate: Date?              // 가입 날짜
     var lastSignInDate: Date?           // 마지막 로그인 날짜
     var isEmailVerified: Bool? = false  // 이메일 인증 여부
+    var pushToken: String?
 }

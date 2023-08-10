@@ -11,6 +11,7 @@ struct Constant {
     static var defaultInset: Float {
         return 16.0
     }
+    static var pushToken: String?
 }
 
 let CARD_START_STATE                                = "CARD_START_STATE"

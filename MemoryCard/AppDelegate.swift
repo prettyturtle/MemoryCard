@@ -8,6 +8,7 @@
 import UIKit
 import UserNotifications
 import FirebaseCore
+import FirebaseMessaging
 import GoogleMobileAds
 
 @main
@@ -23,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         UNUserNotificationCenter.current().delegate = self
+        application.registerForRemoteNotifications()
+        Messaging.messaging().delegate = self
         
         return true
     }
@@ -67,5 +70,21 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         )
         
         completionHandler()
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        guard let fcmToken = fcmToken else {
+            return
+        }
+        
+        print("👏 파이어베이스 토큰", fcmToken)
+        
+        Constant.pushToken = fcmToken
     }
 }

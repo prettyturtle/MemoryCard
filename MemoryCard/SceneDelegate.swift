@@ -27,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             DBManager.shared.fetchDocument(.user, documentName: id, type: User.self) { result in
                 if case var .success(fetchedUser) = result {
                     fetchedUser.lastSignInDate = Date.now
+                    fetchedUser.pushToken = Constant.pushToken
                     
                     DBManager.shared.save(.user, documentName: id, data: fetchedUser) { _ in}
                 }
