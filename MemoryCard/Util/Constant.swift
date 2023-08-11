@@ -5,13 +5,17 @@
 //  Created by yc on 2023/03/25.
 //
 
-import Foundation
+import UIKit
 
 struct Constant {
     static var defaultInset: Float {
         return 16.0
     }
     static var pushToken: String?
+    
+    static var deviceType: UIUserInterfaceIdiom {
+        return UIDevice.current.userInterfaceIdiom
+    }
 }
 
 let CARD_START_STATE                                = "CARD_START_STATE"

@@ -13,6 +13,12 @@ struct Alert {
     let alertController: UIAlertController
     
     init(style: UIAlertController.Style) {
+        var style = style
+        
+        if style == .actionSheet && Constant.deviceType == .pad {
+            style = .alert
+        }
+        
         self.alertController = UIAlertController(title: nil, message: nil, preferredStyle: style)
     }
     

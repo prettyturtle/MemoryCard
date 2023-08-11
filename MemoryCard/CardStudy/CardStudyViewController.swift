@@ -332,46 +332,33 @@ private extension CardStudyViewController {
     }
     
     @objc func didTapOptionSettingButton(_ sender: UIBarButtonItem) {
-        let optionSettingAlertController = UIAlertController(
-            title: "옵션",
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        
-        let cancelAction = UIAlertAction(title: "닫기", style: .cancel)
-        
-        let autoPlaySpeed = UIAlertAction(title: "자동 재생 속도", style: .default) { [weak self] _ in
-            let autoPlaySpeedAlertController = UIAlertController(
-                title: "자동 재생 속도",
-                message: nil,
-                preferredStyle: .actionSheet
-            )
-            
-            [1, 3, 5, 7].forEach { speed in
-                let speedAction = UIAlertAction(
-                    title: self?.currentAutoPlaySpeed == speed ? "✓ \(speed)초" : "\(speed)초",
-                    style: .default
-                ) { _ in
-                    self?.currentAutoPlaySpeed = speed
-                    UserDefaults.standard.setValue(speed, forKey: AUTO_PLAY_SPEED)
-                }
+        let optionSettingAlert = Alert(style: .actionSheet)
+            .setTitle("옵션")
+            .setAction(title: "닫기", style: .cancel)
+            .setAction(title: "자동 재생 속도", style: .default) { [weak self] _ in
+                let autoPlaySpeedAlert = Alert(style: .actionSheet)
+                    .setTitle("자동 재생 속도")
+                    .setAction(title: "닫기", style: .cancel)
+                    .setActions(
+                        [1, 3, 5, 7].map { speed -> Alert.AlertAction in
+                            let speedAction = Alert.AlertAction(
+                                title: self?.currentAutoPlaySpeed == speed ? "✓ \(speed)초" : "\(speed)초",
+                                style: .default
+                            ) { _ in
+                                self?.currentAutoPlaySpeed = speed
+                                UserDefaults.standard.setValue(speed, forKey: AUTO_PLAY_SPEED)
+                            }
+                            
+                            return speedAction
+                        }
+                    )
+                    .endSet()
                 
-                autoPlaySpeedAlertController.addAction(speedAction)
+                self?.present(autoPlaySpeedAlert, animated: true)
             }
-            
-            autoPlaySpeedAlertController.addAction(cancelAction)
-            
-            self?.present(autoPlaySpeedAlertController, animated: true)
-        }
+            .endSet()
         
-        [
-            cancelAction,
-            autoPlaySpeed
-        ].forEach {
-            optionSettingAlertController.addAction($0)
-        }
-        
-        present(optionSettingAlertController, animated: true)
+        present(optionSettingAlert, animated: true)
     }
     
     @objc func didTapDismissButton(_ sender: UIBarButtonItem) {
