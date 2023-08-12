@@ -103,6 +103,21 @@ extension MyCardListViewController {
             )
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let pushAllowTappedDate = UserDefaults.standard.value(forKey: IS_TAPPED_PUSH_ALLOW) as? Date {
+            
+            let intervalDate = Int(Date.now.timeIntervalSince(pushAllowTappedDate))
+            
+            if intervalDate >= 604800 {
+                showPushAllowPopup()
+            }
+        } else {
+            showPushAllowPopup()
+        }
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -117,6 +132,22 @@ extension MyCardListViewController {
 
 // MARK: - 로직
 private extension MyCardListViewController {
+    
+    /// 푸시 알림 허용 팝업 노출
+    func showPushAllowPopup() {
+        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { [weak self] settings in
+            let allowStatus = settings.authorizationStatus
+            
+            if allowStatus != .authorized {
+                DispatchQueue.main.async {
+                    let pop = PopupViewController(popupView: PushAllowPopupView())
+                    pop.modalPresentationStyle = .overFullScreen
+                    pop.modalTransitionStyle = .crossDissolve
+                    self?.present(pop, animated: true)
+                }
+            }
+        })
+    }
     
     /// 카드 집 불러오는 함수
     ///

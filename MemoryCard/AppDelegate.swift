@@ -52,7 +52,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         willPresent noti: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        completionHandler([.badge, .banner, .list])
+        completionHandler([.badge, .banner, .list, .sound])
     }
     
     func userNotificationCenter(

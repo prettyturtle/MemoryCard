@@ -36,7 +36,7 @@ extension ReminderListViewModel {
         let unNotiCenter = UNUserNotificationCenter.current()
         
         if isAllow {
-            let notiOptions: UNAuthorizationOptions = [.alert, .badge]
+            let notiOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
             
             Task {
                 let settings = await unNotiCenter.notificationSettings()
