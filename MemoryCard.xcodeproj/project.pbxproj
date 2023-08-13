@@ -670,7 +670,7 @@
 				CODE_SIGN_ENTITLEMENTS = MemoryCard/MemoryCard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = TB9WF4459Q;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -686,7 +686,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = YC.MemoryCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -707,12 +707,12 @@
 				CODE_SIGN_ENTITLEMENTS = MemoryCard/MemoryCard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = TB9WF4459Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MemoryCard/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "(D)메모리카드";
+				INFOPLIST_KEY_CFBundleDisplayName = "메모리카드";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -723,7 +723,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = YC.MemoryCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
