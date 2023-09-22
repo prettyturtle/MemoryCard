@@ -39,7 +39,7 @@ struct ReminderListView: View {
                 savedReminder: $viewModel.savedReminder
             )
         }
-        .alert("회원탈퇴", isPresented: $viewModel.isShowAllowNotiAlert) {
+        .alert("알림 권한 허용", isPresented: $viewModel.isShowAllowNotiAlert) {
             AlertMoveToSettings()
         } message: {
             Text("암기 리마인더를 사용하려면 \"설정\"에서 알림을 허용해주세요")
