@@ -73,8 +73,6 @@ extension CreateCardFolderNameInputViewController {
                 arrowPosition: .bottom
             )
         }
-        
-        folderNameTextField.becomeFirstResponder()
     }
 }
 
