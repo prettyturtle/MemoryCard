@@ -78,6 +78,7 @@
 		6BD990BB2A716F6A00B1F322 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD990BA2A716F6A00B1F322 /* LoginView.swift */; };
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
+		6BF2A46A2ADAF3CD004A09FE /* VocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF2A4692ADAF3CD004A09FE /* VocView.swift */; };
 		6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */; };
 		6BF64BEF2A483A73000F0EC7 /* AppIconConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF64BEE2A483A73000F0EC7 /* AppIconConfigView.swift */; };
 /* End PBXBuildFile section */
@@ -143,6 +144,7 @@
 		6BD990BA2A716F6A00B1F322 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewCell.swift; sourceTree = "<group>"; };
 		6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeConfigView.swift; sourceTree = "<group>"; };
+		6BF2A4692ADAF3CD004A09FE /* VocView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocView.swift; sourceTree = "<group>"; };
 		6BF64BEE2A483A73000F0EC7 /* AppIconConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconConfigView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -270,6 +272,7 @@
 				6BA6A4372A320FE0002127E6 /* ImagePickerView.swift */,
 				6BD5B5632A6D879100FC82AD /* EmailVerifyView.swift */,
 				6BD3E4BA2A79435F00D3065E /* ReminderListViewModel.swift */,
+				6BF2A4692ADAF3CD004A09FE /* VocView.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 			files = (
 				6BD18CEA2A51C0F40020433A /* Notification_Name+.swift in Sources */,
 				6BD3E51B2A87EED300D3065E /* PushAllowPopupView.swift in Sources */,
+				6BF2A46A2ADAF3CD004A09FE /* VocView.swift in Sources */,
 				6BD3E51D2A87EFF500D3065E /* PopupAction.swift in Sources */,
 				6B85569C29E464070004E226 /* MyCardListViewController.swift in Sources */,
 				6BD3E5192A86B04C00D3065E /* PopupViewController.swift in Sources */,

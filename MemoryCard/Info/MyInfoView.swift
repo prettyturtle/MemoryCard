@@ -17,6 +17,7 @@ struct MyInfoView: View {
     
     @State private var isVerifiedEmail = true
     
+    @State private var isShowVocView = false
     @State private var isShowLoginView = false
     @State private var isSuccessLogin = false
     
@@ -92,6 +93,15 @@ struct MyInfoView: View {
                     }
                     
                     Button {
+                        isShowVocView = true
+                    } label: {
+                        MyInfoViewCell(
+                            title: "개선 요청",
+                            textColor: .black
+                        )
+                    }
+                    
+                    Button {
                         isShowLogoutAlert = true
                     } label: {
                         MyInfoViewCell(
@@ -115,6 +125,9 @@ struct MyInfoView: View {
             
             .navigationTitle("설정")
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .sheet(isPresented: $isShowVocView) {
+            VocView(isShowVocView: $isShowVocView, user: $currentUser)
         }
         .alert("회원탈퇴", isPresented: $isShowDeleteUserAlert) {
             Button(role: .destructive) {
