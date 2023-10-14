@@ -19,6 +19,8 @@ struct VocView: View {
     @State private var placeholderText = "자세한 설명을 입력하세요..."
     @State private var content = ""
     
+    @State private var isShowDismissAlert = false
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -77,7 +79,11 @@ struct VocView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        isShowVocView = false
+                        if !title.isEmpty || !content.isEmpty {
+                            isShowDismissAlert = true
+                        } else {
+                            isShowVocView = false
+                        }
                     } label: {
                         Image(systemName: "xmark")
                     }
@@ -98,6 +104,21 @@ struct VocView: View {
                         Text("보내기")
                     }
                 }
+            }
+            .alert("작성중인 내용이 있습니다.\n나가시겠습니까?", isPresented: $isShowDismissAlert) {
+                Button(role: .destructive) {
+                    isShowVocView = false
+                } label: {
+                    Text("나가기")
+                }
+                
+                Button(role: .cancel) {
+                    
+                } label: {
+                    Text("취소")
+                }
+            } message: {
+                Text("작성된 내용은 저장되지 않습니다.")
             }
         }
     }
