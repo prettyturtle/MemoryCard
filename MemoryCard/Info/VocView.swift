@@ -20,6 +20,7 @@ struct VocView: View {
     @State private var content = ""
     
     @State private var isShowDismissAlert = false
+    @State private var canSubmitVoc = false
     
     var body: some View {
         NavigationView {
@@ -73,6 +74,12 @@ struct VocView: View {
                 }
             }
             .interactiveDismissDisabled()
+            .onChange(of: title, perform: { _ in
+                canSubmitVoc = !title.isEmpty || !content.isEmpty
+            })
+            .onChange(of: content, perform: { _ in
+                canSubmitVoc = !title.isEmpty || !content.isEmpty
+            })
             
             .navigationTitle("개선 요청")
             .navigationBarTitleDisplayMode(.inline)
@@ -99,10 +106,15 @@ struct VocView: View {
                             createdDate: .now
                         )
                         
+                        if canSubmitVoc {
+                            
+                        }
+                        
                         isShowVocView = false
                     } label: {
                         Text("보내기")
                     }
+                    .disabled(!canSubmitVoc)
                 }
             }
             .alert("작성중인 내용이 있습니다.\n나가시겠습니까?", isPresented: $isShowDismissAlert) {
