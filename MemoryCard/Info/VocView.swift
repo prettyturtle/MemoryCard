@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SimpleToast
 
 struct VocView: View {
     
@@ -21,6 +22,10 @@ struct VocView: View {
     
     @State private var isShowDismissAlert = false
     @State private var canSubmitVoc = false
+    
+    @State var showToast = false
+    @State var toastMessage = "다시 시도해주세요!"
+    private let toastOptions = SimpleToastOptions(hideAfter: 3, animation: .easeInOut)
     
     var body: some View {
         NavigationView {
@@ -99,6 +104,8 @@ struct VocView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         // TODO: - 개선 요청 제출
+                        IndicatorManager.shared.start()
+                        
                         let voc = Voc(
                             mIdx: user.id,
                             title: title,
@@ -107,10 +114,22 @@ struct VocView: View {
                         )
                         
                         if canSubmitVoc {
-                            
+                            DBManager.shared.save(
+                                .voc,
+                                documentName: voc.id,
+                                data: voc
+                            ) { result in
+                                IndicatorManager.shared.stop()
+                                switch result {
+                                case .success(_):
+                                    print("성공!")
+                                    isShowVocView = false
+                                case .failure(let error):
+                                    showToast = true
+                                    print("😫", error.localizedDescription)
+                                }
+                            }
                         }
-                        
-                        isShowVocView = false
                     } label: {
                         Text("보내기")
                     }
@@ -131,6 +150,16 @@ struct VocView: View {
                 }
             } message: {
                 Text("작성된 내용은 저장되지 않습니다.")
+            }
+            .simpleToast(isPresented: $showToast, options: toastOptions) {
+                Label(toastMessage, systemImage: "exclamationmark.triangle")
+                    .padding(.vertical, 8)
+                    .font(.system(size: 16, weight: .medium))
+                    .frame(width: UIScreen.main.bounds.width - 32)
+                    .background(.pink.opacity(0.8))
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .padding(.top, 8)
             }
         }
     }
