@@ -102,6 +102,14 @@ struct VocView: View {
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        VocListView(user: $user)
+                    } label: {
+                        Image(systemName: "clock.arrow.2.circlepath")
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         // TODO: - 개선 요청 제출
                         IndicatorManager.shared.start()
@@ -165,10 +173,39 @@ struct VocView: View {
     }
 }
 
-struct Voc: Codable, Identifiable {
-    var id: String = UUID().uuidString
-    let mIdx: String
-    let title: String
-    let content: String
-    let createdDate: Date
-}
+//struct VocDetailView: View {
+//    let voc: Voc
+//    
+//    var body: some View {
+//        VStack(alignment: .leading, spacing: 0) {
+//            Divider()
+//            
+//            ScrollView {
+//                VStack(spacing: 16) {
+//                    VStack(alignment: .leading, spacing: 10) {
+//                        Text("제목")
+//                            .font(.system(size: 16, weight: .medium))
+//                        
+//                        Text(voc.title)
+//                            .font(.system(size: 20, weight: .semibold))
+//                            .lineLimit(0)
+//                    }
+//                    
+//                    Text(voc.formattedDate)
+//                        .foregroundColor(.secondary)
+//                        .font(.system(size: 14, weight: .regular))
+//                    
+//                    VStack(alignment: .leading, spacing: 10) {
+//                        Text("설명")
+//                            .font(.system(size: 16, weight: .medium))
+//                        
+//                        Text(voc.content)
+//                            .font(.system(size: 16, weight: .regular))
+//                            .lineLimit(0)
+//                    }
+//                }
+//                .padding(16)
+//            }
+//        }
+//    }
+//}
