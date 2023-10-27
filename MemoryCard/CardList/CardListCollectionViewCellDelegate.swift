@@ -17,4 +17,8 @@ protocol CardListCollectionViewCellDelegate: AnyObject {
     /// 삭제 버튼을 눌렀을 때
     /// - Parameter cardZip: 삭제할 카드집
     func didTapDeleteButton(_ cardZip: CardZip)
+    
+    /// 게임 모드 버튼을 눌렀을 때
+    /// - Parameter cardZip: 게임할 카드집
+    func didTapGameModeButton(_ cardZip: CardZip)
 }

@@ -384,6 +384,18 @@ extension MyCardListViewController: CardListCollectionViewCellDelegate {
         // 삭제 얼럿 띄우기
         present(deleteAlert, animated: true)
     }
+    
+    func didTapGameModeButton(_ cardZip: CardZip) {
+        let gameModeSelectAlert = Alert(style: .actionSheet)
+            .setTitle("게임 모드")
+            .setMessage("모드를 선택해주세요.")
+            .setAction(title: "퀴즈 챌린지", style: .default)
+            .setAction(title: "입력 레이스", style: .default)
+            .setAction(title: "취소", style: .cancel)
+            .endSet()
+        
+        present(gameModeSelectAlert, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

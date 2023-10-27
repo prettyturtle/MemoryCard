@@ -26,6 +26,17 @@ final class CardListCollectionViewCell: UICollectionViewCell {
         $0.font = .systemFont(ofSize: 14.0, weight: .medium)
     }
     
+    /// 게임 모드 버튼
+    private lazy var gameModeButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "gamecontroller"), for: .normal)
+        $0.tintColor = .systemOrange
+        $0.addTarget(
+            self,
+            action: #selector(didTapGameModeButton),
+            for: .touchUpInside
+        )
+    }
+    
     /// 수정 버튼
     private lazy var editButton = UIButton().then {
         $0.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
@@ -92,6 +103,14 @@ private extension CardListCollectionViewCell {
             return
         }
     }
+    
+    @objc func didTapGameModeButton(_ sender: UIButton) {
+        guard let cardZip = cardZip else {
+            return
+        }
+        
+        delegate?.didTapGameModeButton(cardZip)
+    }
 }
 
 // MARK: - 로직
@@ -127,7 +146,8 @@ extension CardListCollectionViewCell {
         
         if isEdit { // 편집 모드 UI
             [
-                cardCountLabel
+                cardCountLabel,
+                gameModeButton
             ].forEach {
                 $0.removeFromSuperview() // 기존 UI 제거
             }
@@ -157,13 +177,19 @@ extension CardListCollectionViewCell {
             }
             
             [
-                cardCountLabel
+                cardCountLabel,
+                gameModeButton
             ].forEach {
                 contentView.addSubview($0) // 일반 모드 UI 추가
             }
             
             cardCountLabel.snp.makeConstraints {
                 $0.trailing.bottom.equalToSuperview().inset(Constant.defaultInset)
+            }
+            
+            gameModeButton.snp.makeConstraints {
+                $0.top.equalTo(contentView.snp.centerY).offset(Constant.defaultInset)
+                $0.leading.bottom.equalToSuperview().inset(Constant.defaultInset)
             }
         }
     }
@@ -194,4 +220,3 @@ struct CardZipCell: UIViewRepresentable {
         return cell
     }
 }
-
