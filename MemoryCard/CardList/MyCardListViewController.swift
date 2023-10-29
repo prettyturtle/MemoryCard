@@ -389,8 +389,30 @@ extension MyCardListViewController: CardListCollectionViewCellDelegate {
         let gameModeSelectAlert = Alert(style: .actionSheet)
             .setTitle("게임 모드")
             .setMessage("모드를 선택해주세요.")
-            .setAction(title: "퀴즈 챌린지", style: .default)
-            .setAction(title: "입력 레이스", style: .default)
+            .setAction(title: GameMode.quiz.title, style: .default) { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+                
+                let gameIntroVC = GameIntroViewController(gameMode: .quiz)
+                let gameIntroNC = UINavigationController(rootViewController: gameIntroVC)
+                
+                gameIntroNC.modalPresentationStyle = .overFullScreen
+                
+                self.present(gameIntroNC, animated: true)
+            }
+            .setAction(title: GameMode.keyboard.title, style: .default) { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+                
+                let gameIntroVC = GameIntroViewController(gameMode: .keyboard)
+                let gameIntroNC = UINavigationController(rootViewController: gameIntroVC)
+                
+                gameIntroNC.modalPresentationStyle = .overFullScreen
+                
+                self.present(gameIntroNC, animated: true)
+            }
             .setAction(title: "취소", style: .cancel)
             .endSet()
         
