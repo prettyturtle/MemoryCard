@@ -57,12 +57,16 @@ extension GameOptionSettingViewController: UITableViewDataSource {
         return gameMode.options[section].selectionList.count
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return gameMode.options[section].title
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CELL") else {
             return UITableViewCell()
         }
         
-        cell.textLabel?.text = "\(gameMode.options[indexPath.section]) - \(gameMode.options[indexPath.section].selectionList[indexPath.row].text)"
+        cell.textLabel?.text = gameMode.options[indexPath.section].selectionList[indexPath.row].text
         
         return cell
     }
