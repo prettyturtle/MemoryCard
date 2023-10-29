@@ -20,6 +20,8 @@
 		6B14A7C12A13BA58002384B4 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B14A7C02A13BA58002384B4 /* Alert.swift */; };
 		6B192AC22AEEA1F80021EA82 /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B192AC12AEEA1F80021EA82 /* GameMode.swift */; };
 		6B192AC42AEEA2150021EA82 /* GameIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B192AC32AEEA2150021EA82 /* GameIntroViewController.swift */; };
+		6B192AC62AEEAC160021EA82 /* GameModeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B192AC52AEEAC160021EA82 /* GameModeOption.swift */; };
+		6B192AC82AEEAC2B0021EA82 /* GameOptionSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B192AC72AEEAC2B0021EA82 /* GameOptionSettingViewController.swift */; };
 		6B29BDC229CE10EB00F39932 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDC129CE10EB00F39932 /* AppDelegate.swift */; };
 		6B29BDC429CE10EB00F39932 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDC329CE10EB00F39932 /* SceneDelegate.swift */; };
 		6B29BDC629CE10EB00F39932 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDC529CE10EB00F39932 /* LoginViewController.swift */; };
@@ -101,6 +103,8 @@
 		6B14A7C02A13BA58002384B4 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		6B192AC12AEEA1F80021EA82 /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
 		6B192AC32AEEA2150021EA82 /* GameIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameIntroViewController.swift; sourceTree = "<group>"; };
+		6B192AC52AEEAC160021EA82 /* GameModeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModeOption.swift; sourceTree = "<group>"; };
+		6B192AC72AEEAC2B0021EA82 /* GameOptionSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOptionSettingViewController.swift; sourceTree = "<group>"; };
 		6B29BDBE29CE10EB00F39932 /* MemoryCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B29BDC129CE10EB00F39932 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B29BDC329CE10EB00F39932 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -314,7 +318,9 @@
 			isa = PBXGroup;
 			children = (
 				6B192AC12AEEA1F80021EA82 /* GameMode.swift */,
+				6B192AC52AEEAC160021EA82 /* GameModeOption.swift */,
 				6B192AC32AEEA2150021EA82 /* GameIntroViewController.swift */,
+				6B192AC72AEEAC2B0021EA82 /* GameOptionSettingViewController.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -509,10 +515,12 @@
 				6B85569429DC64AA0004E226 /* DBManager.swift in Sources */,
 				6B85569229DC646F0004E226 /* CardZip.swift in Sources */,
 				6BD5B5642A6D879100FC82AD /* EmailVerifyView.swift in Sources */,
+				6B192AC62AEEAC160021EA82 /* GameModeOption.swift in Sources */,
 				6BD3E4BB2A79435F00D3065E /* ReminderListViewModel.swift in Sources */,
 				6BB5BF5F2ADD8248004E9486 /* VocListView.swift in Sources */,
 				6B9BC16629EB213100B32557 /* CardStudyCollectionViewCell.swift in Sources */,
 				6BA3065729D896AA003CFAF2 /* UITextView+.swift in Sources */,
+				6B192AC82AEEAC2B0021EA82 /* GameOptionSettingViewController.swift in Sources */,
 				6B088D1A29D02EBE0056B4EF /* UIViewController+.swift in Sources */,
 				6B088D2E29D32DD90056B4EF /* CreateCardContentInputCollectionViewCell.swift in Sources */,
 				6B9BC16429EAE4C200B32557 /* UINavigationItem+.swift in Sources */,

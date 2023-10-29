@@ -28,4 +28,13 @@ enum GameMode {
             return "암기한 내용을 게임으로 다시 확인해요.\n문제를 보고 정답을 직접 입력해주세요!"
         }
     }
+    
+    var options: [GameModeOption] {
+        switch self {
+        case .quiz:
+            return [.sort, .state, .skip, .sunjiCount]
+        case .keyboard:
+            return [.sort, .state, .skip, .level]
+        }
+    }
 }

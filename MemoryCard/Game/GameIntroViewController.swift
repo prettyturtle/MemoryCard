@@ -28,7 +28,6 @@ final class GameIntroViewController: UIViewController {
         $0.numberOfLines = 0
     }
     
-    
     init(gameMode: GameMode) {
         self.gameMode = gameMode
         super.init(nibName: nil, bundle: nil)
@@ -51,13 +50,25 @@ final class GameIntroViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @objc func didTapOptionSettingButton(_ sender: UIBarButtonItem) {
+        let gameOptionSettingVC = GameOptionSettingViewController(gameMode: gameMode)
+        navigationController?.pushViewController(gameOptionSettingVC, animated: true)
+    }
+    
     private func setupNavigationBar() {
         navigationItem.addDismissButton(self, action: #selector(didTapDismissButton))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "gearshape"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapOptionSettingButton)
+        )
     }
     
     private func setupLayout() {
         [
-            titleLabel,
+            titleLabel,    
             descriptionLabel
         ].forEach {
             view.addSubview($0)
