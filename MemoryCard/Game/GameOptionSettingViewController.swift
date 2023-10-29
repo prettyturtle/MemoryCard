@@ -43,7 +43,7 @@ final class GameOptionSettingViewController: UIViewController {
         view.addSubview(optionListTableView)
         
         optionListTableView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.edges.equalToSuperview()
         }
     }
 }

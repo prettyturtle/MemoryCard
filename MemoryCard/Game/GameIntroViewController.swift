@@ -68,7 +68,7 @@ final class GameIntroViewController: UIViewController {
     
     private func setupLayout() {
         [
-            titleLabel,    
+            titleLabel,
             descriptionLabel
         ].forEach {
             view.addSubview($0)
