@@ -15,7 +15,10 @@ final class GameOptionSettingViewController: UIViewController {
     
     private lazy var optionListTableView = UITableView(frame: .zero, style: .insetGrouped).then {
         $0.dataSource = self
-        $0.register(UITableViewCell.self, forCellReuseIdentifier: "CELL")
+        $0.register(
+            GameOptionListTableViewCell.self,
+            forCellReuseIdentifier: GameOptionListTableViewCell.identifier
+        )
     }
     
     init(gameMode: GameMode) {
@@ -62,11 +65,16 @@ extension GameOptionSettingViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CELL") else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: GameOptionListTableViewCell.identifier
+        ) as? GameOptionListTableViewCell else {
             return UITableViewCell()
         }
         
-        cell.textLabel?.text = gameMode.options[indexPath.section].selectionList[indexPath.row].text
+        let gameModeOption = gameMode.options[indexPath.section].selectionList[indexPath.row]
+        let gameModeOptionTitle = gameModeOption.text
+        let isChecked = gameMode.options[indexPath.section].defaultValue == gameModeOption.idx
+        cell.setupView(title: gameModeOptionTitle, isChecked: isChecked)
         
         return cell
     }
