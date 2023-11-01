@@ -12,6 +12,7 @@ import Then
 final class GameIntroViewController: UIViewController {
     
     private let gameMode: GameMode
+    private var gameModeOptions: [GameModeOption: Int]
     
     private lazy var titleLabel = UILabel().then {
         $0.text = gameMode.title
@@ -30,6 +31,14 @@ final class GameIntroViewController: UIViewController {
     
     init(gameMode: GameMode) {
         self.gameMode = gameMode
+        
+        var tempGameModeOptions = [GameModeOption: Int]()
+        
+        for option in gameMode.options {
+            tempGameModeOptions[option] = option.defaultValue
+        }
+        
+        self.gameModeOptions = tempGameModeOptions
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,7 +60,7 @@ final class GameIntroViewController: UIViewController {
     }
     
     @objc func didTapOptionSettingButton(_ sender: UIBarButtonItem) {
-        let gameOptionSettingVC = GameOptionSettingViewController(gameMode: gameMode)
+        let gameOptionSettingVC = GameOptionSettingViewController(gameMode: gameMode, gameModeOptions: gameModeOptions)
         navigationController?.pushViewController(gameOptionSettingVC, animated: true)
     }
     

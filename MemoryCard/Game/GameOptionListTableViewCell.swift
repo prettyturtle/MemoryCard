@@ -41,11 +41,11 @@ final class GameOptionListTableViewCell: UITableViewCell {
         
         titleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(Constant.defaultInset)
-            $0.top.bottom.equalToSuperview().inset(Constant.defaultInset / 2)
+            $0.top.bottom.equalToSuperview().inset(Constant.defaultInset)
         }
         
         checkImageView.snp.makeConstraints {
-            $0.leading.equalTo(titleLabel.snp.trailing).offset(Constant.defaultInset / 2)
+            $0.leading.equalTo(titleLabel.snp.trailing).offset(Constant.defaultInset)
             $0.top.bottom.equalTo(titleLabel)
             $0.width.equalTo(checkImageView.snp.height)
             $0.trailing.equalToSuperview().inset(Constant.defaultInset)
