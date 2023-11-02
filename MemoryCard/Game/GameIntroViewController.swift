@@ -60,7 +60,13 @@ final class GameIntroViewController: UIViewController {
     }
     
     @objc func didTapOptionSettingButton(_ sender: UIBarButtonItem) {
-        let gameOptionSettingVC = GameOptionSettingViewController(gameMode: gameMode, gameModeOptions: gameModeOptions)
+        let gameOptionSettingVC = GameOptionSettingViewController(
+            gameMode: gameMode,
+            gameModeOptions: gameModeOptions
+        )
+        
+        gameOptionSettingVC.delegate = self
+        
         navigationController?.pushViewController(gameOptionSettingVC, animated: true)
     }
     
@@ -92,5 +98,11 @@ final class GameIntroViewController: UIViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
             $0.top.equalTo(titleLabel.snp.bottom).offset(16)
         }
+    }
+}
+
+extension GameIntroViewController: GameOptionSettingViewControllerDelegate {
+    func didSelectGameOption(_ gameModeOptions: [GameModeOption : Int]) {
+        self.gameModeOptions = gameModeOptions
     }
 }

@@ -9,10 +9,16 @@ import UIKit
 import SnapKit
 import Then
 
+protocol GameOptionSettingViewControllerDelegate: AnyObject {
+    func didSelectGameOption(_ gameModeOptions: [GameModeOption: Int])
+}
+
 final class GameOptionSettingViewController: UIViewController {
     
     private let gameMode: GameMode
     private var gameModeOptions: [GameModeOption: Int]
+    
+    weak var delegate: GameOptionSettingViewControllerDelegate?
     
     private lazy var optionListTableView = UITableView(frame: .zero, style: .insetGrouped).then {
         $0.dataSource = self
@@ -92,7 +98,7 @@ extension GameOptionSettingViewController: UITableViewDelegate {
         let gameModeOptionSelectionItem = gameModeOption.selectionList[indexPath.row]
         
         gameModeOptions[gameModeOption] = gameModeOptionSelectionItem.idx
-        
+        delegate?.didSelectGameOption(gameModeOptions)
         tableView.reloadData()
     }
 }
