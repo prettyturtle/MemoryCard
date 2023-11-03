@@ -29,6 +29,11 @@ final class GameIntroViewController: UIViewController {
         $0.numberOfLines = 0
     }
     
+    private lazy var startButton = OpacityButton().then {
+        $0.style = .fill(backgroundColor: .systemOrange)
+        $0.setTitle("시작하기", for: .normal)
+    }
+    
     init(gameMode: GameMode) {
         self.gameMode = gameMode
         
@@ -84,7 +89,8 @@ final class GameIntroViewController: UIViewController {
     private func setupLayout() {
         [
             titleLabel,
-            descriptionLabel
+            descriptionLabel,
+            startButton
         ].forEach {
             view.addSubview($0)
         }
@@ -96,7 +102,12 @@ final class GameIntroViewController: UIViewController {
         
         descriptionLabel.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constant.defaultInset)
+        }
+        
+        startButton.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.height.equalTo(48.0)
         }
     }
 }
