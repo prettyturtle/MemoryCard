@@ -13,6 +13,7 @@ final class GameIntroViewController: UIViewController {
     
     private let gameMode: GameMode
     private var gameModeOptions: [GameModeOption: Int]
+    private let cardZip: CardZip
     
     private lazy var titleLabel = UILabel().then {
         $0.text = gameMode.title
@@ -32,10 +33,16 @@ final class GameIntroViewController: UIViewController {
     private lazy var startButton = OpacityButton().then {
         $0.style = .fill(backgroundColor: .systemOrange)
         $0.setTitle("시작하기", for: .normal)
+        $0.addTarget(
+            self,
+            action: #selector(didTapStartButton),
+            for: .touchUpInside
+        )
     }
     
-    init(gameMode: GameMode) {
+    init(gameMode: GameMode, cardZip: CardZip) {
         self.gameMode = gameMode
+        self.cardZip = cardZip
         
         var tempGameModeOptions = [GameModeOption: Int]()
         
@@ -73,6 +80,25 @@ final class GameIntroViewController: UIViewController {
         gameOptionSettingVC.delegate = self
         
         navigationController?.pushViewController(gameOptionSettingVC, animated: true)
+    }
+    
+    @objc func didTapStartButton(_ sender: UIButton) {
+        var gameVC: UIViewController
+        
+        switch gameMode {
+        case .quiz:
+            gameVC = GameQuizViewController(
+                cardZip: cardZip,
+                gameModeOptions: gameModeOptions
+            )
+        case .keyboard:
+            gameVC = GameQuizViewController(
+                cardZip: cardZip,
+                gameModeOptions: gameModeOptions
+            )
+        }
+        
+        navigationController?.pushViewController(gameVC, animated: true)
     }
     
     private func setupNavigationBar() {

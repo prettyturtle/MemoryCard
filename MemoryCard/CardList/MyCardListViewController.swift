@@ -394,7 +394,7 @@ extension MyCardListViewController: CardListCollectionViewCellDelegate {
                     return
                 }
                 
-                let gameIntroVC = GameIntroViewController(gameMode: .quiz)
+                let gameIntroVC = GameIntroViewController(gameMode: .quiz, cardZip: cardZip)
                 let gameIntroNC = UINavigationController(rootViewController: gameIntroVC)
                 
                 gameIntroNC.modalPresentationStyle = .overFullScreen
@@ -406,7 +406,7 @@ extension MyCardListViewController: CardListCollectionViewCellDelegate {
                     return
                 }
                 
-                let gameIntroVC = GameIntroViewController(gameMode: .keyboard)
+                let gameIntroVC = GameIntroViewController(gameMode: .keyboard, cardZip: cardZip)
                 let gameIntroNC = UINavigationController(rootViewController: gameIntroVC)
                 
                 gameIntroNC.modalPresentationStyle = .overFullScreen
