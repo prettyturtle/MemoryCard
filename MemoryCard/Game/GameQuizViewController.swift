@@ -13,52 +13,15 @@ final class GameQuizViewController: UIViewController {
     
     private let cardZip: CardZip
     private let gameModeOptions: [GameModeOption: Int]
-    private let gameQuizCardZip: CardZip
+    private let gameQuizCardZip: GameQuizCardZip
     
     init(cardZip: CardZip, gameModeOptions: [GameModeOption : Int]) {
         self.cardZip = cardZip
         self.gameModeOptions = gameModeOptions
-        
-        var gameModeCards = cardZip.cards
-        
-        if gameModeOptions[.sort] == 1 {
-            gameModeCards = gameModeCards.reversed()
-        } else if gameModeOptions[.sort] == 2 {
-            gameModeCards = gameModeCards.shuffled()
-        }
-        
-        if gameModeOptions[.state] == 1 {
-            for i in 0..<gameModeCards.count {
-                var gameModeCard = gameModeCards[i]
-                
-                let temp = gameModeCard.front
-                gameModeCard.front = gameModeCard.back
-                gameModeCard.back = temp
-                
-                gameModeCards[i] = gameModeCard
-            }
-        } else if gameModeOptions[.state] == 2 {
-            for i in 0..<gameModeCards.count {
-                let random = [true, false].randomElement()!
-                
-                if !random { continue }
-                
-                var gameModeCard = gameModeCards[i]
-                
-                let temp = gameModeCard.front
-                gameModeCard.front = gameModeCard.back
-                gameModeCard.back = temp
-                
-                gameModeCards[i] = gameModeCard
-            }
-        }
-        
-        self.gameQuizCardZip = CardZip(
-            folderName: cardZip.folderName,
-            cards: gameModeCards,
-            mIdx: cardZip.mIdx
+        self.gameQuizCardZip = GameQuizCardZip.createGameQuizCardZip(
+            originCardZip: cardZip,
+            options: gameModeOptions
         )
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -91,12 +54,108 @@ struct GameQuizCardZip {
         var id: Int
         var originID: Int
         var sunjis: [String]
+        var isFront: Bool
     }
     
     static func createGameQuizCardZip(
         originCardZip: CardZip,
         options: [GameModeOption: Int]
-    ) {
+    ) -> GameQuizCardZip {
+        var gameQuizCardZip = GameQuizCardZip(
+            originID: originCardZip.id,
+            cards: [],
+            mIdx: originCardZip.mIdx
+        )
         
+        var originCards = originCardZip.cards
+        
+        if options[.sort] == 1 {
+            originCards = originCards.reversed()
+        } else if options[.sort] == 2 {
+            originCards = originCards.shuffled()
+        }
+        
+        for i in 0..<originCards.count {
+            let gameQuizCard = GameQuizCard(
+                target: originCardZip.cards[i].front.content,
+                answer: originCardZip.cards[i].back.content,
+                id: i,
+                originID: originCardZip.cards[i].id,
+                sunjis: [],
+                isFront: true
+            )
+            
+            gameQuizCardZip.cards.append(gameQuizCard)
+        }
+        
+        if options[.state] == 1 {
+            for i in 0..<gameQuizCardZip.cards.count {
+                var gameQuizCard = gameQuizCardZip.cards[i]
+                gameQuizCard.isFront = false
+                
+                let temp = gameQuizCard.target
+                gameQuizCard.target = gameQuizCard.answer
+                gameQuizCard.answer = temp
+                
+                gameQuizCardZip.cards[i] = gameQuizCard
+            }
+        } else if options[.state] == 2 {
+            for i in 0..<gameQuizCardZip.cards.count {
+                let random = [true, false].randomElement()!
+                
+                if !random { continue }
+                
+                var gameQuizCard = gameQuizCardZip.cards[i]
+                gameQuizCard.isFront = false
+                
+                let temp = gameQuizCard.target
+                gameQuizCard.target = gameQuizCard.answer
+                gameQuizCard.answer = temp
+                
+                gameQuizCardZip.cards[i] = gameQuizCard
+            }
+        }
+        
+        for i in 0..<gameQuizCardZip.cards.count {
+            var gameQuizCard = gameQuizCardZip.cards[i]
+            
+            guard let answerCard = originCards.filter({ $0.id == gameQuizCard.originID }).first else {
+                fatalError("말도 안돼")
+            }
+            
+            let answer = gameQuizCard.isFront ? answerCard.back.content : answerCard.front.content
+            
+            var sunjis = [answer]
+            
+            var noAnswerCards = originCards.filter({ $0.id != gameQuizCard.originID })
+            
+            var sunjisLimit = 2
+            
+            if !noAnswerCards.isEmpty {
+                if options[.sunjiCount] == 1 {
+                    sunjisLimit = 3
+                } else if options[.sunjiCount] == 2 {
+                    sunjisLimit = 4
+                }
+                
+                while sunjis.count < sunjisLimit {
+                    let randomCard = noAnswerCards.randomElement()!
+                    
+                    let sunji = gameQuizCard.isFront ? randomCard.back.content : randomCard.front.content
+                    
+                    sunjis.append(sunji)
+                    
+                    noAnswerCards = noAnswerCards.filter { $0.id != randomCard.id }
+                    
+                    if noAnswerCards.isEmpty {
+                        break
+                    }
+                }
+            }
+            
+            gameQuizCardZip.cards[i].sunjis = sunjis
+        }
+        
+        return gameQuizCardZip
     }
 }
