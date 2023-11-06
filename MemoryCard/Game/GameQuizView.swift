@@ -10,7 +10,7 @@ import SnapKit
 import Then
 
 protocol GameQuizViewDelegate: AnyObject {
-    func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunji: String)
+    func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton)
 }
 
 final class GameQuizView: UIView {
@@ -81,11 +81,22 @@ final class GameQuizView: UIView {
     }
     
     @objc func didTapSunjiButton(_ sender: UIButton) {
+        sender.isEnabled = false
+        
         guard let sunji = sender.titleLabel?.text else {
             return
         }
         
-        delegate?.gameQuizView(self, didTapSunjiButton: sunji)
+        sender.backgroundColor = gameQuizCard?.answer == sunji ? .systemGreen : .systemRed
+        sender.setTitleColor(.white, for: .normal)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.delegate?.gameQuizView(self, didTapSunjiButton: sender)
+        }
     }
     
     private func setupLayout() {

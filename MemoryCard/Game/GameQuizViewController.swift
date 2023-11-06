@@ -57,8 +57,7 @@ final class GameQuizViewController: UIViewController {
 }
 
 extension GameQuizViewController: GameQuizViewDelegate {
-    func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunji: String) {
-        print(gqv, sunji)
+    func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton) {
         currentStep += 1
         
         if currentStep < gameQuizCardZip.cards.count {
