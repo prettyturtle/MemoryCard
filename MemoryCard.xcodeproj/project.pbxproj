@@ -57,6 +57,8 @@
 		6B8C598B2A37638500CD8A96 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8C598A2A37638500CD8A96 /* Lottie */; };
 		6B8DBDB42AF7CC08002549EB /* GameQuizCardZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DBDB32AF7CC08002549EB /* GameQuizCardZip.swift */; };
 		6B8DBDB62AF7E1DE002549EB /* GameQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DBDB52AF7E1DE002549EB /* GameQuizView.swift */; };
+		6B8DBDB82AF93F16002549EB /* correct_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B8DBDB72AF93F16002549EB /* correct_lottie.json */; };
+		6B8DBDBA2AFA8906002549EB /* wrong_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B8DBDB92AFA8906002549EB /* wrong_lottie.json */; };
 		6B92AEEC2A658B0E0008297A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B92AEEB2A658B0E0008297A /* UserDefaultsManager.swift */; };
 		6B9BC16229E9D26B00B32557 /* CardStudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16129E9D26B00B32557 /* CardStudyViewController.swift */; };
 		6B9BC16429EAE4C200B32557 /* UINavigationItem+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16329EAE4C200B32557 /* UINavigationItem+.swift */; };
@@ -134,6 +136,8 @@
 		6B8C59872A37630500CD8A96 /* complete_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = complete_lottie.json; sourceTree = "<group>"; };
 		6B8DBDB32AF7CC08002549EB /* GameQuizCardZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameQuizCardZip.swift; sourceTree = "<group>"; };
 		6B8DBDB52AF7E1DE002549EB /* GameQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameQuizView.swift; sourceTree = "<group>"; };
+		6B8DBDB72AF93F16002549EB /* correct_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = correct_lottie.json; sourceTree = "<group>"; };
+		6B8DBDB92AFA8906002549EB /* wrong_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = wrong_lottie.json; sourceTree = "<group>"; };
 		6B92AEEB2A658B0E0008297A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		6B9BC16129E9D26B00B32557 /* CardStudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStudyViewController.swift; sourceTree = "<group>"; };
 		6B9BC16329EAE4C200B32557 /* UINavigationItem+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+.swift"; sourceTree = "<group>"; };
@@ -393,6 +397,8 @@
 		6B8C598D2A3781F300CD8A96 /* LottieFile */ = {
 			isa = PBXGroup;
 			children = (
+				6B8DBDB92AFA8906002549EB /* wrong_lottie.json */,
+				6B8DBDB72AF93F16002549EB /* correct_lottie.json */,
 				6B8C59872A37630500CD8A96 /* complete_lottie.json */,
 			);
 			path = LottieFile;
@@ -496,7 +502,9 @@
 				6B29BDCE29CE10EF00F39932 /* LaunchScreen.storyboard in Resources */,
 				6B29BDDC29CE126600F39932 /* GoogleService-Info.plist in Resources */,
 				6B29BDCB29CE10EF00F39932 /* Assets.xcassets in Resources */,
+				6B8DBDB82AF93F16002549EB /* correct_lottie.json in Resources */,
 				6B8C59882A37630600CD8A96 /* complete_lottie.json in Resources */,
+				6B8DBDBA2AFA8906002549EB /* wrong_lottie.json in Resources */,
 				6B29BDC929CE10EB00F39932 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

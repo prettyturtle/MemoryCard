@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Lottie
 
 protocol GameQuizViewDelegate: AnyObject {
     func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton)
@@ -39,6 +40,14 @@ final class GameQuizView: UIView {
         $0.numberOfLines = 0
         $0.adjustsFontSizeToFitWidth = true
         $0.minimumScaleFactor = 0.5
+    }
+    
+    private lazy var correctLottieAnimationView = LottieAnimationView(name: "correct_lottie").then {
+        $0.loopMode = .playOnce
+    }
+    
+    private lazy var wrongLottieAnimationView = LottieAnimationView(name: "wrong_lottie").then {
+        $0.loopMode = .playOnce
     }
     
     private lazy var sunjiListStackView = UIStackView().then {
@@ -81,14 +90,24 @@ final class GameQuizView: UIView {
     }
     
     @objc func didTapSunjiButton(_ sender: UIButton) {
-        sender.isEnabled = false
+        sunjiListStackView.arrangedSubviews.forEach {
+            ($0 as? UIButton)?.isEnabled = false
+        }
         
         guard let sunji = sender.titleLabel?.text else {
             return
         }
         
-        sender.backgroundColor = gameQuizCard?.answer == sunji ? .systemGreen : .systemRed
+        let isCorrect = gameQuizCard?.answer == sunji
+        
+        sender.backgroundColor = isCorrect ? .systemGreen : .systemRed
         sender.setTitleColor(.white, for: .normal)
+        
+        if isCorrect {
+            correctLottieAnimationView.play()
+        } else {
+            wrongLottieAnimationView.play()
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else {
@@ -117,13 +136,26 @@ final class GameQuizView: UIView {
         }
         
         [
-            cardContentLabel
+            cardContentLabel,
+            correctLottieAnimationView,
+            wrongLottieAnimationView
         ].forEach {
             targetCardView.addSubview($0)
         }
         
         cardContentLabel.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(Constant.defaultInset)
+        }
+        
+        [
+            correctLottieAnimationView,
+            wrongLottieAnimationView
+        ].forEach { lottie in
+            lottie.snp.makeConstraints {
+                $0.center.equalToSuperview()
+                $0.width.equalToSuperview().dividedBy(2)
+                $0.height.equalTo(lottie.snp.width)
+            }
         }
     }
 }
