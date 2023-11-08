@@ -20,6 +20,7 @@ struct GameQuizCardZip {
         var originID: Int
         var sunjis: [String]
         var isFront: Bool
+        var isCorrect: Bool? = nil
     }
     
     static func createGameQuizCardZip(

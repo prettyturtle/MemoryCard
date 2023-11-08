@@ -13,7 +13,7 @@ final class GameQuizViewController: UIViewController {
     
     private let cardZip: CardZip
     private let gameModeOptions: [GameModeOption: Int]
-    private let gameQuizCardZip: GameQuizCardZip
+    private var gameQuizCardZip: GameQuizCardZip
     
     private var currentStep = 0
     
@@ -57,12 +57,17 @@ final class GameQuizViewController: UIViewController {
 }
 
 extension GameQuizViewController: GameQuizViewDelegate {
-    func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton) {
+    func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton, isCorrect: Bool) {
+        gameQuizCardZip.cards[currentStep].isCorrect = isCorrect
+        
         currentStep += 1
         
         if currentStep < gameQuizCardZip.cards.count {
             gqv.gameQuizCard = gameQuizCardZip.cards[currentStep]
             gqv.setupView()
+        } else {
+            let vc = GameFeedbackViewController(feedback: gameQuizCardZip)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

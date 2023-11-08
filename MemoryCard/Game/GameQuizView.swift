@@ -11,7 +11,7 @@ import Then
 import Lottie
 
 protocol GameQuizViewDelegate: AnyObject {
-    func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton)
+    func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton, isCorrect: Bool)
 }
 
 final class GameQuizView: UIView {
@@ -114,7 +114,7 @@ final class GameQuizView: UIView {
                 return
             }
             
-            self.delegate?.gameQuizView(self, didTapSunjiButton: sender)
+            self.delegate?.gameQuizView(self, didTapSunjiButton: sender, isCorrect: isCorrect)
         }
     }
     
