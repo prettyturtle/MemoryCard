@@ -16,8 +16,8 @@ final class GameFeedbackViewController: UIViewController {
     private lazy var feedbackTableView = UITableView().then {
         $0.dataSource = self
         $0.register(
-            UITableViewCell.self,
-            forCellReuseIdentifier: "CELL"
+            GameFeedbackTableViewCell.self,
+            forCellReuseIdentifier: GameFeedbackTableViewCell.identifier
         )
     }
     
@@ -56,10 +56,75 @@ extension GameFeedbackViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CELL", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: GameFeedbackTableViewCell.identifier,
+            for: indexPath
+        ) as? GameFeedbackTableViewCell else {
+            return UITableViewCell()
+        }
         
-        cell.textLabel?.text = feedback.cards[indexPath.row].target
+        cell.setupView(gameQuizCard: feedback.cards[indexPath.row])
         
         return cell
+    }
+}
+
+final class GameFeedbackTableViewCell: UITableViewCell {
+    static let identifier = "GameFeedbackTableViewCell"
+    
+    private lazy var targetLabel = UILabel()
+    private lazy var answerLabel = UILabel()
+    private lazy var correctImageView = UIImageView()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupView(gameQuizCard: GameQuizCardZip.GameQuizCard) {
+        let target = gameQuizCard.target
+        let answer = gameQuizCard.answer
+        let isCorrect = gameQuizCard.isCorrect
+        
+        targetLabel.text = target
+        answerLabel.text = answer
+        
+        if let isCorrect = isCorrect {
+            let correctImage = isCorrect ? "circle" : "xmark"
+            
+            correctImageView.image = UIImage(systemName: correctImage)
+        }
+    }
+    
+    private func setupLayout() {
+        [
+            targetLabel,
+            answerLabel,
+            correctImageView
+        ].forEach {
+            contentView.addSubview($0)
+        }
+        
+        targetLabel.snp.makeConstraints {
+            $0.leading.top.equalToSuperview().inset(Constant.defaultInset)
+        }
+        
+        answerLabel.snp.makeConstraints {
+            $0.leading.bottom.equalToSuperview().inset(Constant.defaultInset)
+            $0.top.equalTo(targetLabel.snp.bottom).offset(Constant.defaultInset)
+            $0.trailing.equalTo(targetLabel.snp.trailing)
+        }
+        
+        correctImageView.snp.makeConstraints {
+            $0.size.equalTo(44)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(targetLabel.snp.trailing).offset(Constant.defaultInset)
+            $0.trailing.equalToSuperview().inset(Constant.defaultInset)
+        }
     }
 }
