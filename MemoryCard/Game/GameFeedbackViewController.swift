@@ -72,8 +72,14 @@ extension GameFeedbackViewController: UITableViewDataSource {
 final class GameFeedbackTableViewCell: UITableViewCell {
     static let identifier = "GameFeedbackTableViewCell"
     
-    private lazy var targetLabel = UILabel()
-    private lazy var answerLabel = UILabel()
+    private lazy var targetLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 24, weight: .semibold)
+        $0.textColor = .label
+    }
+    private lazy var answerLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 18, weight: .medium)
+        $0.textColor = .secondaryLabel
+    }
     private lazy var correctImageView = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -96,8 +102,10 @@ final class GameFeedbackTableViewCell: UITableViewCell {
         
         if let isCorrect = isCorrect {
             let correctImage = isCorrect ? "circle" : "xmark"
+            let correctImageColor = isCorrect ? UIColor.systemGreen : UIColor.systemRed
             
             correctImageView.image = UIImage(systemName: correctImage)
+            correctImageView.tintColor = correctImageColor
         }
     }
     
@@ -121,7 +129,7 @@ final class GameFeedbackTableViewCell: UITableViewCell {
         }
         
         correctImageView.snp.makeConstraints {
-            $0.size.equalTo(44)
+            $0.size.equalTo(36)
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(targetLabel.snp.trailing).offset(Constant.defaultInset)
             $0.trailing.equalToSuperview().inset(Constant.defaultInset)
