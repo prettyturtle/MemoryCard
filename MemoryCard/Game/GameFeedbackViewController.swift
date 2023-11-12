@@ -35,19 +35,12 @@ final class GameFeedbackViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
+        setupNavigationBar()
         setupLayout()
     }
     
-    private func setupLayout() {
-        [
-            feedbackTableView
-        ].forEach {
-            view.addSubview($0)
-        }
-        
-        feedbackTableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+    @objc func didTapDismissButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
     }
 }
 
@@ -88,5 +81,23 @@ extension GameFeedbackViewController: UITableViewDelegate {
         gameFeedbackCardDetailNC.modalTransitionStyle = .crossDissolve
         
         present(gameFeedbackCardDetailNC, animated: true)
+    }
+}
+
+extension GameFeedbackViewController {
+    private func setupNavigationBar() {
+        navigationItem.addDismissButton(self, action: #selector(didTapDismissButton))
+    }
+    
+    private func setupLayout() {
+        [
+            feedbackTableView
+        ].forEach {
+            view.addSubview($0)
+        }
+        
+        feedbackTableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 }

@@ -20,6 +20,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         var rootViewController: UIViewController
         
+        let feedback = GameQuizCardZip(
+            id: "",
+            originID: "", 
+            cards: (0..<10).map {
+                GameQuizCardZip.GameQuizCard(
+                    target: "target\($0)",
+                    answer: "answer\($0)",
+                    id: $0,
+                    originID: $0,
+                    sunjis: ["sunji\($0)"],
+                    isFront: true,
+                    isCorrect: $0 % 2 == 0
+                )
+            },
+            mIdx: ""
+        )
+        rootViewController = GameFeedbackViewController(feedback: feedback)
+        
         if let currentUser = AuthManager.shared.getCurrentUser() {
             
             let id = currentUser.id
