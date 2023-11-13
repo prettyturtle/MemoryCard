@@ -25,6 +25,19 @@ final class GameFeedbackCardDetailViewController: UIViewController {
         $0.delegate = self
     }
     
+    private lazy var dismissButton = OpacityButton().then {
+        $0.setTitle(nil, for: .normal)
+        $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        $0.imageView?.tintColor = .secondaryLabel
+        $0.backgroundColor = .secondarySystemFill
+        $0.layer.cornerRadius = 30
+        $0.addTarget(
+            self,
+            action: #selector(didTapDismissButton),
+            for: .touchUpInside
+        )
+    }
+    
     init(feedbackCard: Card) {
         self.feedbackCard = feedbackCard
         super.init(nibName: nil, bundle: nil)
@@ -39,7 +52,6 @@ final class GameFeedbackCardDetailViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-        setupNavigationBar()
         setupLayout()
     }
     
@@ -91,21 +103,23 @@ extension GameFeedbackCardDetailViewController: UICollectionViewDelegateFlowLayo
 }
 
 extension GameFeedbackCardDetailViewController {
-    /// 내비게이션 바 설정
-    func setupNavigationBar() {
-        navigationItem.addDismissButton(self, action: #selector(didTapDismissButton))
-    }
-    
-    /// 레이아웃 설정
     func setupLayout() {
         [
-            cardCollectionView
+            cardCollectionView,
+            dismissButton
         ].forEach {
             view.addSubview($0)
         }
         
         cardCollectionView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        dismissButton.snp.makeConstraints {
+            $0.size.equalTo(60)
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(cardCollectionView.snp.bottom).offset(Constant.defaultInset)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
         }
     }
 }
