@@ -401,17 +401,19 @@ extension MyCardListViewController: CardListCollectionViewCellDelegate {
                 
                 self.present(gameIntroNC, animated: true)
             }
-            .setAction(title: GameMode.keyboard.title, style: .default) { [weak self] _ in
+            .setAction(title: GameMode.keyboard.title + "(오픈 준비중)", style: .default) { [weak self] _ in
+                
                 guard let self = self else {
                     return
                 }
                 
-                let gameIntroVC = GameIntroViewController(gameMode: .keyboard, cardZip: cardZip)
-                let gameIntroNC = UINavigationController(rootViewController: gameIntroVC)
+                let openReadyAlert = Alert(style: .alert)
+                    .setTitle("오픈 준비중입니다.")
+                    .setMessage("조금만 기다려주세요! 🙇‍♀️")
+                    .setAction(title: "확인", style: .default)
+                    .endSet()
                 
-                gameIntroNC.modalPresentationStyle = .overFullScreen
-                
-                self.present(gameIntroNC, animated: true)
+                self.present(openReadyAlert, animated: true)
             }
             .setAction(title: "취소", style: .cancel)
             .endSet()
