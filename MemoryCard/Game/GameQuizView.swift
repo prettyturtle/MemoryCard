@@ -12,6 +12,7 @@ import Lottie
 
 protocol GameQuizViewDelegate: AnyObject {
     func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton, isCorrect: Bool)
+    func gameQuizView(_ gqv: GameQuizView, didSkip: Void)
 }
 
 final class GameQuizView: UIView {
@@ -87,6 +88,10 @@ final class GameQuizView: UIView {
             
             sunjiListStackView.addArrangedSubview(sunjiButton)
         }
+    }
+    
+    func skip() {
+        delegate?.gameQuizView(self, didSkip: ())
     }
     
     @objc func didTapSunjiButton(_ sender: UIButton) {

@@ -40,11 +40,28 @@ final class GameQuizViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
+        setupNavigationBar()
         setupLayout()
         
         gameQuizView.gameQuizCard = gameQuizCardZip.cards.first
         
         gameQuizView.setupView()
+    }
+    
+    @objc func didTapSkipButton(_ sender: UIBarButtonItem) {
+        gameQuizView.skip()
+    }
+    
+    private func setupNavigationBar() {
+        if gameModeOptions[.skip] == 0 {
+            let skipBarButtonItem = UIBarButtonItem(
+                title: "SKIP",
+                style: .plain,
+                target: self,
+                action: #selector(didTapSkipButton)
+            )
+            navigationItem.setRightBarButton(skipBarButtonItem, animated: true)
+        }
     }
     
     private func setupLayout() {
@@ -59,6 +76,20 @@ final class GameQuizViewController: UIViewController {
 extension GameQuizViewController: GameQuizViewDelegate {
     func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton, isCorrect: Bool) {
         gameQuizCardZip.cards[currentStep].isCorrect = isCorrect
+        
+        currentStep += 1
+        
+        if currentStep < gameQuizCardZip.cards.count {
+            gqv.gameQuizCard = gameQuizCardZip.cards[currentStep]
+            gqv.setupView()
+        } else {
+            let vc = GameFeedbackViewController(feedback: gameQuizCardZip)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func gameQuizView(_ gqv: GameQuizView, didSkip: Void) {
+        gameQuizCardZip.cards[currentStep].isCorrect = nil
         
         currentStep += 1
         

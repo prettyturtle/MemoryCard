@@ -46,6 +46,12 @@ final class GameFeedbackTableViewCell: UITableViewCell {
             
             correctImageView.image = UIImage(systemName: correctImage)
             correctImageView.tintColor = correctImageColor
+        } else {
+            let correctImage = "triangle"
+            let correctImageColor = UIColor.systemOrange
+            
+            correctImageView.image = UIImage(systemName: correctImage)
+            correctImageView.tintColor = correctImageColor
         }
     }
     
