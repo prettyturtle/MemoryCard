@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Lottie
 
 final class GameFeedbackViewController: UIViewController {
     
@@ -20,6 +21,10 @@ final class GameFeedbackViewController: UIViewController {
             GameFeedbackTableViewCell.self,
             forCellReuseIdentifier: GameFeedbackTableViewCell.identifier
         )
+    }
+    
+    private lazy var congratulationLottieAnimationView = LottieAnimationView(name: "congratulation").then {
+        $0.loopMode = .playOnce
     }
     
     init(feedback: GameQuizCardZip) {
@@ -37,6 +42,12 @@ final class GameFeedbackViewController: UIViewController {
         
         setupNavigationBar()
         setupLayout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        congratulationLottieAnimationView.play()
     }
     
     @objc func didTapDismissButton(_ sender: UIBarButtonItem) {
@@ -91,13 +102,19 @@ extension GameFeedbackViewController {
     
     private func setupLayout() {
         [
-            feedbackTableView
+            feedbackTableView,
+            congratulationLottieAnimationView
         ].forEach {
             view.addSubview($0)
         }
         
         feedbackTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        congratulationLottieAnimationView.snp.makeConstraints {
+            $0.size.equalTo(view.safeAreaLayoutGuide).dividedBy(2)
+            $0.center.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }

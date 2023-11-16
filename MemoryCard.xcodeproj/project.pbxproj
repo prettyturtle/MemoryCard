@@ -63,6 +63,7 @@
 		6B92AEEC2A658B0E0008297A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B92AEEB2A658B0E0008297A /* UserDefaultsManager.swift */; };
 		6B9A57002AFFE3F800B47C31 /* GameFeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9A56FF2AFFE3F800B47C31 /* GameFeedbackTableViewCell.swift */; };
 		6B9A57022AFFE40C00B47C31 /* GameFeedbackCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9A57012AFFE40C00B47C31 /* GameFeedbackCardDetailViewController.swift */; };
+		6B9A57042B06660500B47C31 /* congratulation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B9A57032B06660500B47C31 /* congratulation.json */; };
 		6B9BC16229E9D26B00B32557 /* CardStudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16129E9D26B00B32557 /* CardStudyViewController.swift */; };
 		6B9BC16429EAE4C200B32557 /* UINavigationItem+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16329EAE4C200B32557 /* UINavigationItem+.swift */; };
 		6B9BC16629EB213100B32557 /* CardStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16529EB213100B32557 /* CardStudyCollectionViewCell.swift */; };
@@ -145,6 +146,7 @@
 		6B92AEEB2A658B0E0008297A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		6B9A56FF2AFFE3F800B47C31 /* GameFeedbackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFeedbackTableViewCell.swift; sourceTree = "<group>"; };
 		6B9A57012AFFE40C00B47C31 /* GameFeedbackCardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFeedbackCardDetailViewController.swift; sourceTree = "<group>"; };
+		6B9A57032B06660500B47C31 /* congratulation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congratulation.json; sourceTree = "<group>"; };
 		6B9BC16129E9D26B00B32557 /* CardStudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStudyViewController.swift; sourceTree = "<group>"; };
 		6B9BC16329EAE4C200B32557 /* UINavigationItem+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+.swift"; sourceTree = "<group>"; };
 		6B9BC16529EB213100B32557 /* CardStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStudyCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				6B8DBDB92AFA8906002549EB /* wrong_lottie.json */,
 				6B8DBDB72AF93F16002549EB /* correct_lottie.json */,
 				6B8C59872A37630500CD8A96 /* complete_lottie.json */,
+				6B9A57032B06660500B47C31 /* congratulation.json */,
 			);
 			path = LottieFile;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				6B29BDCB29CE10EF00F39932 /* Assets.xcassets in Resources */,
 				6B8DBDB82AF93F16002549EB /* correct_lottie.json in Resources */,
 				6B8C59882A37630600CD8A96 /* complete_lottie.json in Resources */,
+				6B9A57042B06660500B47C31 /* congratulation.json in Resources */,
 				6B8DBDBA2AFA8906002549EB /* wrong_lottie.json in Resources */,
 				6B29BDC929CE10EB00F39932 /* Main.storyboard in Resources */,
 			);
