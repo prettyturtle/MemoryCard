@@ -98,6 +98,12 @@ extension GameFeedbackViewController: UITableViewDelegate {
 extension GameFeedbackViewController {
     private func setupNavigationBar() {
         navigationItem.addDismissButton(self, action: #selector(didTapDismissButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "star"),
+            style: .plain,
+            target: self,
+            action: nil
+        )
     }
     
     private func setupLayout() {
