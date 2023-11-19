@@ -53,6 +53,10 @@ final class GameFeedbackViewController: UIViewController {
     @objc func didTapDismissButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true)
     }
+    
+    @objc func didTapStarButton(_ sender: UIBarButtonItem) {
+        sender.image = sender.image == UIImage(systemName: "star") ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+    }
 }
 
 extension GameFeedbackViewController: UITableViewDataSource {
@@ -102,7 +106,7 @@ extension GameFeedbackViewController {
             image: UIImage(systemName: "star"),
             style: .plain,
             target: self,
-            action: nil
+            action: #selector(didTapStarButton)
         )
     }
     
