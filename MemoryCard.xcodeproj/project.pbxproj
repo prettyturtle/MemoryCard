@@ -64,6 +64,7 @@
 		6B9A57002AFFE3F800B47C31 /* GameFeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9A56FF2AFFE3F800B47C31 /* GameFeedbackTableViewCell.swift */; };
 		6B9A57022AFFE40C00B47C31 /* GameFeedbackCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9A57012AFFE40C00B47C31 /* GameFeedbackCardDetailViewController.swift */; };
 		6B9A57042B06660500B47C31 /* congratulation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B9A57032B06660500B47C31 /* congratulation.json */; };
+		6B9A57062B0BA65E00B47C31 /* VersionChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9A57052B0BA65E00B47C31 /* VersionChecker.swift */; };
 		6B9BC16229E9D26B00B32557 /* CardStudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16129E9D26B00B32557 /* CardStudyViewController.swift */; };
 		6B9BC16429EAE4C200B32557 /* UINavigationItem+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16329EAE4C200B32557 /* UINavigationItem+.swift */; };
 		6B9BC16629EB213100B32557 /* CardStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BC16529EB213100B32557 /* CardStudyCollectionViewCell.swift */; };
@@ -147,6 +148,7 @@
 		6B9A56FF2AFFE3F800B47C31 /* GameFeedbackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFeedbackTableViewCell.swift; sourceTree = "<group>"; };
 		6B9A57012AFFE40C00B47C31 /* GameFeedbackCardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFeedbackCardDetailViewController.swift; sourceTree = "<group>"; };
 		6B9A57032B06660500B47C31 /* congratulation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congratulation.json; sourceTree = "<group>"; };
+		6B9A57052B0BA65E00B47C31 /* VersionChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionChecker.swift; sourceTree = "<group>"; };
 		6B9BC16129E9D26B00B32557 /* CardStudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStudyViewController.swift; sourceTree = "<group>"; };
 		6B9BC16329EAE4C200B32557 /* UINavigationItem+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+.swift"; sourceTree = "<group>"; };
 		6B9BC16529EB213100B32557 /* CardStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStudyCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				6B29BDF229CECCC000F39932 /* Constant.swift */,
+				6B9A57052B0BA65E00B47C31 /* VersionChecker.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				6B29BDC229CE10EB00F39932 /* AppDelegate.swift in Sources */,
 				6BD5B5622A6CFC9F00FC82AD /* WeekDay.swift in Sources */,
 				6B29BDC429CE10EB00F39932 /* SceneDelegate.swift in Sources */,
+				6B9A57062B0BA65E00B47C31 /* VersionChecker.swift in Sources */,
 				6B088D2229D05CEA0056B4EF /* MyInfoViewController.swift in Sources */,
 				6B8DBDB62AF7E1DE002549EB /* GameQuizView.swift in Sources */,
 				6B088D1C29D037220056B4EF /* UIApplication+.swift in Sources */,

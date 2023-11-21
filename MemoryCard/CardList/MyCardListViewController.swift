@@ -77,6 +77,20 @@ final class MyCardListViewController: UIViewController {
 extension MyCardListViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Task {
+            if let storeVersion = await VersionChecker.getCurrentVersion(),
+               let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                
+                let isOld = VersionChecker.compareVersion(current: currentVersion, store: storeVersion)
+                
+                if isOld {
+                    print("업데이트 필요")
+                }
+            }
+        }
+        
+        
         view.backgroundColor = .systemBackground // 배경색 설정
         
         setupNavigationBar()    // 내비게이션 설정
@@ -105,6 +119,12 @@ extension MyCardListViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        Task {
+            let a = await VersionChecker.getCurrentVersion()
+            
+            
+        }
         
         if let pushAllowTappedDate = UserDefaults.standard.value(forKey: IS_TAPPED_PUSH_ALLOW) as? Date {
             
