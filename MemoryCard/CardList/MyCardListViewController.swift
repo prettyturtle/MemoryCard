@@ -90,7 +90,14 @@ extension MyCardListViewController {
                     let alert = Alert(style: .alert)
                         .setTitle("업데이트 안내")
                         .setMessage("🎉최신 버전이 나왔어요.🎉\n원활한 서비스 이용을 위해 앱을 업데이트해주세요.")
-                        .setAction(title: "이동", style: .default)
+                        .setAction(title: "이동", style: .default) { _ in
+                            if let url = URL(string: "itms-apps://itunes.apple.com/app/6450637636") {
+                                if UIApplication.shared.canOpenURL(url) {
+                                    UIApplication.shared.open(url)
+                                }
+                            }
+                            
+                        }
                         .endSet()
                     
                     present(alert, animated: true)
