@@ -75,20 +75,15 @@ final class GameQuizView: UIView {
                 $0.layer.cornerRadius = 12
                 $0.layer.borderWidth = 0.4
                 $0.layer.borderColor = UIColor.darkGray.cgColor
-//                $0.addTarget(
-//                    self,
-//                    action: #selector(didTapSunjiButton),
-//                    for: .touchUpInside
-//                )
                 
                 let longPressGesture = UILongPressGestureRecognizer(
                     target: self,
-                    action: #selector(didLongPressSunjiButton)
+                    action: #selector(didGestureSunjiButton)
                 )
                 
                 let tapGesture = UITapGestureRecognizer(
                     target: self,
-                    action: #selector(didLongPressSunjiButton)
+                    action: #selector(didGestureSunjiButton)
                 )
                 
                 $0.addGestureRecognizer(tapGesture)
@@ -107,7 +102,7 @@ final class GameQuizView: UIView {
         delegate?.gameQuizView(self, didSkip: ())
     }
     
-    @objc func didTapSunjiButton(_ sender: UIButton) {
+    private func didTapSunjiButton(_ sender: UIButton) {
         sunjiListStackView.arrangedSubviews.forEach {
             ($0 as? UIButton)?.isEnabled = false
         }
@@ -136,10 +131,13 @@ final class GameQuizView: UIView {
         }
     }
     
-    @objc func didLongPressSunjiButton(_ gesture: UIGestureRecognizer) {
+    @objc func didGestureSunjiButton(_ gesture: UIGestureRecognizer) {
+        guard let sender = gesture.view as? UIButton else {
+            return
+        }
+        
         if gesture is UITapGestureRecognizer {
-            print("TAP")
-            
+            didTapSunjiButton(sender)
         } else if gesture is UILongPressGestureRecognizer {
             print("LONG")
         }
