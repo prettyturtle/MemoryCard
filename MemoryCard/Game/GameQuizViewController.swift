@@ -101,4 +101,14 @@ extension GameQuizViewController: GameQuizViewDelegate {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
+    func gameQuizView(_ gqv: GameQuizView, didLongPressSunjiButton: UIButton, target card: Card) {
+        let gameFeedbackCardDetailVC = GameFeedbackCardDetailViewController(feedbackCard: card)
+        
+        let gameFeedbackCardDetailNC = UINavigationController(rootViewController: gameFeedbackCardDetailVC)
+        gameFeedbackCardDetailNC.modalPresentationStyle = .overFullScreen
+        gameFeedbackCardDetailNC.modalTransitionStyle = .crossDissolve
+        
+        present(gameFeedbackCardDetailNC, animated: true)
+    }
 }

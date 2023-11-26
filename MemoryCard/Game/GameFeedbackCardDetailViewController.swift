@@ -98,6 +98,10 @@ extension GameFeedbackCardDetailViewController: UICollectionViewDelegateFlowLayo
             return
         }
         
+        if feedbackCard.id == -1 {
+            return
+        }
+        
         cell.rotateCard()
     }
 }

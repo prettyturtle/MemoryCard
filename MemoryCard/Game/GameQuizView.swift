@@ -13,6 +13,7 @@ import Lottie
 protocol GameQuizViewDelegate: AnyObject {
     func gameQuizView(_ gqv: GameQuizView, didTapSunjiButton sunjiButton: UIButton, isCorrect: Bool)
     func gameQuizView(_ gqv: GameQuizView, didSkip: Void)
+    func gameQuizView(_ gqv: GameQuizView, didLongPressSunjiButton: UIButton, target card: Card)
 }
 
 final class GameQuizView: UIView {
@@ -140,6 +141,21 @@ final class GameQuizView: UIView {
             didTapSunjiButton(sender)
         } else if gesture is UILongPressGestureRecognizer {
             print("LONG")
+            
+            if gesture.state == .began {
+                
+                guard let sunjiText = sender.titleLabel?.text else {
+                    return
+                }
+                
+                let card = Card(
+                    id: -1,
+                    front: Card.CardContent(content: sunjiText),
+                    back: Card.CardContent(content: sunjiText + "1231232")
+                )
+                
+                delegate?.gameQuizView(self, didLongPressSunjiButton: sender, target: card)
+            }
         }
     }
     
