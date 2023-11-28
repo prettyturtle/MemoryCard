@@ -26,3 +26,5 @@ let APP_ICON                                        = "APP_ICON"
 let IS_ALLOW_REMINDER_NOTI                          = "IS_ALLOW_REMINDER_NOTI"
 let AUTO_PLAY_SPEED                                 = "AUTO_PLAY_SPEED"
 let IS_TAPPED_PUSH_ALLOW                            = "IS_TAPPED_PUSH_ALLOW"
+
+let GAME_MODE_OPTIONS                               = "GAME_MODE_OPTIONS"

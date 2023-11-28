@@ -46,8 +46,16 @@ final class GameIntroViewController: UIViewController {
         
         var tempGameModeOptions = [GameModeOption: Int]()
         
-        for option in gameMode.options {
-            tempGameModeOptions[option] = option.defaultValue
+        let savedGameModeOptions = UserDefaults.standard.dictionary(forKey: GAME_MODE_OPTIONS) as? [GameModeOption: Int]
+        
+        if let savedGameModeOptions = savedGameModeOptions {
+            print("🤢 저장된 옵션 있음")
+            tempGameModeOptions = savedGameModeOptions
+        } else {
+            print("🤢 저장된 옵션 없음")
+            for option in gameMode.options {
+                tempGameModeOptions[option] = option.defaultValue
+            }
         }
         
         self.gameModeOptions = tempGameModeOptions
@@ -141,5 +149,7 @@ final class GameIntroViewController: UIViewController {
 extension GameIntroViewController: GameOptionSettingViewControllerDelegate {
     func didSelectGameOption(_ gameModeOptions: [GameModeOption : Int]) {
         self.gameModeOptions = gameModeOptions
+        
+        // TODO: - 옵션 저장
     }
 }

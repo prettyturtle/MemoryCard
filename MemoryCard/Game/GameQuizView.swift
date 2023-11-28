@@ -151,7 +151,7 @@ final class GameQuizView: UIView {
                 let card = Card(
                     id: -1,
                     front: Card.CardContent(content: sunjiText),
-                    back: Card.CardContent(content: sunjiText + "1231232")
+                    back: Card.CardContent(content: sunjiText)
                 )
                 
                 delegate?.gameQuizView(self, didLongPressSunjiButton: sender, target: card)
