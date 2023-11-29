@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GameModeOption {
+enum GameModeOption: Codable {
     case sort       // 정렬 (순서대로, 거꾸로, 랜덤)
     case state      // 앞, 뒤, 랜덤
     case skip       // 스킵 가능 여부 (스킵 가능, 스킵 불가능)
