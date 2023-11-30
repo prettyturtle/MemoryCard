@@ -48,10 +48,8 @@ final class GameIntroViewController: UIViewController {
         
         if let savedGameModeOptionsData = UserDefaults.standard.data(forKey: GAME_MODE_OPTIONS),
            let savedGameModeOptions = try? JSONDecoder().decode([GameModeOption: Int].self, from: savedGameModeOptionsData) {
-            print("🤢 저장된 옵션 있음")
             tempGameModeOptions = savedGameModeOptions
         } else {
-            print("🤢 저장된 옵션 없음")
             for option in gameMode.options {
                 tempGameModeOptions[option] = option.defaultValue
             }
