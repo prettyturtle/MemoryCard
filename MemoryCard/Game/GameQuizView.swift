@@ -115,6 +115,7 @@ final class GameQuizView: UIView {
         let isCorrect = gameQuizCard?.answer == sunji
         
         sender.backgroundColor = isCorrect ? .systemGreen : .systemRed
+        sender.layer.borderColor = isCorrect ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
         sender.setTitleColor(.white, for: .normal)
         
         if isCorrect {
