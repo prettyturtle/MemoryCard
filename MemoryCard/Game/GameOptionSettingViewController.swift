@@ -47,8 +47,19 @@ final class GameOptionSettingViewController: UIViewController {
         setupLayout()
     }
     
+    @objc func didTapResetButton() {
+        
+    }
+    
     private func setupNavigationBar() {
         navigationItem.title = "게임 옵션"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "초기화",
+            style: .plain,
+            target: self,
+            action: #selector(didTapResetButton)
+        )
     }
     
     private func setupLayout() {
