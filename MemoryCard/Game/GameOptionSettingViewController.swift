@@ -48,7 +48,11 @@ final class GameOptionSettingViewController: UIViewController {
     }
     
     @objc func didTapResetButton() {
+        gameModeOptions = GameModeOption.getDefaultValues()
         
+        delegate?.didSelectGameOption(gameModeOptions)
+        
+        optionListTableView.reloadData()
     }
     
     private func setupNavigationBar() {
