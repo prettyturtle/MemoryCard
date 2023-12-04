@@ -16,7 +16,11 @@ protocol GameOptionSettingViewControllerDelegate: AnyObject {
 final class GameOptionSettingViewController: UIViewController {
     
     private let gameMode: GameMode
-    private var gameModeOptions: [GameModeOption: Int]
+    private var gameModeOptions: [GameModeOption: Int] {
+        didSet {
+            enableResetButton()
+        }
+    }
     
     weak var delegate: GameOptionSettingViewControllerDelegate?
     
@@ -45,6 +49,8 @@ final class GameOptionSettingViewController: UIViewController {
         
         setupNavigationBar()
         setupLayout()
+        
+        enableResetButton()
     }
     
     @objc func didTapResetButton() {
@@ -53,6 +59,14 @@ final class GameOptionSettingViewController: UIViewController {
         delegate?.didSelectGameOption(gameModeOptions)
         
         optionListTableView.reloadData()
+    }
+    
+    private func enableResetButton() {
+        if gameModeOptions == GameModeOption.getDefaultValues() {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        }
     }
     
     private func setupNavigationBar() {
