@@ -104,12 +104,12 @@ extension GameFeedbackViewController {
         navigationItem.title = "퀴즈 결과"
         
         navigationItem.addDismissButton(self, action: #selector(didTapDismissButton))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "star"),
-            style: .plain,
-            target: self,
-            action: #selector(didTapStarButton)
-        )
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(
+//            image: UIImage(systemName: "star"),
+//            style: .plain,
+//            target: self,
+//            action: #selector(didTapStarButton)
+//        )
     }
     
     private func setupLayout() {
