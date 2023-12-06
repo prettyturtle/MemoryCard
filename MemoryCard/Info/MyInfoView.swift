@@ -21,6 +21,8 @@ struct MyInfoView: View {
     @State private var isShowLoginView = false
     @State private var isSuccessLogin = false
     
+    @State private var isShowShopView = false
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0.0) {
@@ -125,10 +127,23 @@ struct MyInfoView: View {
             
             .navigationTitle("설정")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        isShowShopView = true
+                    } label: {
+                        Image(systemName: "creditcard.circle")
+                    }
+                }
+            }
         }
         .sheet(isPresented: $isShowVocView) {
             VocView(isShowVocView: $isShowVocView, user: $currentUser)
         }
+        .sheet(isPresented: $isShowShopView, content: {
+            ShopView(isShow: $isShowShopView)
+                .interactiveDismissDisabled()
+        })
         .alert("회원탈퇴", isPresented: $isShowDeleteUserAlert) {
             Button(role: .destructive) {
                 showLoginView()
