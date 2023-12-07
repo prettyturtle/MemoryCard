@@ -10,6 +10,7 @@ import SwiftUI
 struct ShopView: View {
     
     @Binding var isShow: Bool
+    let iap = IAPManager(productID: ["YC.MemoryCard.inapp.1"])
     
     var body: some View {
         NavigationView {
@@ -42,6 +43,7 @@ struct ShopView: View {
                 
                 Button {
                     
+                    iap.buy()
                 } label: {
                     
                     HStack {
@@ -78,5 +80,38 @@ struct ShopView: View {
                 }
             }
         }
+    }
+}
+
+import StoreKit
+
+final class IAPManager: NSObject {
+    let productID: Set<String>
+    
+    var productRequest: SKProductsRequest?
+    
+    init(productID: Set<String>) {
+        self.productID = productID
+        super.init()
+        
+    }
+    
+    func buy() {
+        productRequest = SKProductsRequest(productIdentifiers: productID)
+        productRequest?.delegate = self
+        productRequest?.start()
+    }
+}
+
+extension IAPManager: SKProductsRequestDelegate {
+    func productsRequest(
+        _ request: SKProductsRequest,
+        didReceive response: SKProductsResponse
+    ) {
+        let products = response.products
+        
+        let payment = SKPayment(product: products.first!)
+        
+        SKPaymentQueue.default().add(payment)
     }
 }

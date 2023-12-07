@@ -99,6 +99,7 @@
 		6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */; };
 		6BF64BEF2A483A73000F0EC7 /* AppIconConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF64BEE2A483A73000F0EC7 /* AppIconConfigView.swift */; };
 		6BF6568E2B1F6D5000653096 /* ShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF6568D2B1F6D5000653096 /* ShopView.swift */; };
+		6BF656912B220FE500653096 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF656902B220FE500653096 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -182,6 +183,7 @@
 		6BF2A4692ADAF3CD004A09FE /* VocView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocView.swift; sourceTree = "<group>"; };
 		6BF64BEE2A483A73000F0EC7 /* AppIconConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconConfigView.swift; sourceTree = "<group>"; };
 		6BF6568D2B1F6D5000653096 /* ShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopView.swift; sourceTree = "<group>"; };
+		6BF656902B220FE500653096 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				6B682DFC2A1A68E700187262 /* Toast in Frameworks */,
 				6B29BDEB29CE132000F39932 /* FirebaseMessaging in Frameworks */,
 				6B29BDE529CE132000F39932 /* FirebaseDatabaseSwift in Frameworks */,
+				6BF656912B220FE500653096 /* StoreKit.framework in Frameworks */,
 				6B29BDE329CE132000F39932 /* FirebaseDatabase in Frameworks */,
 				6BD5B55E2A6CD0ED00FC82AD /* SimpleToast in Frameworks */,
 				6B29BDED29CE132000F39932 /* FirebaseStorage in Frameworks */,
@@ -362,6 +365,7 @@
 			children = (
 				6B29BDC029CE10EB00F39932 /* MemoryCard */,
 				6B29BDBF29CE10EB00F39932 /* Products */,
+				6BF6568F2B220FE500653096 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -438,6 +442,14 @@
 				6BF6568D2B1F6D5000653096 /* ShopView.swift */,
 			);
 			path = Shop;
+			sourceTree = "<group>";
+		};
+		6BF6568F2B220FE500653096 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6BF656902B220FE500653096 /* StoreKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
