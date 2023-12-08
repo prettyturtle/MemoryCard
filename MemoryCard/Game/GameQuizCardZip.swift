@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct GameQuizCardZip {
+struct GameQuizCardZip: Codable {
     var id: String = UUID().uuidString
     var originID: String
     var cards: [GameQuizCard]
     var mIdx: String
     
-    struct GameQuizCard {
+    struct GameQuizCard: Codable {
         var target: String
         var answer: String
         var id: Int
