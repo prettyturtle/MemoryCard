@@ -83,8 +83,22 @@ extension GameQuizViewController: GameQuizViewDelegate {
             gqv.gameQuizCard = gameQuizCardZip.cards[currentStep]
             gqv.setupView()
         } else {
-            let vc = GameFeedbackViewController(feedback: gameQuizCardZip)
-            navigationController?.pushViewController(vc, animated: true)
+            guard let currentUser = AuthManager.shared.getCurrentUser() else {
+                return
+            }
+            
+            let mIdx = currentUser.id
+            
+            DBManager.shared.save(.gameFeedback, documentName: mIdx, data: gameQuizCardZip) { [weak self] result in
+                DispatchQueue.main.async {
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let vc = GameFeedbackViewController(feedback: self.gameQuizCardZip)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
         }
     }
     
@@ -97,14 +111,13 @@ extension GameQuizViewController: GameQuizViewDelegate {
             gqv.gameQuizCard = gameQuizCardZip.cards[currentStep]
             gqv.setupView()
         } else {
-            guard let currentUser = AuthManager.shared.getCurrentUser() else { // 현재 유저
-                return  // TODO: - 현재 유저가 없을 때 예외처리
+            guard let currentUser = AuthManager.shared.getCurrentUser() else {
+                return
             }
             
             let mIdx = currentUser.id
             
             DBManager.shared.save(.gameFeedback, documentName: mIdx, data: gameQuizCardZip) { [weak self] result in
-                print(result, "12312321312")
                 DispatchQueue.main.async {
                     guard let self = self else {
                         return
