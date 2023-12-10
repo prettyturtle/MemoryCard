@@ -117,15 +117,16 @@ extension GameQuizViewController: GameQuizViewDelegate {
             
             let mIdx = currentUser.id
             
-            DBManager.shared.save(.gameFeedback, documentName: mIdx, data: gameQuizCardZip) { [weak self] result in
-                DispatchQueue.main.async {
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    let vc = GameFeedbackViewController(feedback: self.gameQuizCardZip)
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
+            DBManager.shared.save(
+                .gameFeedback,
+                documentName: gameQuizCardZip.id,
+                data: gameQuizCardZip,
+                completion: { _ in }
+            )
+                
+            DispatchQueue.main.async {
+                let vc = GameFeedbackViewController(feedback: self.gameQuizCardZip)
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }
