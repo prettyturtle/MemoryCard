@@ -83,12 +83,6 @@ extension GameQuizViewController: GameQuizViewDelegate {
             gqv.gameQuizCard = gameQuizCardZip.cards[currentStep]
             gqv.setupView()
         } else {
-            guard let currentUser = AuthManager.shared.getCurrentUser() else {
-                return
-            }
-            
-            let mIdx = currentUser.id
-            
             DBManager.shared.save(
                 .gameFeedback,
                 documentName: gameQuizCardZip.id,
@@ -110,12 +104,6 @@ extension GameQuizViewController: GameQuizViewDelegate {
             gqv.gameQuizCard = gameQuizCardZip.cards[currentStep]
             gqv.setupView()
         } else {
-            guard let currentUser = AuthManager.shared.getCurrentUser() else {
-                return
-            }
-            
-            let mIdx = currentUser.id
-            
             DBManager.shared.save(
                 .gameFeedback,
                 documentName: gameQuizCardZip.id,

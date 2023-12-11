@@ -27,6 +27,16 @@ final class GameFeedbackViewController: UIViewController {
         $0.loopMode = .playOnce
     }
     
+    private lazy var exitButton = OpacityButton().then {
+        $0.style = .fill(backgroundColor: .systemOrange)
+        $0.setTitle("나가기", for: .normal)
+        $0.addTarget(
+            self,
+            action: #selector(didTapExitButton),
+            for: .touchUpInside
+        )
+    }
+    
     init(feedback: GameQuizCardZip) {
         self.feedback = feedback
         super.init(nibName: nil, bundle: nil)
@@ -48,6 +58,10 @@ final class GameFeedbackViewController: UIViewController {
         super.viewDidAppear(animated)
         
         congratulationLottieAnimationView.play()
+    }
+    
+    @objc func didTapExitButton() {
+        dismiss(animated: true)
     }
     
     @objc func didTapDismissButton(_ sender: UIBarButtonItem) {
@@ -115,18 +129,25 @@ extension GameFeedbackViewController {
     private func setupLayout() {
         [
             feedbackTableView,
-            congratulationLottieAnimationView
+            congratulationLottieAnimationView,
+            exitButton
         ].forEach {
             view.addSubview($0)
         }
         
         feedbackTableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.leading.top.trailing.equalToSuperview()
         }
         
         congratulationLottieAnimationView.snp.makeConstraints {
             $0.size.equalTo(view.safeAreaLayoutGuide).dividedBy(2)
             $0.center.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        exitButton.snp.makeConstraints {
+            $0.top.equalTo(feedbackTableView.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultInset)
+            $0.height.equalTo(48.0)
         }
     }
 }
