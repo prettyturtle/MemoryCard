@@ -127,15 +127,15 @@ struct MyInfoView: View {
             
             .navigationTitle("설정")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isShowShopView = true
-                    } label: {
-                        Image(systemName: "creditcard.circle")
-                    }
-                }
-            }
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    Button {
+//                        isShowShopView = true
+//                    } label: {
+//                        Image(systemName: "creditcard.circle")
+//                    }
+//                }
+//            }
         }
         .sheet(isPresented: $isShowVocView) {
             VocView(isShowVocView: $isShowVocView, user: $currentUser)
