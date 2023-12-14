@@ -161,10 +161,10 @@ private extension LoginViewController {
 #endif
         
         if email.isEmpty {                                                  // 이메일이 빈 문자열일 때
-            view.makeToast("이메일을 입력해주세요!")                              // 토스트 얼럿 노출 -> 리턴
+            view.makeToast("이메일을 입력해주세요!", position: .top)              // 토스트 얼럿 노출 -> 리턴
             return
         } else if password.isEmpty {                                        // 비밀번호가 빈 문자열일 때
-            view.makeToast("비밀번호를 입력해주세요!")                             // 토스트 얼럿 노출 -> 리턴
+            view.makeToast("비밀번호를 입력해주세요!", position: .top)             // 토스트 얼럿 노출 -> 리턴
             return
         }
         
@@ -199,8 +199,8 @@ private extension LoginViewController {
                     }
                 }
                 
-            case .failure(let error):                                       // 로그인 실패 (`에러`)
-                self.view.makeToast("사용자 정보를 찾을 수 없어요!")               // 토스트 얼럿 노출
+            case .failure(let error):                                            // 로그인 실패 (`에러`)
+                self.view.makeToast("사용자 정보를 찾을 수 없어요!", position: .top)    // 토스트 얼럿 노출
                 print("🎉 이메일 로그인 실패", error)
             }
         }
@@ -267,7 +267,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
               let idTokenString = String(data: appleIDToken, encoding: .utf8),
               let nonce = currentNonce else {
             IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
-            view.makeToast("다시 시도해주세요!")
+            view.makeToast("다시 시도해주세요!", position: .top)
             return
         }
         
@@ -298,8 +298,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         
                         DBManager.shared.save(.user, documentName: authResult.user.uid, data: fetchedUser) { _ in}
                         
-                        let rootVC = TabBarController()         // 메인 탭바 컨트롤러
-                        self.changeRootVC(rootVC, animated: true)    // 메인 탭바 컨트롤러로 루트 뷰컨 변경
+                        let rootVC = TabBarController()             // 메인 탭바 컨트롤러
+                        self.changeRootVC(rootVC, animated: true)   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
                         
                     case .failure(_): // 로그인 시 회원정보가 없으면, 회원가입
                         
@@ -338,7 +338,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             }
             
             if let error = error {
-                view.makeToast("사용자 정보를 찾을 수 없어요!")               // 토스트 얼럿 노출
+                view.makeToast("사용자 정보를 찾을 수 없어요!", position: .top)     // 토스트 얼럿 노출
             }
         }
     }
