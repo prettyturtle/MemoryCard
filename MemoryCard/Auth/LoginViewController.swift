@@ -13,6 +13,8 @@ import SnapKit
 import Then
 import Toast
 import FirebaseAuth
+import GoogleSignIn
+import GoogleSignInSwift
 
 // MARK: - 로그인 뷰컨
 final class LoginViewController: UIViewController {
@@ -66,6 +68,13 @@ final class LoginViewController: UIViewController {
     private lazy var appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black).then {
         $0.cornerRadius = 12.0
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAppleLogInButton))
+        $0.addGestureRecognizer(tapGesture)
+    }
+    
+    // 구글 로그인 버튼
+    private lazy var googleLoginButton = GIDSignInButton().then {
+        $0.style = .wide
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapGoogleLogInButton))
         $0.addGestureRecognizer(tapGesture)
     }
     
@@ -222,6 +231,98 @@ private extension LoginViewController {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()                                                   // 모달 노출
+    }
+    
+    // 구글 로그인 버튼 탭
+    @objc func didTapGoogleLogInButton() {
+        IndicatorManager.shared.start()
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { [weak self] signInResult, error in
+            guard let self = self else {
+                return
+            }
+            
+            if let error = error {
+                IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
+                print("구글 로그인 에러 : \(error)")
+                self.view.makeToast("다시 시도해주세요!", position: .top)
+                return
+            }
+            
+            guard let user = signInResult?.user,
+                  let idToken = user.idToken?.tokenString else {
+                self.view.makeToast("다시 시도해주세요!", position: .top)
+                return
+            }
+            
+            let credential = GoogleAuthProvider.credential(
+                withIDToken: idToken,
+                accessToken: user.accessToken.tokenString
+            )
+            
+            Auth.auth().signIn(with: credential) { authResult, error in
+                IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
+                
+                if let authResult = authResult {
+                    
+                    if self.isRevokeLogin == true {                                  // 탈퇴전 로그인은 화면 닫기 (예외처리)
+                        self.dismiss(animated: true, completion: self.isRevokeLoginCompletion)
+                        
+                        return
+                    }
+                    
+                    DBManager.shared.fetchDocument(.user, documentName: authResult.user.uid, type: User.self) { result in
+                        switch result {
+                        case .success(var fetchedUser): // 로그인
+                            
+                            fetchedUser.lastSignInDate = authResult.user.metadata.lastSignInDate
+                            
+                            DBManager.shared.save(.user, documentName: authResult.user.uid, data: fetchedUser) { _ in }
+                            
+                            let rootVC = TabBarController()             // 메인 탭바 컨트롤러
+                            self.changeRootVC(rootVC, animated: true)   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
+                            
+                        case .failure(_): // 로그인 시 회원정보가 없으면, 회원가입
+                            
+                            let id = authResult.user.uid
+                            let email = authResult.user.email ?? "NIL"
+                            let name = user.profile?.name ?? String(email.split(separator: "@").first ?? "NIL")
+                            let createdDate = authResult.user.metadata.creationDate
+                            let lastSignInDate = authResult.user.metadata.lastSignInDate
+                            
+                            let user = User(
+                                id: id,
+                                email: email,
+                                name: name,
+                                createdDate: createdDate,
+                                lastSignInDate: lastSignInDate,
+                                isEmailVerified: false
+                            )
+                            
+                            // 유저 정보 저장 시작
+                            DBManager.shared.save(
+                                .user,
+                                documentName: user.id,
+                                data: user
+                            ) { dbResult in
+                                switch dbResult {
+                                case .success(_):                               // 유저 저장 성공
+                                    let rootVC = TabBarController()             // 메인 탭바 컨트롤러
+                                    self.changeRootVC(rootVC, animated: true)   // 메인 탭바 컨트롤러로 루트 뷰컨 변경
+                                case .failure(let error):
+                                    // TODO: - 유저 저장 실패 처리
+                                    print("🎉 유저 저장 실패", error)
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if let error = error {
+                    self.view.makeToast("사용자 정보를 찾을 수 없어요!", position: .top)     // 토스트 얼럿 노출
+                }
+            }
+        }
     }
 }
 
@@ -387,6 +488,7 @@ private extension LoginViewController {
             passwordTextField,
             loginButton,
             appleLoginButton,
+            googleLoginButton,
             lineSeparator,
             moveToSignUpButton
         ].forEach {
@@ -416,9 +518,14 @@ private extension LoginViewController {
             $0.top.equalTo(lineSeparator.snp.bottom).offset(Constant.defaultInset * 2)
             $0.height.equalTo(48.0)
         }
+        googleLoginButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(Constant.defaultInset)
+            $0.top.equalTo(appleLoginButton.snp.bottom).offset(Constant.defaultInset)
+            $0.height.equalTo(48.0)
+        }
         moveToSignUpButton.snp.makeConstraints {
             $0.centerX.equalTo(appleLoginButton.snp.centerX)
-            $0.top.equalTo(appleLoginButton.snp.bottom).offset(Constant.defaultInset)
+            $0.top.equalTo(googleLoginButton.snp.bottom).offset(Constant.defaultInset)
             $0.bottom.equalToSuperview()
         }
     }

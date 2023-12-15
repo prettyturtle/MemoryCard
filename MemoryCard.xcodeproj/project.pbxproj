@@ -47,6 +47,8 @@
 		6B29BDF529CED7A700F39932 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDF429CED7A600F39932 /* SignUpViewController.swift */; };
 		6B29BDF929CF547600F39932 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDF829CF547600F39932 /* AuthManager.swift */; };
 		6B682DFC2A1A68E700187262 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 6B682DFB2A1A68E700187262 /* Toast */; };
+		6B6DAC642B2CAE05007D1332 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6DAC632B2CAE05007D1332 /* GoogleSignIn */; };
+		6B6DAC662B2CAE05007D1332 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6DAC652B2CAE05007D1332 /* GoogleSignInSwift */; };
 		6B7C6C1129F80B930045C230 /* MyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7C6C1029F80B930045C230 /* MyInfoView.swift */; };
 		6B85569229DC646F0004E226 /* CardZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569129DC646F0004E226 /* CardZip.swift */; };
 		6B85569429DC64AA0004E226 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569329DC64AA0004E226 /* DBManager.swift */; };
@@ -200,6 +202,8 @@
 				6B29BDED29CE132000F39932 /* FirebaseStorage in Frameworks */,
 				6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */,
 				6B29BDD729CE111C00F39932 /* SnapKit in Frameworks */,
+				6B6DAC662B2CAE05007D1332 /* GoogleSignInSwift in Frameworks */,
+				6B6DAC642B2CAE05007D1332 /* GoogleSignIn in Frameworks */,
 				6B29BDE129CE132000F39932 /* FirebaseCrashlytics in Frameworks */,
 				6B29BDDF29CE132000F39932 /* FirebaseAuth in Frameworks */,
 				6B29BDDA29CE112C00F39932 /* Then in Frameworks */,
@@ -484,6 +488,8 @@
 				6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */,
 				6BD18CDF2A4B283C0020433A /* EasyTipView */,
 				6BD5B55D2A6CD0ED00FC82AD /* SimpleToast */,
+				6B6DAC632B2CAE05007D1332 /* GoogleSignIn */,
+				6B6DAC652B2CAE05007D1332 /* GoogleSignInSwift */,
 			);
 			productName = MemoryCard;
 			productReference = 6B29BDBE29CE10EB00F39932 /* MemoryCard.app */;
@@ -522,6 +528,7 @@
 				6BF64BE02A475F99000F0EC7 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				6BD18CDE2A4B283C0020433A /* XCRemoteSwiftPackageReference "EasyTipView" */,
 				6BD5B55C2A6CD0ED00FC82AD /* XCRemoteSwiftPackageReference "SimpleToast" */,
+				6B6DAC622B2CAE05007D1332 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 6B29BDBF29CE10EB00F39932 /* Products */;
 			projectDirPath = "";
@@ -816,7 +823,7 @@
 				DEVELOPMENT_TEAM = TB9WF4459Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MemoryCard/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "메모리카드";
+				INFOPLIST_KEY_CFBundleDisplayName = "(D)메모리카드";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -892,6 +899,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.0;
+			};
+		};
+		6B6DAC622B2CAE05007D1332 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
 			};
 		};
 		6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
@@ -983,6 +998,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B682DFA2A1A68E700187262 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		6B6DAC632B2CAE05007D1332 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B6DAC622B2CAE05007D1332 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		6B6DAC652B2CAE05007D1332 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B6DAC622B2CAE05007D1332 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		6B8C598A2A37638500CD8A96 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
