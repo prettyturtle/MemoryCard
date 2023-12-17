@@ -129,6 +129,7 @@ extension LoginViewController {
         setupNavigationBar()            // 내비게이션 설정
         setupLayout()                   // 레이아웃 설정
         
+        setKeyboardObserver()           // 키보드 옵저버
     }
 }
 
@@ -323,6 +324,47 @@ private extension LoginViewController {
                 }
             }
         }
+    }
+    
+    /// 키보드가 올라올 때
+    /// - Parameter notification: 노티피케이션
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        
+        scrollView.contentInset.bottom = keyboardFrame.size.height + 48.0
+        
+        let firstResponder = view.subviews.filter { $0.isFirstResponder }.first as? UITextField
+        
+        UIView.animate(withDuration: 0.4) {
+            self.scrollView.scrollRectToVisible(firstResponder?.frame ?? CGRect.zero, animated: true)
+        }
+    }
+    
+    /// 키보드가 내려갈 때
+    /// - Parameter notification: 노티피케이션
+    @objc func keyboardWillHide(_ notification: Notification) {
+        let contentInset = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    /// 키보드 옵저버 Add
+    func setKeyboardObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object:nil
+        )
     }
 }
 
