@@ -44,6 +44,12 @@ struct ReminderListCell: View {
                 Label("", systemImage: "trash")
             }
             .tint(.red)
+            
+            Button {
+            } label: {
+                Label("", systemImage: "square.and.pencil")
+            }
+            .tint(.blue)
         }
     }
     
