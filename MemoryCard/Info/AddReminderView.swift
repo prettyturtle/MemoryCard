@@ -24,6 +24,8 @@ struct AddReminderView: View {
     @State var showToast = false
     @State var toastMessage = "다시 시도해주세요!"
     private let toastOptions = SimpleToastOptions(hideAfter: 3, animation: .easeInOut)
+    
+    @Binding var isModify: Bool
 }
 
 // MARK: - UI Components

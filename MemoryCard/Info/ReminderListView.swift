@@ -36,7 +36,8 @@ struct ReminderListView: View {
         } content: {
             AddReminderView(
                 isShow: $viewModel.isShowAddReminderView,
-                savedReminder: $viewModel.savedReminder
+                savedReminder: $viewModel.savedReminder,
+                isModify: $viewModel.isModify
             )
         }
         .alert("알림 권한 허용", isPresented: $viewModel.isShowAllowNotiAlert) {
@@ -97,6 +98,7 @@ private extension ReminderListView {
         ToolbarItem(placement: .navigationBarTrailing) {
             if viewModel.isAllowReminder {
                 Button {
+                    viewModel.isModify = false
                     viewModel.isShowAddReminderView = true
                 } label: {
                     Image(systemName: "plus")
