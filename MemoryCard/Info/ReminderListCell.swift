@@ -47,6 +47,7 @@ struct ReminderListCell: View {
             
             Button {
                 viewModel.isModify = true
+                viewModel.modifiedReminder = reminder
                 viewModel.isShowAddReminderView = true
             } label: {
                 Label("", systemImage: "square.and.pencil")

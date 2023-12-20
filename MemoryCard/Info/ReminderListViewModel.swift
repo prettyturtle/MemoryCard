@@ -14,6 +14,7 @@ final class ReminderListViewModel: ObservableObject {
     @Published var isAllowReminder = false
     @Published var isShowAllowNotiAlert = false
     @Published var isModify = false
+    @Published var modifiedReminder: Reminder?
 }
 
 extension ReminderListViewModel {

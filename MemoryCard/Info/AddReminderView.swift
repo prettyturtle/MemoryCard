@@ -26,6 +26,7 @@ struct AddReminderView: View {
     private let toastOptions = SimpleToastOptions(hideAfter: 3, animation: .easeInOut)
     
     @Binding var isModify: Bool
+    @Binding var modifiedReminder: Reminder?
 }
 
 // MARK: - UI Components
@@ -69,6 +70,17 @@ extension AddReminderView {
             .navigationBarTitleDisplayMode(.inline)
             
             .onAppear {
+                if isModify {
+                    if let modifiedReminder = modifiedReminder {
+                        title = modifiedReminder.title
+                        selectedDate = modifiedReminder.date
+                        
+                        for weekDay in modifiedReminder.weekDayList {
+                            selectedWeekDay[weekDay] = true
+                        }
+                    }
+                }
+                
                 if let currentUser = AuthManager.shared.getCurrentUser() {
                     let mIdx = currentUser.id
                     

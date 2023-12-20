@@ -37,7 +37,8 @@ struct ReminderListView: View {
             AddReminderView(
                 isShow: $viewModel.isShowAddReminderView,
                 savedReminder: $viewModel.savedReminder,
-                isModify: $viewModel.isModify
+                isModify: $viewModel.isModify,
+                modifiedReminder: $viewModel.modifiedReminder
             )
         }
         .alert("알림 권한 허용", isPresented: $viewModel.isShowAllowNotiAlert) {
@@ -99,6 +100,7 @@ private extension ReminderListView {
             if viewModel.isAllowReminder {
                 Button {
                     viewModel.isModify = false
+                    viewModel.modifiedReminder = nil
                     viewModel.isShowAddReminderView = true
                 } label: {
                     Image(systemName: "plus")
