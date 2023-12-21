@@ -241,22 +241,43 @@ private extension AddReminderView {
             return
         }
         
-        let newReminder = Reminder(
-            id: UUID(),
-            title: title,
-            date: selectedDate,
-            weekDayList: weekDayList,
-            cardZipID: selectedCardZip?.id,
-            isOn: true,
-            createdAt: .now
-        )
-        
-        if saveReminder(newReminder) {
-            registerReminder(newReminder)
+        if !isModify {
+            let newReminder = Reminder(
+                id: UUID(),
+                title: title,
+                date: selectedDate,
+                weekDayList: weekDayList,
+                cardZipID: selectedCardZip?.id,
+                isOn: true,
+                createdAt: .now
+            )
             
-            savedReminder = newReminder
+            if saveReminder(newReminder) {
+                registerReminder(newReminder)
+                
+                savedReminder = newReminder
+                
+                isShow = false
+            }
+        } else {
+            modifiedReminder?.title = title
+            modifiedReminder?.date = selectedDate
+            modifiedReminder?.weekDayList = weekDayList
+            modifiedReminder?.cardZipID = selectedCardZip?.id
+            modifiedReminder?.isOn = true
+            modifiedReminder?.createdAt = .now
             
-            isShow = false
+            guard let modifiedReminder = modifiedReminder else {
+                return
+            }
+            
+            if saveReminder(modifiedReminder) {
+                registerReminder(modifiedReminder)
+                
+                savedReminder = modifiedReminder
+                
+                isShow = false
+            }
         }
     }
     
@@ -281,6 +302,7 @@ private extension AddReminderView {
         notificationContent.body = "알림을 눌러 지금 바로 암기를 시작해봐요 👏"
         notificationContent.badge = 1
         notificationContent.userInfo = ["cardZipID": reminder.cardZipID ?? ""]
+        notificationContent.sound = .default
         
         let reminderDate = Calendar.current.dateComponents([.hour, .minute], from: reminder.date)
         

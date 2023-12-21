@@ -38,9 +38,11 @@ struct UserDefaultsManager<T: Codable & Equatable> {
     
     @discardableResult
     func save(_ newValue: T) -> [T]? {
-        guard let savedList = read() else {
+        guard var savedList = read() else {
             return nil
         }
+        
+        savedList = savedList.filter { $0 != newValue }
         
         let newSavedList = savedList + [newValue]
         

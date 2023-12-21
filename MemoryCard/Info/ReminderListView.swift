@@ -48,7 +48,7 @@ struct ReminderListView: View {
         }
         .onChange(of: viewModel.savedReminder) { newReminder in
             if let newReminder = newReminder {
-                viewModel.reminderList.insert(newReminder, at: 0)
+                viewModel.viewOnAppear()
                 viewModel.savedReminder = nil
             }
         }
