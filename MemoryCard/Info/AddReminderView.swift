@@ -66,7 +66,7 @@ extension AddReminderView {
                     }
                 }
             }
-            .navigationTitle("암기 리마인더 생성")
+            .navigationTitle(!isModify ? "암기 리마인더 생성" : "암기 리마인더 수정")
             .navigationBarTitleDisplayMode(.inline)
             
             .onAppear {
