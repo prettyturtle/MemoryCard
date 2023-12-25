@@ -214,7 +214,7 @@ extension AddReminderView {
         return Button {
             didTapSaveButton()
         } label: {
-            Text("저장하기")
+            Text(!isModify ? "저장하기" : "수정하기")
                 .frame(width: buttonWidth, height: buttonHeight)
                 .background(.orange)
                 .font(.system(size: 16, weight: .semibold))
