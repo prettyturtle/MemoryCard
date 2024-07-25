@@ -24,6 +24,7 @@
 		6B192AC82AEEAC2B0021EA82 /* GameOptionSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B192AC72AEEAC2B0021EA82 /* GameOptionSettingViewController.swift */; };
 		6B192ACA2AEFFA440021EA82 /* GameOptionListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B192AC92AEFFA440021EA82 /* GameOptionListTableViewCell.swift */; };
 		6B192ACC2AF61D600021EA82 /* GameQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B192ACB2AF61D600021EA82 /* GameQuizViewController.swift */; };
+		6B1F667C2C528B6400B976CF /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1F667B2C528B6400B976CF /* Util.swift */; };
 		6B29BDC229CE10EB00F39932 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDC129CE10EB00F39932 /* AppDelegate.swift */; };
 		6B29BDC429CE10EB00F39932 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDC329CE10EB00F39932 /* SceneDelegate.swift */; };
 		6B29BDC629CE10EB00F39932 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B29BDC529CE10EB00F39932 /* LoginViewController.swift */; };
@@ -122,6 +123,7 @@
 		6B192AC72AEEAC2B0021EA82 /* GameOptionSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOptionSettingViewController.swift; sourceTree = "<group>"; };
 		6B192AC92AEFFA440021EA82 /* GameOptionListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOptionListTableViewCell.swift; sourceTree = "<group>"; };
 		6B192ACB2AF61D600021EA82 /* GameQuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameQuizViewController.swift; sourceTree = "<group>"; };
+		6B1F667B2C528B6400B976CF /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		6B29BDBE29CE10EB00F39932 /* MemoryCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B29BDC129CE10EB00F39932 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B29BDC329CE10EB00F39932 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				6BD5B55F2A6CFC8700FC82AD /* Reminder.swift */,
 				6BD5B5612A6CFC9F00FC82AD /* WeekDay.swift */,
 				6BB5BF602ADD826E004E9486 /* Voc.swift */,
+				6B1F667B2C528B6400B976CF /* Util.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				6BA3065929D8A5CC003CFAF2 /* CardContentType.swift in Sources */,
 				6B85569829E2C1100004E226 /* CardListCollectionViewCell.swift in Sources */,
 				6B14A7C12A13BA58002384B4 /* Alert.swift in Sources */,
+				6B1F667C2C528B6400B976CF /* Util.swift in Sources */,
 				6B29BDF329CECCC000F39932 /* Constant.swift in Sources */,
 				6B088D2429D06DFF0056B4EF /* CreateCardIntroViewController.swift in Sources */,
 			);
