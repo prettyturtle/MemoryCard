@@ -494,6 +494,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         IndicatorManager.shared.stop()                                  // 로딩 인디케이터 제거
     }
 }
+
 extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window!

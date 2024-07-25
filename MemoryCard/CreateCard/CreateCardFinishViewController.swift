@@ -108,6 +108,26 @@ private extension CreateCardFinishViewController {
     /// 완료 버튼을 눌렀을 때
     /// - Parameter sender: 완료 버튼
     @objc func didTapFinishButton(_ sender: UIButton) {
+        guard let currentUser = AuthManager.shared.getCurrentUser() else {
+            return
+        }
+        
+        let mIdx = currentUser.id
+        
+        if mIdx == "LWtgt6ntq3d13PDWp45ZWcISQ2u1" {
+            dismiss(animated: true)
+            
+            NotificationCenter
+                .default
+                .post(
+                    name: .DID_FINISH_CREATE_CARD,
+                    object: nil,
+                    userInfo: ["isEdit": isEdit]
+                )
+            
+            return
+        }
+        
         if let interstitial = interstitial {
             interstitial.present(fromRootViewController: self)
         }
