@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class CreateCardIntroViewController: UIViewController {
+final class CreateCardIntroViewController: BaseViewController {
     
     private lazy var nextButton = OpacityButton().then {
         $0.setTitle("다음으로", for: .normal)

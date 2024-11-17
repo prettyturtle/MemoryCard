@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class GameFeedbackCardDetailViewController: UIViewController {
+final class GameFeedbackCardDetailViewController: BaseViewController {
     let feedbackCard: Card
     
     private lazy var cardCollectionViewFlowLayout = UICollectionViewFlowLayout().then {

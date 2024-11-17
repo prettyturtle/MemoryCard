@@ -12,7 +12,7 @@ import Toast
 import FirebaseAuth
 
 // MARK: - 회원가입 뷰컨
-final class SignUpViewController: UIViewController {
+final class SignUpViewController: BaseViewController {
 	
 	// MARK: ========================= < UI 컴포넌트 > =========================
 	
@@ -312,7 +312,7 @@ private extension SignUpViewController {
 	
 	/// 내비게이션 바 설정
 	func setupNavigationBar() {
-		navigationItem.title = "회원가입"
+		setNavBarCenterTitle(title: "회원가입")
 		navigationController?.navigationBar.topItem?.backButtonTitle = ""
 	}
 	

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class CreateCardFolderNameInputViewController: UIViewController {
+final class CreateCardFolderNameInputViewController: BaseViewController {
 	
 	private lazy var titleLabel = UILabel().then {
 		$0.text = "폴더 이름 정하기"
@@ -144,6 +144,7 @@ private extension CreateCardFolderNameInputViewController {
 		createCardContentInputViewController.willEditCardZip = willEditCardZip // 수정모드
 		navigationController?.pushViewController(createCardContentInputViewController, animated: true)
 	}
+	
 	@objc func didTapDismissButton(_ sender: UIBarButtonItem) {
 		dismiss(animated: true)
 	}
@@ -151,12 +152,7 @@ private extension CreateCardFolderNameInputViewController {
 
 private extension CreateCardFolderNameInputViewController {
 	func setupNavigationBar() {
-		navigationItem.leftBarButtonItem = UIBarButtonItem(
-			image: UIImage(systemName: "xmark"),
-			style: .plain,
-			target: self,
-			action: #selector(didTapDismissButton)
-		)
+		setNavBarXButton(action: #selector(didTapDismissButton))
 	}
 	func setupLayout() {
 		[

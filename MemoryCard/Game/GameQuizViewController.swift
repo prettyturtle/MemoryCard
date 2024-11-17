@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class GameQuizViewController: UIViewController {
+final class GameQuizViewController: BaseViewController {
     
     private let cardZip: CardZip
     private let gameModeOptions: [GameModeOption: Int]

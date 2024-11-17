@@ -18,7 +18,7 @@ protocol PopupView: UIView {
     var delegate: PopupViewDelegate? { get set }
 }
 
-final class PopupViewController: UIViewController {
+final class PopupViewController: BaseViewController {
     let popupView: PopupView
     
     init(popupView: PopupView) {

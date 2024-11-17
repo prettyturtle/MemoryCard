@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class GameIntroViewController: UIViewController {
+final class GameIntroViewController: BaseViewController {
 	
 	private let gameMode: GameMode
 	private var gameModeOptions: [GameModeOption: Int]

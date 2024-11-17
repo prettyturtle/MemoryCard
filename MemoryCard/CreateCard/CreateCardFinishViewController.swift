@@ -12,7 +12,7 @@ import Lottie
 import GoogleMobileAds
 
 // MARK: - 카드 생성 완료 뷰컨
-final class CreateCardFinishViewController: UIViewController {
+final class CreateCardFinishViewController: BaseViewController {
 	// MARK: ========================= < UI 컴포넌트 > =========================
 	
 	/// 로티 애니메이션 뷰

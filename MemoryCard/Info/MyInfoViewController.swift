@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import FirebaseAuth
 
-final class MyInfoViewController: UIViewController {
+final class MyInfoViewController: BaseViewController {
     
     private lazy var test = OpacityButton().then {
         $0.style = .fill(backgroundColor: .systemGreen)

@@ -17,7 +17,7 @@ import GoogleSignIn
 import GoogleSignInSwift
 
 // MARK: - 로그인 뷰컨
-final class LoginViewController: UIViewController {
+final class LoginViewController: BaseViewController {
 	
 	// MARK: ========================= < UI 컴포넌트 > =========================
 	/// 스크롤뷰
@@ -503,8 +503,7 @@ private extension LoginViewController {
 	
 	/// 내비게이션 바 설정
 	func setupNavigationBar() {
-		navigationItem.title = "로그인"
-		navigationController?.navigationBar.prefersLargeTitles = true
+		setNavBarLeftTitle(title: "로그인")
 	}
 	
 	/// 레이아웃 설정
