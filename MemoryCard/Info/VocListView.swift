@@ -23,17 +23,17 @@ struct VocListView: View {
                             HStack(spacing: 0) {
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(vocItem.title)
-                                        .font(.system(size: 18, weight: .medium))
+										.font(UIFont.Pretendard.m18.font)
                                         .lineLimit(0)
                                     
                                     Text(vocItem.content)
-                                        .font(.system(size: 16, weight: .regular))
+										.font(UIFont.Pretendard.r16.font)
                                         .foregroundColor(.secondary)
                                         .lineLimit(0)
                                     
                                     Text(vocItem.formattedDate)
                                         .foregroundColor(.secondary)
-                                        .font(.system(size: 14, weight: .regular))
+										.font(UIFont.Pretendard.r14.font)
                                 }
                                 .padding(16)
                                 

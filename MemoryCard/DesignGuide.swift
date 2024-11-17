@@ -5,6 +5,7 @@
 //  Created by yc on 1/14/24.
 //
 
+import SwiftUI
 import UIKit
 
 // MARK: - COLOR
@@ -242,6 +243,10 @@ extension UIImage {
 
 // MARK: - FONT
 extension UIFont {
+	
+	var font: Font {
+		return Font(self)
+	}
 	
 	enum FontWeight: String {
 		case bold		= "Pretendard-Bold"

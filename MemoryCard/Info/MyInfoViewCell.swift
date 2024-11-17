@@ -8,32 +8,32 @@
 import SwiftUI
 
 struct MyInfoViewCell: View {
-    
-    let title: String
-    let textColor: Color
-    
-    var body: some View {
-        VStack {
-            Spacer()
-                .frame(height: 16.0)
-            
-            HStack {
-                Text(title)
-                    .font(.system(size: 18.0, weight: .medium))
-                    .foregroundColor(textColor)
-                
-                Spacer()
-            }
-            
-            Spacer()
-                .frame(height: 16.0)
-        }
-    }
+	
+	let title: String
+	let textColor: Color
+	
+	var body: some View {
+		VStack {
+			Spacer()
+				.frame(height: 16.0)
+			
+			HStack {
+				Text(title)
+					.font(UIFont.Pretendard.m18.font)
+					.foregroundColor(textColor)
+				
+				Spacer()
+			}
+			
+			Spacer()
+				.frame(height: 16.0)
+		}
+	}
 }
 
 
 struct MyInfoViewCell_Previews: PreviewProvider {
-    static var previews: some View {
-        MyInfoViewCell(title: "로그아웃", textColor: .red)
-    }
+	static var previews: some View {
+		MyInfoViewCell(title: "로그아웃", textColor: .red)
+	}
 }
