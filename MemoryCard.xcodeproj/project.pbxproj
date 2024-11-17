@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -99,6 +99,9 @@
 		6BD990BB2A716F6A00B1F322 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD990BA2A716F6A00B1F322 /* LoginView.swift */; };
 		6BDB4E1C2CEA2CAB00B9E4E6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDB4E1B2CEA2CAB00B9E4E6 /* Lottie */; };
 		6BDB4E1E2CEA360600B9E4E6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB4E1D2CEA360600B9E4E6 /* BaseViewController.swift */; };
+		6BDB4E302CEA42C000B9E4E6 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6BDB4E2F2CEA42C000B9E4E6 /* Pretendard-Regular.otf */; };
+		6BDB4E312CEA42C000B9E4E6 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6BDB4E2D2CEA42C000B9E4E6 /* Pretendard-Bold.otf */; };
+		6BDB4E322CEA42C000B9E4E6 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6BDB4E2E2CEA42C000B9E4E6 /* Pretendard-Medium.otf */; };
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
 		6BF2A46A2ADAF3CD004A09FE /* VocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF2A4692ADAF3CD004A09FE /* VocView.swift */; };
@@ -186,6 +189,9 @@
 		6BD5B5632A6D879100FC82AD /* EmailVerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerifyView.swift; sourceTree = "<group>"; };
 		6BD990BA2A716F6A00B1F322 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6BDB4E1D2CEA360600B9E4E6 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		6BDB4E2D2CEA42C000B9E4E6 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		6BDB4E2E2CEA42C000B9E4E6 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		6BDB4E2F2CEA42C000B9E4E6 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewCell.swift; sourceTree = "<group>"; };
 		6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeConfigView.swift; sourceTree = "<group>"; };
 		6BF2A4692ADAF3CD004A09FE /* VocView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocView.swift; sourceTree = "<group>"; };
@@ -193,10 +199,6 @@
 		6BF6568D2B1F6D5000653096 /* ShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopView.swift; sourceTree = "<group>"; };
 		6BF656902B220FE500653096 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		6BC7E04B2CEA2AA300DCA720 /* Font */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Font; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6B29BDBB29CE10EB00F39932 /* Frameworks */ = {
@@ -402,7 +404,7 @@
 				6B29BDC329CE10EB00F39932 /* SceneDelegate.swift */,
 				6BC7E0412CEA2A5C00DCA720 /* DesignGuide.swift */,
 				6BDB4E1D2CEA360600B9E4E6 /* BaseViewController.swift */,
-				6BC7E0432CEA2A8900DCA720 /* Assets */,
+				6BDB4E2C2CEA42B100B9E4E6 /* Font */,
 				6B192AC02AEEA1E60021EA82 /* Game */,
 				6B29BDCA29CE10EF00F39932 /* Assets.xcassets */,
 				6BD3E5172A86B03300D3065E /* Popup */,
@@ -444,14 +446,6 @@
 			path = LottieFile;
 			sourceTree = "<group>";
 		};
-		6BC7E0432CEA2A8900DCA720 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				6BC7E04B2CEA2AA300DCA720 /* Font */,
-			);
-			path = Assets;
-			sourceTree = "<group>";
-		};
 		6BD3E5172A86B03300D3065E /* Popup */ = {
 			isa = PBXGroup;
 			children = (
@@ -460,6 +454,16 @@
 				6BD3E51A2A87EED300D3065E /* PushAllowPopupView.swift */,
 			);
 			path = Popup;
+			sourceTree = "<group>";
+		};
+		6BDB4E2C2CEA42B100B9E4E6 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				6BDB4E2D2CEA42C000B9E4E6 /* Pretendard-Bold.otf */,
+				6BDB4E2E2CEA42C000B9E4E6 /* Pretendard-Medium.otf */,
+				6BDB4E2F2CEA42C000B9E4E6 /* Pretendard-Regular.otf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		6BF6568C2B1F6D2400653096 /* Shop */ = {
@@ -492,9 +496,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				6BC7E04B2CEA2AA300DCA720 /* Font */,
 			);
 			name = MemoryCard;
 			packageProductDependencies = (
@@ -571,6 +572,9 @@
 			files = (
 				6B29BDCE29CE10EF00F39932 /* LaunchScreen.storyboard in Resources */,
 				6B29BDDC29CE126600F39932 /* GoogleService-Info.plist in Resources */,
+				6BDB4E302CEA42C000B9E4E6 /* Pretendard-Regular.otf in Resources */,
+				6BDB4E312CEA42C000B9E4E6 /* Pretendard-Bold.otf in Resources */,
+				6BDB4E322CEA42C000B9E4E6 /* Pretendard-Medium.otf in Resources */,
 				6B29BDCB29CE10EF00F39932 /* Assets.xcassets in Resources */,
 				6B8DBDB82AF93F16002549EB /* correct_lottie.json in Resources */,
 				6B8C59882A37630600CD8A96 /* complete_lottie.json in Resources */,
@@ -809,7 +813,7 @@
 				CODE_SIGN_ENTITLEMENTS = MemoryCard/MemoryCard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = TB9WF4459Q;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -825,7 +829,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = YC.MemoryCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -846,12 +850,12 @@
 				CODE_SIGN_ENTITLEMENTS = MemoryCard/MemoryCard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = TB9WF4459Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MemoryCard/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "(D)메모리카드";
+				INFOPLIST_KEY_CFBundleDisplayName = "메모리카드";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -862,7 +866,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = YC.MemoryCard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
