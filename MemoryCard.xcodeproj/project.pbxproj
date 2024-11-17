@@ -80,6 +80,7 @@
 		6BA6A4382A320FE0002127E6 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA6A4372A320FE0002127E6 /* ImagePickerView.swift */; };
 		6BB5BF5F2ADD8248004E9486 /* VocListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB5BF5E2ADD8248004E9486 /* VocListView.swift */; };
 		6BB5BF612ADD826E004E9486 /* Voc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB5BF602ADD826E004E9486 /* Voc.swift */; };
+		6BC7DFAB2CEA0E5E00DCA720 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BC7DFAA2CEA0E5E00DCA720 /* GoogleMobileAds */; };
 		6BD18CE02A4B283C0020433A /* EasyTipView in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD18CDF2A4B283C0020433A /* EasyTipView */; };
 		6BD18CEA2A51C0F40020433A /* Notification_Name+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD18CE92A51C0F40020433A /* Notification_Name+.swift */; };
 		6BD18CEC2A51C10A0020433A /* TutorialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD18CEB2A51C10A0020433A /* TutorialManager.swift */; };
@@ -99,7 +100,6 @@
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
 		6BF2A46A2ADAF3CD004A09FE /* VocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF2A4692ADAF3CD004A09FE /* VocView.swift */; };
-		6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */; };
 		6BF64BEF2A483A73000F0EC7 /* AppIconConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF64BEE2A483A73000F0EC7 /* AppIconConfigView.swift */; };
 		6BF6568E2B1F6D5000653096 /* ShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF6568D2B1F6D5000653096 /* ShopView.swift */; };
 		6BF656912B220FE500653096 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF656902B220FE500653096 /* StoreKit.framework */; };
@@ -202,12 +202,12 @@
 				6B29BDE329CE132000F39932 /* FirebaseDatabase in Frameworks */,
 				6BD5B55E2A6CD0ED00FC82AD /* SimpleToast in Frameworks */,
 				6B29BDED29CE132000F39932 /* FirebaseStorage in Frameworks */,
-				6BF64BE22A475F9A000F0EC7 /* GoogleMobileAds in Frameworks */,
 				6B29BDD729CE111C00F39932 /* SnapKit in Frameworks */,
 				6B6DAC662B2CAE05007D1332 /* GoogleSignInSwift in Frameworks */,
 				6B6DAC642B2CAE05007D1332 /* GoogleSignIn in Frameworks */,
 				6B29BDE129CE132000F39932 /* FirebaseCrashlytics in Frameworks */,
 				6B29BDDF29CE132000F39932 /* FirebaseAuth in Frameworks */,
+				6BC7DFAB2CEA0E5E00DCA720 /* GoogleMobileAds in Frameworks */,
 				6B29BDDA29CE112C00F39932 /* Then in Frameworks */,
 				6B29BDE729CE132000F39932 /* FirebaseFirestore in Frameworks */,
 				6BD18CE02A4B283C0020433A /* EasyTipView in Frameworks */,
@@ -488,11 +488,11 @@
 				6B29BDEC29CE132000F39932 /* FirebaseStorage */,
 				6B682DFB2A1A68E700187262 /* Toast */,
 				6B8C598A2A37638500CD8A96 /* Lottie */,
-				6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */,
 				6BD18CDF2A4B283C0020433A /* EasyTipView */,
 				6BD5B55D2A6CD0ED00FC82AD /* SimpleToast */,
 				6B6DAC632B2CAE05007D1332 /* GoogleSignIn */,
 				6B6DAC652B2CAE05007D1332 /* GoogleSignInSwift */,
+				6BC7DFAA2CEA0E5E00DCA720 /* GoogleMobileAds */,
 			);
 			productName = MemoryCard;
 			productReference = 6B29BDBE29CE10EB00F39932 /* MemoryCard.app */;
@@ -528,10 +528,10 @@
 				6B29BDDD29CE132000F39932 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				6B682DFA2A1A68E700187262 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */,
-				6BF64BE02A475F99000F0EC7 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				6BD18CDE2A4B283C0020433A /* XCRemoteSwiftPackageReference "EasyTipView" */,
 				6BD5B55C2A6CD0ED00FC82AD /* XCRemoteSwiftPackageReference "SimpleToast" */,
 				6B6DAC622B2CAE05007D1332 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				6BC7DFA92CEA0E5E00DCA720 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 6B29BDBF29CE10EB00F39932 /* Products */;
 			projectDirPath = "";
@@ -921,6 +921,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		6BC7DFA92CEA0E5E00DCA720 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.12.0;
+			};
+		};
 		6BD18CDE2A4B283C0020433A /* XCRemoteSwiftPackageReference "EasyTipView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/teodorpatras/EasyTipView";
@@ -935,14 +943,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.7.2;
-			};
-		};
-		6BF64BE02A475F99000F0EC7 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1018,6 +1018,11 @@
 			package = 6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
+		6BC7DFAA2CEA0E5E00DCA720 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BC7DFA92CEA0E5E00DCA720 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
 		6BD18CDF2A4B283C0020433A /* EasyTipView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6BD18CDE2A4B283C0020433A /* XCRemoteSwiftPackageReference "EasyTipView" */;
@@ -1027,11 +1032,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6BD5B55C2A6CD0ED00FC82AD /* XCRemoteSwiftPackageReference "SimpleToast" */;
 			productName = SimpleToast;
-		};
-		6BF64BE12A475F9A000F0EC7 /* GoogleMobileAds */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6BF64BE02A475F99000F0EC7 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
-			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
