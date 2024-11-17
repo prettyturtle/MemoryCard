@@ -13,11 +13,11 @@ final class GameFeedbackTableViewCell: UITableViewCell {
     static let identifier = "GameFeedbackTableViewCell"
     
     private lazy var targetLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 24, weight: .semibold)
+        $0.font = .Pretendard.m24
         $0.textColor = .label
     }
     private lazy var answerLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 18, weight: .medium)
+        $0.font = .Pretendard.r18
         $0.textColor = .secondaryLabel
     }
     private lazy var correctImageView = UIImageView()

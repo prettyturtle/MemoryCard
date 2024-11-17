@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -57,7 +57,6 @@
 		6B85569829E2C1100004E226 /* CardListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569729E2C10F0004E226 /* CardListCollectionViewCell.swift */; };
 		6B85569C29E464070004E226 /* MyCardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85569B29E464070004E226 /* MyCardListViewController.swift */; };
 		6B8C59882A37630600CD8A96 /* complete_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B8C59872A37630500CD8A96 /* complete_lottie.json */; };
-		6B8C598B2A37638500CD8A96 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8C598A2A37638500CD8A96 /* Lottie */; };
 		6B8DBDB42AF7CC08002549EB /* GameQuizCardZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DBDB32AF7CC08002549EB /* GameQuizCardZip.swift */; };
 		6B8DBDB62AF7E1DE002549EB /* GameQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8DBDB52AF7E1DE002549EB /* GameQuizView.swift */; };
 		6B8DBDB82AF93F16002549EB /* correct_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B8DBDB72AF93F16002549EB /* correct_lottie.json */; };
@@ -81,6 +80,7 @@
 		6BB5BF5F2ADD8248004E9486 /* VocListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB5BF5E2ADD8248004E9486 /* VocListView.swift */; };
 		6BB5BF612ADD826E004E9486 /* Voc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB5BF602ADD826E004E9486 /* Voc.swift */; };
 		6BC7DFAB2CEA0E5E00DCA720 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6BC7DFAA2CEA0E5E00DCA720 /* GoogleMobileAds */; };
+		6BC7E0422CEA2A5C00DCA720 /* DesignGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC7E0412CEA2A5C00DCA720 /* DesignGuide.swift */; };
 		6BD18CE02A4B283C0020433A /* EasyTipView in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD18CDF2A4B283C0020433A /* EasyTipView */; };
 		6BD18CEA2A51C0F40020433A /* Notification_Name+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD18CE92A51C0F40020433A /* Notification_Name+.swift */; };
 		6BD18CEC2A51C10A0020433A /* TutorialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD18CEB2A51C10A0020433A /* TutorialManager.swift */; };
@@ -97,6 +97,7 @@
 		6BD5B5622A6CFC9F00FC82AD /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5B5612A6CFC9F00FC82AD /* WeekDay.swift */; };
 		6BD5B5642A6D879100FC82AD /* EmailVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD5B5632A6D879100FC82AD /* EmailVerifyView.swift */; };
 		6BD990BB2A716F6A00B1F322 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD990BA2A716F6A00B1F322 /* LoginView.swift */; };
+		6BDB4E1C2CEA2CAB00B9E4E6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDB4E1B2CEA2CAB00B9E4E6 /* Lottie */; };
 		6BE24B532A28EBF100332BC1 /* MyInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE24B522A28EBF100332BC1 /* MyInfoViewCell.swift */; };
 		6BEC9F072A2B81020008366A /* StudyModeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC9F062A2B81010008366A /* StudyModeConfigView.swift */; };
 		6BF2A46A2ADAF3CD004A09FE /* VocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF2A4692ADAF3CD004A09FE /* VocView.swift */; };
@@ -167,6 +168,7 @@
 		6BA6A4372A320FE0002127E6 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		6BB5BF5E2ADD8248004E9486 /* VocListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocListView.swift; sourceTree = "<group>"; };
 		6BB5BF602ADD826E004E9486 /* Voc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voc.swift; sourceTree = "<group>"; };
+		6BC7E0412CEA2A5C00DCA720 /* DesignGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignGuide.swift; sourceTree = "<group>"; };
 		6BD18CE92A51C0F40020433A /* Notification_Name+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification_Name+.swift"; sourceTree = "<group>"; };
 		6BD18CEB2A51C10A0020433A /* TutorialManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialManager.swift; sourceTree = "<group>"; };
 		6BD18CED2A55ADFC0020433A /* ReminderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListView.swift; sourceTree = "<group>"; };
@@ -190,6 +192,10 @@
 		6BF656902B220FE500653096 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6BC7E04B2CEA2AA300DCA720 /* Font */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Font; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		6B29BDBB29CE10EB00F39932 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -206,13 +212,13 @@
 				6B6DAC662B2CAE05007D1332 /* GoogleSignInSwift in Frameworks */,
 				6B6DAC642B2CAE05007D1332 /* GoogleSignIn in Frameworks */,
 				6B29BDE129CE132000F39932 /* FirebaseCrashlytics in Frameworks */,
+				6BDB4E1C2CEA2CAB00B9E4E6 /* Lottie in Frameworks */,
 				6B29BDDF29CE132000F39932 /* FirebaseAuth in Frameworks */,
 				6BC7DFAB2CEA0E5E00DCA720 /* GoogleMobileAds in Frameworks */,
 				6B29BDDA29CE112C00F39932 /* Then in Frameworks */,
 				6B29BDE729CE132000F39932 /* FirebaseFirestore in Frameworks */,
 				6BD18CE02A4B283C0020433A /* EasyTipView in Frameworks */,
 				6B29BDE929CE132000F39932 /* FirebaseFirestoreSwift in Frameworks */,
-				6B8C598B2A37638500CD8A96 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +398,8 @@
 				6B29BDCF29CE10EF00F39932 /* Info.plist */,
 				6B29BDC129CE10EB00F39932 /* AppDelegate.swift */,
 				6B29BDC329CE10EB00F39932 /* SceneDelegate.swift */,
+				6BC7E0412CEA2A5C00DCA720 /* DesignGuide.swift */,
+				6BC7E0432CEA2A8900DCA720 /* Assets */,
 				6B192AC02AEEA1E60021EA82 /* Game */,
 				6B29BDCA29CE10EF00F39932 /* Assets.xcassets */,
 				6BD3E5172A86B03300D3065E /* Popup */,
@@ -431,6 +439,14 @@
 				6B9A57032B06660500B47C31 /* congratulation.json */,
 			);
 			path = LottieFile;
+			sourceTree = "<group>";
+		};
+		6BC7E0432CEA2A8900DCA720 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				6BC7E04B2CEA2AA300DCA720 /* Font */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		6BD3E5172A86B03300D3065E /* Popup */ = {
@@ -474,6 +490,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				6BC7E04B2CEA2AA300DCA720 /* Font */,
+			);
 			name = MemoryCard;
 			packageProductDependencies = (
 				6B29BDD629CE111C00F39932 /* SnapKit */,
@@ -487,12 +506,12 @@
 				6B29BDEA29CE132000F39932 /* FirebaseMessaging */,
 				6B29BDEC29CE132000F39932 /* FirebaseStorage */,
 				6B682DFB2A1A68E700187262 /* Toast */,
-				6B8C598A2A37638500CD8A96 /* Lottie */,
 				6BD18CDF2A4B283C0020433A /* EasyTipView */,
 				6BD5B55D2A6CD0ED00FC82AD /* SimpleToast */,
 				6B6DAC632B2CAE05007D1332 /* GoogleSignIn */,
 				6B6DAC652B2CAE05007D1332 /* GoogleSignInSwift */,
 				6BC7DFAA2CEA0E5E00DCA720 /* GoogleMobileAds */,
+				6BDB4E1B2CEA2CAB00B9E4E6 /* Lottie */,
 			);
 			productName = MemoryCard;
 			productReference = 6B29BDBE29CE10EB00F39932 /* MemoryCard.app */;
@@ -527,11 +546,11 @@
 				6B29BDD829CE112B00F39932 /* XCRemoteSwiftPackageReference "Then" */,
 				6B29BDDD29CE132000F39932 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				6B682DFA2A1A68E700187262 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
-				6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				6BD18CDE2A4B283C0020433A /* XCRemoteSwiftPackageReference "EasyTipView" */,
 				6BD5B55C2A6CD0ED00FC82AD /* XCRemoteSwiftPackageReference "SimpleToast" */,
 				6B6DAC622B2CAE05007D1332 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				6BC7DFA92CEA0E5E00DCA720 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				6BDB4E1A2CEA2CAB00B9E4E6 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 6B29BDBF29CE10EB00F39932 /* Products */;
 			projectDirPath = "";
@@ -613,6 +632,7 @@
 				6B088D1C29D037220056B4EF /* UIApplication+.swift in Sources */,
 				6B8DBDBC2AFBD7A3002549EB /* GameFeedbackViewController.swift in Sources */,
 				6B29BDEF29CEA06500F39932 /* OpacityButton.swift in Sources */,
+				6BC7E0422CEA2A5C00DCA720 /* DesignGuide.swift in Sources */,
 				6BF6568E2B1F6D5000653096 /* ShopView.swift in Sources */,
 				6B7C6C1129F80B930045C230 /* MyInfoView.swift in Sources */,
 				6B9BC16229E9D26B00B32557 /* CardStudyViewController.swift in Sources */,
@@ -913,14 +933,6 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
 		6BC7DFA92CEA0E5E00DCA720 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
@@ -943,6 +955,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.7.2;
+			};
+		};
+		6BDB4E1A2CEA2CAB00B9E4E6 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1013,11 +1033,6 @@
 			package = 6B6DAC622B2CAE05007D1332 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
 		};
-		6B8C598A2A37638500CD8A96 /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B8C59892A37638500CD8A96 /* XCRemoteSwiftPackageReference "lottie-spm" */;
-			productName = Lottie;
-		};
 		6BC7DFAA2CEA0E5E00DCA720 /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6BC7DFA92CEA0E5E00DCA720 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
@@ -1032,6 +1047,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6BD5B55C2A6CD0ED00FC82AD /* XCRemoteSwiftPackageReference "SimpleToast" */;
 			productName = SimpleToast;
+		};
+		6BDB4E1B2CEA2CAB00B9E4E6 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BDB4E1A2CEA2CAB00B9E4E6 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

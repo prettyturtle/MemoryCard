@@ -13,7 +13,7 @@ final class CardStudyCollectionViewCell: UICollectionViewCell {
     static let identifier = "CardStudyCollectionViewCell"
     
     private lazy var cardContentLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 32.0, weight: .bold)
+        $0.font = .Pretendard.b32
         $0.textAlignment = .center
         $0.numberOfLines = 0
         $0.adjustsFontSizeToFitWidth = true
